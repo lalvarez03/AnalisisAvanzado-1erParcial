@@ -3,6 +3,8 @@
 import { el, slider, selectControl } from '../utils/dom.js';
 import { pageHeader, callout, mountCanvas, readout } from '../utils/page.js';
 import { exRef } from '../utils/ejercicios.js';
+import { seccionResueltos } from '../utils/resueltos.js';
+import { RES_SUCESIONES } from '../utils/resueltos-data.js';
 import { COLORS } from '../constants.js';
 
 const SEQS = {
@@ -188,6 +190,8 @@ export function renderSucesiones(root) {
     + 'diverge. $\\blacksquare$</p>'
   ));
   root.appendChild(exRef(1, [13, 14, 15, 16]));
+
+  root.appendChild(seccionResueltos('Ejercicios resueltos', RES_SUCESIONES));
 
   root.appendChild(callout('', 'Practicá las pruebas',
     'En el <a href="#asistente">Asistente de ejercicios</a> podés armar, arrastrando, la demostración de '

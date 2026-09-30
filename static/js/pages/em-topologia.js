@@ -3,6 +3,8 @@
 import { el, selectControl } from '../utils/dom.js';
 import { pageHeader, callout, mountCanvas, readout } from '../utils/page.js';
 import { exRef } from '../utils/ejercicios.js';
+import { seccionResueltos } from '../utils/resueltos.js';
+import { RES_TOPOLOGIA } from '../utils/resueltos-data.js';
 import { COLORS } from '../constants.js';
 import { hexAlpha } from '../utils/canvas2d.js';
 import { registerCleanup } from '../state.js';
@@ -248,4 +250,6 @@ export function renderTopologia(root) {
     + 'La frontera es siempre cerrada y $\\partial A = \\partial(A^c)$.'
   ));
   root.appendChild(exRef(3, [3, 5, 6, 9]));
+
+  root.appendChild(seccionResueltos('Ejercicios resueltos', RES_TOPOLOGIA));
 }

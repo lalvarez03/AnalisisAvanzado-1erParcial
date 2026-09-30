@@ -3,6 +3,8 @@
 import { el, slider, selectControl } from '../utils/dom.js';
 import { pageHeader, callout, mountCanvas, readout } from '../utils/page.js';
 import { exRef } from '../utils/ejercicios.js';
+import { seccionResueltos } from '../utils/resueltos.js';
+import { RES_COMPLETITUD } from '../utils/resueltos-data.js';
 import { COLORS } from '../constants.js';
 
 // Sucesiones de ejemplo (en R o en Q).
@@ -171,4 +173,6 @@ export function renderCauchy(root) {
     + 'pero su límite $\\sqrt{2}$ es irracional. El “agujero” que deja es justamente lo que el axioma de '
     + 'completitud de $\\mathbb{R}$ rellena.'
   ));
+
+  root.appendChild(seccionResueltos('Ejercicios resueltos', RES_COMPLETITUD));
 }

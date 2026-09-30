@@ -3,6 +3,8 @@
 import { el, slider } from '../utils/dom.js';
 import { pageHeader, callout, mountCanvas } from '../utils/page.js';
 import { exRef } from '../utils/ejercicios.js';
+import { seccionResueltos } from '../utils/resueltos.js';
+import { RES_CARDINALIDAD } from '../utils/resueltos-data.js';
 import { COLORS } from '../constants.js';
 
 export function renderOrden(root) {
@@ -96,4 +98,6 @@ export function renderOrden(root) {
     + 'Y $|\\mathbb{R}^k| = c$ para todo $k$: agregar dimensiones no agranda el continuo.'
   ));
   root.appendChild(exRef(2, [7, 8, 10, 11, 14, 15]));
+
+  root.appendChild(seccionResueltos('Ejercicios resueltos', RES_CARDINALIDAD));
 }

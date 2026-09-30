@@ -3,6 +3,8 @@
 import { el, slider, selectControl } from '../utils/dom.js';
 import { pageHeader, callout, mountCanvas, readout } from '../utils/page.js';
 import { exRef } from '../utils/ejercicios.js';
+import { seccionResueltos } from '../utils/resueltos.js';
+import { RES_SUP_INF } from '../utils/resueltos-data.js';
 import { COLORS } from '../constants.js';
 
 // Conjuntos de ejemplo en R (representados por muestras + descripción analítica).
@@ -268,6 +270,8 @@ export function renderSupInf(root) {
     + 'y el otro es la menor, entonces $s \\le s\'$ y $s\' \\le s$, luego $s = s\'$. $\\blacksquare$</p>'
   ));
   root.appendChild(exRef(1, [5, 6]));
+
+  root.appendChild(seccionResueltos('Ejercicios resueltos', RES_SUP_INF));
 
   root.appendChild(callout('tip', '¿Querés practicar las demostraciones?',
     'En el <a href="#asistente">Asistente de ejercicios</a> podés armar paso a paso, arrastrando, la prueba '
