@@ -1,0 +1,69 @@
+# === Datos tabulares y hojas de cálculo ===
+*.xlsx
+*.xls
+*.xlsb
+*.xlsm
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# === Bases de datos locales ===
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.mdb
+*.accdb
+
+# === Archivos de texto con datos ===
+*.dat
+*.txt
+!README.txt
+!LICENSE.txt
+!requirements.txt
+
+# === Geoespacial y técnico ===
+*.shp
+*.dbf
+*.geojson
+*.las
+*.laz
+
+# === Carpetas de datos ===
+Data_Origen/
+Data_Raw/
+Data/
+data/
+datos/
+raw/
+Procesados/
+output/
+exports/
+
+# === Archivos grandes ===
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# === PDFs de material de la materia (no versionar) ===
+Archivos/
+
+# === Python / entorno ===
+__pycache__/
+*.pyc
+.env
+*.pem
+*.key
+venv/
+.venv/
+
+# === IDE / editor ===
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

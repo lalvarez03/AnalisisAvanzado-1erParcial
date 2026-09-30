@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machete — Análisis Avanzado</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] },
+      startup: {
+        ready: () => {
+          MathJax.startup.defaultReady();
+          MathJax.startup.promise.then(() => { MathJax.typesetPromise(); });
+        },
+      },
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <style>
+    body { background: var(--bg); }
+    .machete-top {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 22px;
+      background: linear-gradient(90deg, #141b2c, #1a2236);
+      border-bottom: 1px solid var(--border);
+    }
+    .machete-top h1 { font-size: 20px; margin: 0; }
+    .machete-top small { color: var(--text-dim); }
+    .machete-wrap { max-width: 1200px; margin: 0 auto; padding: 22px; }
+
+    .m-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .m-cols { grid-template-columns: 1fr; } }
+
+    .m-card {
+      min-width: 0;
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 0 0 16px;
+    }
+    .m-card h2 {
+      font-size: 15px; margin: 0 0 8px; border: none; padding: 0;
+      display: flex; align-items: center; gap: 8px;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .m-card h3 { font-size: 13px; margin: 12px 0 4px; color: var(--accent); }
+    .m-card p, .m-card li { font-size: 13.5px; line-height: 1.55; color: #d5ddf0; margin: 4px 0; }
+    .m-card ul { margin: 4px 0; padding-left: 18px; }
+    .m-tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 1px 7px; border-radius: 999px; margin-right: 6px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .m-tag.def { background: rgba(56,217,217,0.18); color: var(--cyan); }
+    .m-tag.thm { background: rgba(124,92,255,0.20); color: #b6a4ff; }
+    .m-tag.tip { background: rgba(53,201,138,0.18); color: var(--ok); }
+    .m-formula {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 10px; margin: 6px 0; overflow-x: auto;
+    }
+
+    /* ---- Fases ---- */
+    .fase {
+      margin: 30px 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(28, 36, 56, 0.4);
+    }
+    .fase-head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      background: linear-gradient(90deg, rgba(91,140,255,0.16), rgba(124,92,255,0.10));
+      border-bottom: 1px solid var(--border);
+    }
+    .fase-num {
+      flex-shrink: 0;
+      width: 46px; height: 46px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800; font-size: 20px;
+      border-radius: 12px;
+    }
+    .fase-title { font-size: 20px; margin: 0; color: var(--text); }
+    .fase-sub { font-size: 13px; color: var(--text-dim); margin: 2px 0 0; }
+    .fase-body { padding: 18px 20px; }
+
+    /* Bloque de definiciones clave */
+    .defs-clave {
+      background: rgba(56, 217, 217, 0.06);
+      border: 1px solid rgba(56, 217, 217, 0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+    }
+    .defs-clave > h3 {
+      margin: 0 0 8px; font-size: 14px; color: var(--cyan);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .defs-clave dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 24px;
+    }
+    @media (max-width: 760px) { .defs-clave dl { grid-template-columns: 1fr; } }
+    .defs-clave .def-item { padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.06); }
+    .defs-clave dt {
+      font-weight: 700; color: var(--text); font-size: 13.5px;
+    }
+    .defs-clave dd { margin: 2px 0 0; padding: 0; font-size: 13px; color: #cdd7f2; line-height: 1.5; }
+
+    .m-toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px; }
+    .m-toc a {
+      background: var(--panel); border: 1px solid var(--border);
+      color: var(--text-dim); border-radius: 999px; padding: 6px 14px;
+      font-size: 13px; text-decoration: none;
+    }
+    .m-toc a:hover { border-color: var(--accent); color: var(--text); }
+
+    @media print {
+      .machete-top, .m-toc, .print-btn { display: none; }
+      body { background: #fff; color: #000; }
+      .fase, .m-card, .defs-clave { border-color: #ccc; background: #fff; break-inside: avoid; }
+      .fase-head { background: #eee; }
+      .m-card p, .m-card li, .defs-clave dd { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <header class="machete-top">
+    <span class="brand-logo">📄</span>
+    <div>
+      <h1>Machete — Análisis Avanzado</h1>
+      <small>Resumen por fases · definiciones + resultados clave · DM · FCEN · UBA</small>
+    </div>
+    <button class="btn print-btn" style="margin-left:auto;" onclick="window.print()">🖨 Imprimir / PDF</button>
+  </header>
+
+  <div class="machete-wrap">
+    <div class="m-toc">
+      <a href="#f1">Fase 1 · Fundamentos de ℝ</a>
+      <a href="#f2">Fase 2 · Convergencia</a>
+      <a href="#f3">Fase 3 · Cardinalidad</a>
+      <a href="#f4">Fase 4 · Topología métrica</a>
+      <a href="#f5">Fase 5 · Completitud</a>
+    </div>
+
+    <!-- =================== FASE 1 =================== -->
+    <section class="fase" id="f1">
+      <div class="fase-head">
+        <div class="fase-num">1</div>
+        <div>
+          <h2 class="fase-title">Fundamentos de ℝ — Supremos e ínfimos</h2>
+          <p class="fase-sub">El axioma que distingue ℝ de ℚ y las herramientas de cotas.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Cota superior de $A$</dt>
+              <dd>$c \in \mathbb{R}$ tal que $a \le c$ para todo $a \in A$.</dd></div>
+            <div class="def-item"><dt>Cota inferior de $A$</dt>
+              <dd>$c \in \mathbb{R}$ tal que $c \le a$ para todo $a \in A$.</dd></div>
+            <div class="def-item"><dt>Conjunto acotado</dt>
+              <dd>Acotado sup. si tiene cota superior; acotado inf. si tiene cota inferior; acotado si ambas.</dd></div>
+            <div class="def-item"><dt>Supremo $\sup A$</dt>
+              <dd>La <em>menor</em> cota superior: es cota superior y $\sup A \le t$ para toda cota superior $t$.</dd></div>
+            <div class="def-item"><dt>Ínfimo $\inf A$</dt>
+              <dd>La <em>mayor</em> cota inferior: es cota inferior y $t \le \inf A$ para toda cota inferior $t$.</dd></div>
+            <div class="def-item"><dt>Máximo / mínimo</dt>
+              <dd>$\max A = \sup A$ si $\sup A \in A$; $\ \min A = \inf A$ si $\inf A \in A$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Axioma de completitud</h2>
+            <p><span class="m-tag thm">axioma</span>Todo $A\subseteq\mathbb{R}$ no vacío y acotado superiormente tiene supremo en $\mathbb{R}$.</p>
+            <p>Distingue $\mathbb{R}$ de $\mathbb{Q}$: en $\mathbb{Q}$, $\{r:r^2&lt;2\}$ no tiene supremo.</p>
+            <p><strong>Versión ínfimo</strong> (equivalente): todo $A\ne\varnothing$ acotado inferiormente tiene ínfimo.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Caracterización ε</h2>
+            <div class="m-formula">$s=\sup A \iff s \text{ es cota sup. y } \forall\varepsilon&gt;0\ \exists a\in A:\ s-\varepsilon&lt;a\le s$</div>
+            <div class="m-formula">$i=\inf A \iff i \text{ es cota inf. y } \forall\varepsilon&gt;0\ \exists a\in A:\ i\le a&lt;i+\varepsilon$</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Propiedades</h2>
+            <ul>
+              <li>$A\subseteq B$ acotado sup. $\Rightarrow \sup A \le \sup B$.</li>
+              <li>$\inf(-A) = -\sup A$; $\ \sup(-A) = -\inf A$.</li>
+              <li>$c&gt;0$: $\sup(cA)=c\sup A$.</li>
+              <li>sup e inf son <strong>únicos</strong> cuando existen.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Arquímedes y densidad</h2>
+            <p>$\forall x\in\mathbb{R}\ \exists n\in\mathbb{N}: n&gt;x$. Consecuencia: $\forall\varepsilon&gt;0\ \exists n:\ 0&lt;\tfrac1n&lt;\varepsilon$.</p>
+            <p><strong>Densidad:</strong> entre dos reales siempre hay un racional y un irracional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 2 =================== -->
+    <section class="fase" id="f2">
+      <div class="fase-head">
+        <div class="fase-num">2</div>
+        <div>
+          <h2 class="fase-title">Convergencia — Sucesiones</h2>
+          <p class="fase-sub">Comportamiento a largo plazo: límites, monotonía y subsucesiones.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Sucesión</dt>
+              <dd>Función $a:\mathbb{N}\to\mathbb{R}$; se nota $(a_n)$.</dd></div>
+            <div class="def-item"><dt>Límite (convergencia)</dt>
+              <dd>$a_n\to\ell$ si $\forall\varepsilon&gt;0\ \exists n_0\ \forall n\ge n_0:\ |a_n-\ell|&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Divergencia a $+\infty$</dt>
+              <dd>$\forall M&gt;0\ \exists n_0\ \forall n\ge n_0:\ a_n&gt;M$ (análogo a $-\infty$).</dd></div>
+            <div class="def-item"><dt>Sucesión acotada</dt>
+              <dd>Existe $M&gt;0$ con $|a_n|\le M$ para todo $n$.</dd></div>
+            <div class="def-item"><dt>Monótona</dt>
+              <dd>Creciente si $a_{n+1}\ge a_n\ \forall n$; decreciente si $a_{n+1}\le a_n\ \forall n$.</dd></div>
+            <div class="def-item"><dt>Subsucesión</dt>
+              <dd>$(a_{n_k})_k$ con índices $n_1&lt;n_2&lt;\cdots$ estrictamente crecientes.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Resultados básicos</h2>
+            <p><span class="m-tag thm">thm</span><strong>Unicidad:</strong> el límite, si existe, es único.</p>
+            <p>Convergente $\Rightarrow$ acotada (no vale la vuelta).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Álgebra de límites</h2>
+            <p>Si $a_n\to a$, $b_n\to b$ (finitos):</p>
+            <ul>
+              <li>$c\,a_n\to c\,a$; $\ a_n+b_n\to a+b$; $\ a_nb_n\to ab$.</li>
+              <li>$b\ne0\Rightarrow a_n/b_n\to a/b$.</li>
+              <li>$a_n\le b_n\ \forall n \Rightarrow a\le b$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Herramientas</h2>
+            <p><span class="m-tag tip">sandwich</span>Si $|x_n-\ell|\le a_n$ y $a_n\to0$, entonces $x_n\to\ell$.</p>
+            <p>Sucesión nula $\times$ acotada $\Rightarrow$ producto $\to 0$.</p>
+            <p><span class="m-tag thm">thm</span><strong>Monótona + acotada $\Rightarrow$ converge</strong> (a su sup o ínf).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Subsucesiones</h2>
+            <ul>
+              <li>$a_n\to\ell \Rightarrow$ toda subsucesión $\to\ell$.</li>
+              <li>Dos subsucesiones con límites distintos $\Rightarrow$ diverge (ej. $(-1)^n$).</li>
+              <li>No acotada sup. $\Rightarrow$ subsucesión $\to+\infty$.</li>
+              <li>$a_{2k}$ y $a_{2k-1}\to\ell \Rightarrow a_n\to\ell$.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 3 =================== -->
+    <section class="fase" id="f3">
+      <div class="fase-head">
+        <div class="fase-num">3</div>
+        <div>
+          <h2 class="fase-title">Cardinalidad</h2>
+          <p class="fase-sub">Comparar tamaños de conjuntos con biyecciones.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Inyectiva / sobreyectiva / biyectiva</dt>
+              <dd>Iny.: $f(x)=f(y)\Rightarrow x=y$. Sobre.: $\operatorname{Im}f=B$. Biy.: ambas.</dd></div>
+            <div class="def-item"><dt>Coordinables ($A\sim B$)</dt>
+              <dd>Existe una biyección $f:A\to B$. Es relación de equivalencia.</dd></div>
+            <div class="def-item"><dt>Cardinal</dt>
+              <dd>Clase de coordinabilidad: $A$ y $B$ tienen el mismo cardinal $\iff A\sim B$.</dd></div>
+            <div class="def-item"><dt>Finito / numerable / contable</dt>
+              <dd>Finito: $A\sim\{1,\dots,n\}$. Numerable: $A\sim\mathbb{N}$ ($\aleph_0$). Contable: finito o numerable.</dd></div>
+            <div class="def-item"><dt>No numerable</dt>
+              <dd>Infinito y no coordinable con $\mathbb{N}$ (ej. $\mathbb{R}$, cardinal $c$).</dd></div>
+            <div class="def-item"><dt>Comparación $|A|\le|B|$</dt>
+              <dd>Existe una inyección $A\hookrightarrow B$.</dd></div>
+            <div class="def-item"><dt>Conjunto de partes $\mathcal{P}(A)$</dt>
+              <dd>El conjunto de todos los subconjuntos de $A$; cumple $\mathcal{P}(A)\sim\{0,1\}^A$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Numerables</h2>
+            <ul>
+              <li>$\mathbb{Z},\ \mathbb{Q},\ \mathbb{N}^k,$ primos: numerables.</li>
+              <li>Unión (numerable) de contables es contable.</li>
+              <li>Subconjunto infinito de numerable es numerable.</li>
+              <li>Subconjuntos finitos de un numerable: numerable.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>No numerabilidad</h2>
+            <p><span class="m-tag thm">Cantor</span>$[0,1)$ y $\mathbb{R}$ no son numerables (diagonal). Cardinal $c=2^{\aleph_0}$.</p>
+            <p>Los irracionales tienen cardinal $c$.</p>
+            <div class="m-formula">$\aleph_0 &lt; c &lt; 2^{c} &lt; \cdots$</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Partes y potencias</h2>
+            <ul>
+              <li>Si $\#A=n$, $\#\mathcal{P}(A)=2^n$.</li>
+              <li><span class="m-tag thm">Cantor</span>$|A|&lt;|\mathcal{P}(A)|$ siempre.</li>
+              <li>$\mathcal{P}(\mathbb{N})\sim\mathbb{R}$, $\ \#\mathcal{P}(\mathbb{N})=c$.</li>
+              <li>$|\mathbb{R}^k|=c\ \forall k$; $\ |\mathbb{R}[X]|=c$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Cantor–Schröder–Bernstein</h2>
+            <p><span class="m-tag thm">CSB</span>Inyecciones $A\hookrightarrow B$ y $B\hookrightarrow A$ $\Rightarrow A\sim B$.</p>
+            <p>Herramienta para probar igualdad de cardinales sin dar la biyección explícita.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 4 =================== -->
+    <section class="fase" id="f4">
+      <div class="fase-head">
+        <div class="fase-num">4</div>
+        <div>
+          <h2 class="fase-title">Topología métrica — Espacios métricos</h2>
+          <p class="fase-sub">Distancia, abiertos/cerrados, compacidad y continuidad.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Métrica $(E,d)$</dt>
+              <dd>$d\ge0$ con: $d(x,y)=0\iff x=y$; $d(x,y)=d(y,x)$; $d(x,z)\le d(x,y)+d(y,z)$.</dd></div>
+            <div class="def-item"><dt>Distancia euclídea $d_2$</dt>
+              <dd>$d_2(x,y)=\left(\sum_{i=1}^n (x_i-y_i)^2\right)^{1/2}$.</dd></div>
+            <div class="def-item"><dt>Distancia taxicab $d_1$</dt>
+              <dd>$d_1(x,y)=\sum_{i=1}^n |x_i-y_i|$.</dd></div>
+            <div class="def-item"><dt>Distancia del máximo $d_\infty$</dt>
+              <dd>$d_\infty(x,y)=\max_{1\le i\le n} |x_i-y_i|$.</dd></div>
+            <div class="def-item"><dt>Métrica discreta</dt>
+              <dd>$\delta(x,y)=0$ si $x=y$, y $\delta(x,y)=1$ si $x\ne y$.</dd></div>
+            <div class="def-item"><dt>Bola abierta / cerrada</dt>
+              <dd>$B(x,r)=\{y:d(x,y)&lt;r\}$; $\ \overline{B}(x,r)=\{y:d(x,y)\le r\}$.</dd></div>
+            <div class="def-item"><dt>Entorno de $x$</dt>
+              <dd>Conjunto $V$ que contiene alguna bola $B(x,r)$ con $r&gt;0$.</dd></div>
+            <div class="def-item"><dt>Acotado / diámetro</dt>
+              <dd>$A$ acotado si cabe en una bola; $\operatorname{diam}(A)=\sup\{d(x,y):x,y\in A\}$.</dd></div>
+            <div class="def-item"><dt>Distancia punto–conjunto</dt>
+              <dd>$d(x,A)=\inf\{d(x,a):a\in A\}$.</dd></div>
+            <div class="def-item"><dt>Interior / clausura / frontera</dt>
+              <dd>$x\in A^\circ$: hay $B(x,r)\subseteq A$. $\ x\in\overline{A}$: toda $B(x,r)$ corta $A$. $\ \partial A=\overline{A}\setminus A^\circ$.</dd></div>
+            <div class="def-item"><dt>Abierto / cerrado</dt>
+              <dd>Abierto: $A=A^\circ$. Cerrado: $A=\overline{A}$ ($\iff A^c$ abierto).</dd></div>
+            <div class="def-item"><dt>Acumulación / aislado / denso</dt>
+              <dd>$x\in A'$: toda bola tiene un punto de $A$ distinto de $x$. Aislado: $B(x,r)\cap A=\{x\}$. Denso: $\overline{A}=E$.</dd></div>
+            <div class="def-item"><dt>Compacto</dt>
+              <dd>Todo cubrimiento abierto admite subcubrimiento finito.</dd></div>
+            <div class="def-item"><dt>Continuidad en $x_0$</dt>
+              <dd>$\forall\varepsilon&gt;0\ \exists\delta&gt;0:\ d(x,x_0)&lt;\delta\Rightarrow\rho(f(x),f(x_0))&lt;\varepsilon$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Métricas en ℝⁿ</h2>
+            <div class="m-formula">$d_\infty\le d_2\le d_1\le n\,d_\infty$</div>
+            <p>$d_1,d_2,d_\infty$ son equivalentes: definen la misma topología.</p>
+            <p>Bolas: $B_1$ (rombo) $\subseteq B_2$ (círculo) $\subseteq B_\infty$ (cuadrado).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Identidades</h2>
+            <div class="m-formula">$(A^\circ)^c=\overline{A^c}$; $\ \overline{A}^{\,c}=(A^c)^\circ$</div>
+            <p>$(A\cap B)^\circ=A^\circ\cap B^\circ$; $\ \overline{A\cup B}=\overline{A}\cup\overline{B}$.</p>
+            <p>$\overline{A}=A\cup A'$; $\ A$ cerrado $\iff A'\subseteq A$.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Compacidad · Heine-Borel</h2>
+            <p><span class="m-tag thm">Heine-Borel</span>En $\mathbb{R}^n$: compacto $\iff$ cerrado y acotado.</p>
+            <ul>
+              <li>Compacto $\Rightarrow$ cerrado y acotado (siempre).</li>
+              <li>Cerrado en compacto es compacto.</li>
+              <li>Imagen continua de compacto es compacta.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Continuidad</h2>
+            <p><span class="m-tag thm">≡</span>Sucesional: $x_n\to x_0\Rightarrow f(x_n)\to f(x_0)$.</p>
+            <p><span class="m-tag thm">≡</span>Topológica: preimagen de abierto es abierta.</p>
+            <p><strong>Homeomorfismo:</strong> biyección continua con inversa continua.</p>
+            <p><strong>Isometría:</strong> $\rho(f(x),f(y))=d(x,y)$.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 5 =================== -->
+    <section class="fase" id="f5">
+      <div class="fase-head">
+        <div class="fase-num">5</div>
+        <div>
+          <h2 class="fase-title">Completitud y aplicaciones</h2>
+          <p class="fase-sub">Cauchy, espacios completos, Cantor y punto fijo de Banach.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Convergencia métrica</dt>
+              <dd>$x_n\to x$ si $d(x_n,x)\to 0$, o sea $\forall\varepsilon&gt;0\ \exists n_0\ \forall n\ge n_0:\ d(x_n,x)&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Sucesión de Cauchy</dt>
+              <dd>$\forall\varepsilon&gt;0\ \exists N\ \forall n,m\ge N:\ d(x_n,x_m)&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Espacio completo</dt>
+              <dd>Toda sucesión de Cauchy converge a un punto del espacio.</dd></div>
+            <div class="def-item"><dt>Diámetro</dt>
+              <dd>$\operatorname{diam}(A)=\sup\{d(x,y):x,y\in A\}$.</dd></div>
+            <div class="def-item"><dt>Función Lipschitz</dt>
+              <dd>$\exists K\ge0:\ d(f(x),f(y))\le K\,d(x,y)$ para todo $x,y$.</dd></div>
+            <div class="def-item"><dt>Contracción</dt>
+              <dd>Lipschitz con constante $0\le k&lt;1$: $d(Tx,Ty)\le k\,d(x,y)$.</dd></div>
+            <div class="def-item"><dt>Punto fijo</dt>
+              <dd>$x^\ast$ tal que $T(x^\ast)=x^\ast$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Cauchy y completitud</h2>
+            <p>Convergente $\Rightarrow$ Cauchy. Completo: vale la vuelta.</p>
+            <ul>
+              <li>$(\mathbb{R}^n, d_1),(d_2),(d_\infty)$ son completos.</li>
+              <li>Cerrado en completo es completo.</li>
+              <li>$\mathbb{Q}$ <strong>no</strong> es completo (Cauchy $\to\sqrt2\notin\mathbb{Q}$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Cantor (intersección)</h2>
+            <p><span class="m-tag thm">thm</span>$E$ completo, $A_{n+1}\subseteq A_n$ cerrados no vacíos con $\operatorname{diam}(A_n)\to0$:</p>
+            <div class="m-formula">$\displaystyle\bigcap_{n}A_n=\{x\}$ (un único punto).</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Punto fijo (Banach)</h2>
+            <p><span class="m-tag thm">thm</span>$E$ completo + $T$ contracción $\Rightarrow$ único punto fijo $x^\ast$; $x_{n+1}=Tx_n\to x^\ast$ desde cualquier $x_0$.</p>
+            <div class="m-formula">$d(x_n,x^\ast)\le\dfrac{k^n}{1-k}\,d(x_1,x_0)$</div>
+            <p>Requiere completitud y $k&lt;1$; sólo continuidad no alcanza.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Continuidad uniforme</h2>
+            <p><strong>Def.:</strong> $\forall\varepsilon&gt;0\ \exists\delta&gt;0\ \forall x,y:\ d(x,y)&lt;\delta\Rightarrow\rho(f(x),f(y))&lt;\varepsilon$ (mismo $\delta$ para todo $x_0$).</p>
+            <p>Manda sucesiones de Cauchy en sucesiones de Cauchy.</p>
+            <p><span class="m-tag thm">Heine-Cantor</span>Continua en compacto $\Rightarrow$ uniformemente continua.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
