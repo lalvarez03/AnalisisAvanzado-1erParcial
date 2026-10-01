@@ -92,6 +92,44 @@ export function renderSupInf(root) {
     + '<strong>mínimo</strong> ($\\min A$).'
   ));
 
+  root.appendChild(callout('thm', 'Teorema 1.11 — Principio de Arquímedes',
+    'Dado cualquier $x \\in \\mathbb{R}$, existe un $n \\in \\mathbb{N}$ tal que $n > x$.<br>'
+    + '<em>Equivalente:</em> El conjunto $\\mathbb{N}$ no está acotado superiormente en $\\mathbb{R}$.<br>'
+    + '• <strong>Versión Infinitesimal (Prop. 1.12):</strong> Si $y > 0$, existe $n \\in \\mathbb{N}$ tal que $0 < \\frac{1}{n} < y$.',
+    '<p><span class="proof-step">Demostración (Por el absurdo):</span><br>'
+    + 'Supongamos por el absurdo que $\\mathbb{N}$ está acotado superiormente. Como $\\mathbb{N} \\neq \\emptyset$, el Axioma de Completitud de $\\mathbb{R}$ garantiza la existencia de su supremo $s = \\sup(\\mathbb{N}) \\in \\mathbb{R}$.<br>'
+    + 'Si consideramos $t = s - 1 < s$, entonces $t$ no puede ser cota superior de $\\mathbb{N}$. Luego, existe un $m \\in \\mathbb{N}$ tal que $s - 1 < m \\le s$.<br>'
+    + 'Sumando $1$ a la desigualdad se obtiene $s < m + 1$. Dado que $m + 1 \\in \\mathbb{N}$, esto contradice que $s$ sea cota superior de $\\mathbb{N}$. $\\blacksquare$</p>'
+    + '<p><span class="proof-step">Demostración de la versión infinitesimal:</span><br>'
+    + 'Como $y > 0$, su inverso multiplicativo $y^{-1} \\in \\mathbb{R}$ existe. Por el Principio de Arquímedes, existe $n \\in \\mathbb{N}$ tal que $n > y^{-1}$, lo cual es equivalente a $\\frac{1}{n} < y$. $\\blacksquare$</p>'
+  ));
+
+  root.appendChild(callout('thm', 'Propiedad 1.14 — Densidad de ℚ y ℝ \\ ℚ en ℝ',
+    'Sean $x, y \\in \\mathbb{R}$ con $x < y$:<br>'
+    + '1. <strong>Densidad de ℚ:</strong> Existe un racional $q \\in \\mathbb{Q}$ tal que $x < q < y$.<br>'
+    + '2. <strong>Densidad de irracinoales:</strong> Existe un irracional $z \\in \\mathbb{R} \\setminus \\mathbb{Q}$ tal que $x < z < y$.',
+    '<p><span class="proof-step">Demostración (Densidad de ℚ):</span><br>'
+    + 'Dado que $y - x > 0$, por la versión infinitesimal de Arquímedes existe $n \\in \\mathbb{N}$ tal que $0 < \\frac{1}{n} < y - x$, lo que implica $n(y - x) > 1$, es decir, $ny - nx > 1$.<br>'
+    + 'Al ser la distancia entre $nx$ y $ny$ estrictamente mayor a $1$, existe un entero $m \\in \\mathbb{Z}$ tal que $nx < m < ny$. Dividiendo por $n$, resulta $x < \\frac{m}{n} < y$. Tomando $q = \\frac{m}{n} \\in \\mathbb{Q}$, queda probado. $\\blacksquare$</p>'
+    + '<p><span class="proof-step">Demostración (Densidad de irracionales):</span><br>'
+    + 'Como $\\sqrt{2} > 0$, se cumple $\\frac{x}{\\sqrt{2}} < \\frac{y}{\\sqrt{2}}$. Por la densidad de $\\mathbb{Q}$, existe $q \\in \\mathbb{Q}$ no nulo tal que $\\frac{x}{\\sqrt{2}} < q < \\frac{y}{\\sqrt{2}}$.<br>'
+    + 'Multiplicando por $\\sqrt{2}$, se obtiene $x < q\\sqrt{2} < y$. El número $z = q\\sqrt{2}$ es irracional (si fuera racional, $\\sqrt{2} = z/q$ sería racional, lo cual es absurdo). $\\blacksquare$</p>'
+  ));
+
+  root.appendChild(callout('warn', 'Teorema — Incompletitud de ℚ',
+    'El conjunto $A = \\{r \\in \\mathbb{Q} : r > 0 \\text{ y } r^2 < 2\\} \\subset \\mathbb{Q}$ es no vacío y está acotado superiormente en $\\mathbb{Q}$, pero <strong>no posee supremo en $\\mathbb{Q}$</strong>.<br>'
+    + 'Por lo tanto, el cuerpo ordenado $\\mathbb{Q}$ no satisface el Axioma de Completitud.',
+    '<p><span class="proof-step">Demostración:</span><br>'
+    + '1. $A \\neq \\emptyset$ pues $1 \\in \\mathbb{Q}$ y $1^2 = 1 < 2 \\implies 1 \\in A$.<br>'
+    + '2. $A$ está acotado superiormente por $2$ (si $r > 2 \\implies r^2 > 4 > 2 \\implies r \\notin A$).<br>'
+    + '3. Supongamos por el absurdo que existe $s = \\sup(A) \\in \\mathbb{Q}$. Por tricotomía, analizamos las tres opciones:<br>'
+    + '&nbsp;&nbsp;• <strong>Caso $s^2 = 2$:</strong> Imposible, pues $\\sqrt{2} \\notin \\mathbb{Q}$.<br>'
+    + '&nbsp;&nbsp;• <strong>Caso $s^2 < 2$:</strong> Por densidad, como $s < \\sqrt{2}$, existe $q \\in \\mathbb{Q}$ tal que $s < q < \\sqrt{2}$. Elevando al cuadrado, $q^2 < 2 \\implies q \\in A$. Pero $q > s$, contradiciendo que $s$ sea cota superior.<br>'
+    + '&nbsp;&nbsp;• <strong>Caso $s^2 > 2$:</strong> Por densidad, como $s > \\sqrt{2}$, existe $q \\in \\mathbb{Q}$ tal que $\\sqrt{2} < q < s$. Para todo $r \\in A$ vale $r^2 < 2 < q^2 \\implies r < q$, luego $q$ es cota superior de $A$. Pero $q < s$, contradiciendo que $s$ sea la menor cota superior.<br>'
+    + 'Por contradicción, no existe tal $s \\in \\mathbb{Q}$. $\\blacksquare$</p>'
+  ));
+
+
   root.appendChild(callout('thm', 'Axioma de Completitud',
     'Todo $A \\subseteq \\mathbb{R}$ no vacío y acotado superiormente tiene supremo en $\\mathbb{R}$. '
     + '$\\mathbb{Q}$ no lo cumple: $\\{r \\in \\mathbb{Q} : r^2 < 2\\}$ no tiene supremo en $\\mathbb{Q}$ '
@@ -112,15 +150,6 @@ export function renderSupInf(root) {
     + 'Pero $q < s$, contradiciendo que $s$ sea la <em>menor</em> cota superior.</p>'
     + '<p>Ambos casos son absurdos, luego no existe tal $s \\in \\mathbb{Q}$: el conjunto $A$ no tiene supremo en $\\mathbb{Q}$. '
     + 'En cambio, en $\\mathbb{R}$ el Axioma de Completitud garantiza que el supremo existe (y es $\\sqrt2$). $\\blacksquare$</p>'
-  ));
-
-  
-  root.appendChild(callout('thm', 'Densidad de ℚ y ℝ \\ ℚ',
-    '• <strong>Densidad de ℚ:</strong> Para todo $x, y \\in \\mathbb{R}$ con $x < y$, existe $q \\in \\mathbb{Q}$ tal que $x < q < y$.<br>'
-    + '• <strong>Densidad de irracinoales:</strong> Existe $z \\in \\mathbb{R} \\setminus \\mathbb{Q}$ tal que $x < z < y$.<br>'
-    + '• <strong>Principio de Arquímedes:</strong> Dado $x > 0$ y $y \\in \\mathbb{R}$, existe $n \\in \\mathbb{N}$ tal que $n x > y$.',
-    '<p><span class="proof-step">Idea de Arquímedes en la Densidad:</span> Dado $y - x > 0$, por Arquímedes existe $n \\in \\mathbb{N}$ tal que $\\frac{1}{n} < y - x$. '
-    + 'Tomando $m = \\lfloor n x \\rfloor + 1$, se satisface $x < \\frac{m}{n} < y$, eligiendo el racional $q = \\frac{m}{n}$. $\\blacksquare$</p>'
   ));
 
   root.appendChild(el('h2', { text: 'Caracterización ε del supremo' }));
