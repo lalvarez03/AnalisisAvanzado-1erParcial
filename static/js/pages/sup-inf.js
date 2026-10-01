@@ -116,9 +116,11 @@ export function renderSupInf(root) {
     + 'Multiplicando por $\\sqrt{2}$, se obtiene $x < q\\sqrt{2} < y$. El número $z = q\\sqrt{2}$ es irracional (si fuera racional, $\\sqrt{2} = z/q$ sería racional, lo cual es absurdo). $\\blacksquare$</p>'
   ));
 
-  root.appendChild(callout('warn', 'Teorema — Incompletitud de ℚ',
-    'El conjunto $A = \\{r \\in \\mathbb{Q} : r > 0 \\text{ y } r^2 < 2\\} \\subset \\mathbb{Q}$ es no vacío y está acotado superiormente en $\\mathbb{Q}$, pero <strong>no posee supremo en $\\mathbb{Q}$</strong>.<br>'
-    + 'Por lo tanto, el cuerpo ordenado $\\mathbb{Q}$ no satisface el Axioma de Completitud.',
+  root.appendChild(callout('warn', 'Axioma de Completitud',
+    'Todo $A \\subseteq \\mathbb{R}$ no vacío y acotado superiormente tiene supremo en $\\mathbb{R}$. '
+    + '$\\mathbb{Q}$ no lo cumple: $\\{r \\in \\mathbb{Q} : r^2 < 2\\}$ no tiene supremo en $\\mathbb{Q}$ '
+    + '(sería $\\sqrt{2}$).',
+    // demostración de que Q no es completo
     '<p><span class="proof-step">Demostración:</span><br>'
     + '1. $A \\neq \\emptyset$ pues $1 \\in \\mathbb{Q}$ y $1^2 = 1 < 2 \\implies 1 \\in A$.<br>'
     + '2. $A$ está acotado superiormente por $2$ (si $r > 2 \\implies r^2 > 4 > 2 \\implies r \\notin A$).<br>'
@@ -129,28 +131,6 @@ export function renderSupInf(root) {
     + 'Por contradicción, no existe tal $s \\in \\mathbb{Q}$. $\\blacksquare$</p>'
   ));
 
-
-  root.appendChild(callout('thm', 'Axioma de Completitud',
-    'Todo $A \\subseteq \\mathbb{R}$ no vacío y acotado superiormente tiene supremo en $\\mathbb{R}$. '
-    + '$\\mathbb{Q}$ no lo cumple: $\\{r \\in \\mathbb{Q} : r^2 < 2\\}$ no tiene supremo en $\\mathbb{Q}$ '
-    + '(sería $\\sqrt{2}$).',
-    // demostración de que Q no es completo
-    '<p><span class="proof-step">Idea:</span> sea $A = \\{r \\in \\mathbb{Q} : r^2 < 2\\}$. Es no vacío '
-    + '($1 \\in A$) y acotado superiormente (por $2$). Supongamos que tiene supremo $s \\in \\mathbb{Q}$.</p>'
-    + '<p>Por tricotomía en $\\mathbb{Q}$, $s^2 < 2$ o $s^2 > 2$ (no puede ser $s^2 = 2$ porque $\\sqrt2 \\notin \\mathbb{Q}$). '
-    + 'Analizamos ambos casos y en cada uno construimos explícitamente el racional que da la contradicción, perturbando $s$ por un $\\tfrac1n$ con $n$ grande (Arquímedes).</p>'
-    + '<p><strong>Caso $s^2 < 2$.</strong> Buscamos $n \\in \\mathbb{N}$ tal que $q = s + \\tfrac1n \\in \\mathbb{Q}$ cumpla $q^2 < 2$. '
-    + 'En efecto, $\\left(s+\\tfrac1n\\right)^2 = s^2 + \\tfrac{2s}{n} + \\tfrac1{n^2} \\le s^2 + \\tfrac{2s+1}{n}$ (pues $\\tfrac1{n^2}\\le\\tfrac1n$). '
-    + 'Como $2 - s^2 > 0$, por Arquímedes existe $n$ con $\\tfrac{2s+1}{n} < 2 - s^2$, y entonces $q^2 < 2$, es decir $q \\in A$. '
-    + 'Pero $q > s$, contradiciendo que $s$ sea cota superior de $A$.</p>'
-    + '<p><strong>Caso $s^2 > 2$.</strong> Buscamos $n$ tal que $q = s - \\tfrac1n \\in \\mathbb{Q}$ cumpla $q^2 > 2$ (y $q>0$). '
-    + 'Ahora $\\left(s-\\tfrac1n\\right)^2 = s^2 - \\tfrac{2s}{n} + \\tfrac1{n^2} \\ge s^2 - \\tfrac{2s}{n}$. '
-    + 'Como $s^2 - 2 > 0$, por Arquímedes existe $n$ con $\\tfrac{2s}{n} < s^2 - 2$, y entonces $q^2 > 2$. '
-    + 'Tal $q$ es cota superior de $A$: si $r \\in A$ (es decir $r^2 < 2 < q^2$ con $r,q>0$) entonces $r < q$. '
-    + 'Pero $q < s$, contradiciendo que $s$ sea la <em>menor</em> cota superior.</p>'
-    + '<p>Ambos casos son absurdos, luego no existe tal $s \\in \\mathbb{Q}$: el conjunto $A$ no tiene supremo en $\\mathbb{Q}$. '
-    + 'En cambio, en $\\mathbb{R}$ el Axioma de Completitud garantiza que el supremo existe (y es $\\sqrt2$). $\\blacksquare$</p>'
-  ));
 
   root.appendChild(el('h2', { text: 'Caracterización ε del supremo' }));
   root.appendChild(exRef(1, 3));
