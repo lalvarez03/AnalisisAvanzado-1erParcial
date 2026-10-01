@@ -17,6 +17,7 @@ import { renderCompacidad } from './pages/em-compacidad.js';
 import { renderCauchy } from './pages/em-cauchy.js';
 import { renderContinuidad } from './pages/em-continuidad.js';
 import { renderPuntoFijo } from './pages/em-puntofijo.js';
+import { renderGuia } from './pages/guia.js';
 import { renderAsistente } from './pages/asistente.js';
 import { renderQuiz } from './pages/quiz.js';
 
@@ -36,6 +37,7 @@ const registry = {
   'em-cauchy': renderCauchy,
   'em-continuidad': renderContinuidad,
   'em-puntofijo': renderPuntoFijo,
+  'guia': renderGuia,
   'asistente': renderAsistente,
   'quiz': renderQuiz,
 };

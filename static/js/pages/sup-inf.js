@@ -93,13 +93,19 @@ export function renderSupInf(root) {
     // demostración de que Q no es completo
     '<p><span class="proof-step">Idea:</span> sea $A = \\{r \\in \\mathbb{Q} : r^2 < 2\\}$. Es no vacío '
     + '($1 \\in A$) y acotado superiormente (por $2$). Supongamos que tiene supremo $s \\in \\mathbb{Q}$.</p>'
-    + '<p>Por tricotomía en $\\mathbb{Q}$, $s^2 < 2$ o $s^2 > 2$ (no puede ser $=2$ porque $\\sqrt2 \\notin \\mathbb{Q}$).</p>'
-    + '<p><strong>Si $s^2 < 2$:</strong> se puede hallar un racional $q$ con $s < q$ y $q^2 < 2$, '
-    + 'así que $q \\in A$ y $q > s$: contradice que $s$ sea cota superior.</p>'
-    + '<p><strong>Si $s^2 > 2$:</strong> se puede hallar un racional $q < s$ con $q^2 > 2$, que resulta '
-    + 'cota superior de $A$ menor que $s$: contradice que $s$ sea la <em>menor</em> cota superior.</p>'
-    + '<p>Ambos casos son absurdos, luego no existe tal $s$ en $\\mathbb{Q}$. En $\\mathbb{R}$ el axioma '
-    + 'garantiza que sí existe (y vale $\\sqrt2$). $\\blacksquare$</p>'
+    + '<p>Por tricotomía en $\\mathbb{Q}$, $s^2 < 2$ o $s^2 > 2$ (no puede ser $s^2 = 2$ porque $\\sqrt2 \\notin \\mathbb{Q}$). '
+    + 'Analizamos ambos casos y en cada uno construimos explícitamente el racional que da la contradicción, perturbando $s$ por un $\\tfrac1n$ con $n$ grande (Arquímedes).</p>'
+    + '<p><strong>Caso $s^2 < 2$.</strong> Buscamos $n \\in \\mathbb{N}$ tal que $q = s + \\tfrac1n \\in \\mathbb{Q}$ cumpla $q^2 < 2$. '
+    + 'En efecto, $\\left(s+\\tfrac1n\\right)^2 = s^2 + \\tfrac{2s}{n} + \\tfrac1{n^2} \\le s^2 + \\tfrac{2s+1}{n}$ (pues $\\tfrac1{n^2}\\le\\tfrac1n$). '
+    + 'Como $2 - s^2 > 0$, por Arquímedes existe $n$ con $\\tfrac{2s+1}{n} < 2 - s^2$, y entonces $q^2 < 2$, es decir $q \\in A$. '
+    + 'Pero $q > s$, contradiciendo que $s$ sea cota superior de $A$.</p>'
+    + '<p><strong>Caso $s^2 > 2$.</strong> Buscamos $n$ tal que $q = s - \\tfrac1n \\in \\mathbb{Q}$ cumpla $q^2 > 2$ (y $q>0$). '
+    + 'Ahora $\\left(s-\\tfrac1n\\right)^2 = s^2 - \\tfrac{2s}{n} + \\tfrac1{n^2} \\ge s^2 - \\tfrac{2s}{n}$. '
+    + 'Como $s^2 - 2 > 0$, por Arquímedes existe $n$ con $\\tfrac{2s}{n} < s^2 - 2$, y entonces $q^2 > 2$. '
+    + 'Tal $q$ es cota superior de $A$: si $r \\in A$ (es decir $r^2 < 2 < q^2$ con $r,q>0$) entonces $r < q$. '
+    + 'Pero $q < s$, contradiciendo que $s$ sea la <em>menor</em> cota superior.</p>'
+    + '<p>Ambos casos son absurdos, luego no existe tal $s \\in \\mathbb{Q}$: el conjunto $A$ no tiene supremo en $\\mathbb{Q}$. '
+    + 'En cambio, en $\\mathbb{R}$ el Axioma de Completitud garantiza que el supremo existe (y es $\\sqrt2$). $\\blacksquare$</p>'
   ));
 
   root.appendChild(el('h2', { text: 'Caracterización ε del supremo' }));

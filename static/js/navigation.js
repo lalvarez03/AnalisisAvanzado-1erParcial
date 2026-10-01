@@ -11,6 +11,56 @@ function updateActiveLink(page) {
   document.querySelectorAll('.nav-link').forEach((a) => {
     a.classList.toggle('active', a.dataset.page === page);
   });
+  // Abrir automáticamente el grupo que contiene la página activa.
+  const activeLink = document.querySelector('.nav-link.active');
+  if (activeLink) {
+    const group = activeLink.closest('.nav-group');
+    if (group) setGroupCollapsed(group, false);
+  }
+}
+
+// --- Grupos colapsables del nav ---
+const NAV_STATE_KEY = 'aa_nav_collapsed';
+
+function loadCollapsed() {
+  try { return new Set(JSON.parse(localStorage.getItem(NAV_STATE_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveCollapsed(set) {
+  try { localStorage.setItem(NAV_STATE_KEY, JSON.stringify([...set])); } catch { /* ignore */ }
+}
+
+function setGroupCollapsed(group, collapsed) {
+  group.classList.toggle('collapsed', collapsed);
+  const btn = group.querySelector('.nav-group-title');
+  if (btn) btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+}
+
+function initCollapsibleGroups() {
+  const collapsed = loadCollapsed();
+  const groups = [...document.querySelectorAll('.nav-group')];
+  groups.forEach((group, i) => {
+    const title = group.querySelector('.nav-group-title');
+    if (!title) return;
+    const key = title.textContent.trim() || ('g' + i);
+    group.dataset.groupKey = key;
+    // estado inicial según localStorage
+    setGroupCollapsed(group, collapsed.has(key));
+    // hacer el título interactivo
+    title.setAttribute('role', 'button');
+    title.setAttribute('tabindex', '0');
+    const toggle = () => {
+      const nowCollapsed = !group.classList.contains('collapsed');
+      setGroupCollapsed(group, nowCollapsed);
+      const s = loadCollapsed();
+      if (nowCollapsed) s.add(key); else s.delete(key);
+      saveCollapsed(s);
+    };
+    title.addEventListener('click', toggle);
+    title.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
 }
 
 function updateProgress() {
@@ -90,6 +140,8 @@ export function initNavigation(registry) {
 
   document.getElementById('menu-toggle')?.addEventListener('click', openSidebar);
   document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
+
+  initCollapsibleGroups();
 
   // Render inicial.
   render(currentHashPage());

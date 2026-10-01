@@ -34,16 +34,21 @@ export const RES_SUP_INF = [
           + '$\\inf A = \\inf \\overline{A}$. <strong>(a) es verdadera.</strong>',
       },
       {
-        idea: '(b) Contraejemplo',
-        detalle: 'Tomemos $A = (0,1) \\cup \\{2\\}$, que es acotado y no vacío. Su interior es $A^\\circ = (0,1)$ '
-          + '(el punto $2$ es aislado, no interior). Entonces $\\inf A = 0$ pero $\\inf A^\\circ = 0$ también... '
-          + 'ojo: para separar los ínfimos conviene $A = \\{-2\\} \\cup (0,1)$: ahí $\\inf A = -2$ mientras '
-          + '$A^\\circ = (0,1)$ y $\\inf A^\\circ = 0$.',
+        idea: '(b) Elección del contraejemplo',
+        detalle: 'Buscamos un conjunto cuyo ínfimo lo aporte un punto <em>aislado</em>, ya que el interior descarta '
+          + 'esos puntos. Tomamos $A = \\{-2\\} \\cup (0,1)$: es no vacío y acotado.',
+      },
+      {
+        idea: '(b) Cálculo de los ínfimos',
+        detalle: 'El menor elemento es $-2$, y es cota inferior de $A$; por lo tanto $\\inf A = \\min A = -2$. '
+          + 'Por otro lado, el punto $-2$ es aislado (la bola $B(-2, 1)$ no contiene otros puntos de $A$), '
+          + 'de modo que $-2 \\notin A^\\circ$; el interior es $A^\\circ = (0,1)$, cuyo ínfimo es $\\inf A^\\circ = 0$.',
       },
       {
         idea: '(b) Conclusión',
         detalle: 'Como $\\inf A = -2 \\ne 0 = \\inf A^\\circ$, la igualdad (b) <strong>no</strong> vale en general. '
-          + 'La razón: pasar al interior puede <em>tirar</em> puntos aislados que son los que dan el ínfimo.',
+          + 'La razón estructural: pasar al interior elimina los puntos aislados, y el ínfimo de $A$ podía estar '
+          + 'sostenido justamente por uno de ellos.',
       },
     ],
     conclusion: '$\\inf A = \\inf \\overline{A}$ siempre (la clausura no baja el ínfimo); '
@@ -187,8 +192,10 @@ export const RES_CARDINALIDAD = [
       },
       {
         idea: 'Descartar repetidos',
-        detalle: 'Ese recorrido da una sobreyección $\\mathbb{N} \\to \\bigcup_k A_k$. Salteando elementos ya vistos '
-          + 'obtenemos una biyección con un subconjunto de $\\mathbb{N}$: la unión es contable. $\\blacksquare$',
+        detalle: 'Ese recorrido da una sobreyección $g:\\mathbb{N} \\to \\bigcup_k A_k$. <strong>Lema:</strong> si hay una '
+          + 'sobreyección desde $\\mathbb{N}$ sobre un conjunto infinito $X$, entonces $X$ es numerable (se define '
+          + 'una biyección eligiendo, recursivamente, el menor índice cuyo valor no apareció aún). Aplicándolo a $g$, '
+          + 'la unión $\\bigcup_k A_k$ es numerable. $\\blacksquare$',
       },
     ],
     conclusion: 'La unión es numerable. La misma idea (grilla + diagonal) prueba que $\\mathbb{Q}$ es numerable.',

@@ -118,12 +118,43 @@ html, body {
 .nav { padding: 14px 10px; flex: 1; }
 .nav-group { margin-bottom: 18px; }
 .nav-group-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 11px;
   color: var(--text-dim);
-  padding: 4px 12px;
+  padding: 6px 12px;
   margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-group-title:hover { background: var(--panel); color: var(--text); }
+/* Caret que rota según el estado */
+.nav-group-title::before {
+  content: '▾';
+  font-size: 9px;
+  transition: transform 0.18s ease;
+  color: var(--accent);
+}
+.nav-group.collapsed .nav-group-title::before { transform: rotate(-90deg); }
+
+/* Links del grupo: animan al colapsar */
+.nav-group .nav-link {
+  overflow: hidden;
+  transition: max-height 0.2s ease, opacity 0.15s ease, padding 0.15s ease, margin 0.15s ease;
+  max-height: 40px;
+}
+.nav-group.collapsed .nav-link {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  pointer-events: none;
 }
 .nav-link {
   display: block;

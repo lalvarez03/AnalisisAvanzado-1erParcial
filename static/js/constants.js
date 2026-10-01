@@ -34,6 +34,7 @@ export const PAGE_ORDER = [
   'em-cauchy',
   'em-continuidad',
   'em-puntofijo',
+  'guia',
   'asistente',
   'quiz',
 ];
@@ -54,6 +55,7 @@ export const PAGE_TITLES = {
   'em-cauchy': 'Cauchy y completitud',
   'em-continuidad': 'Continuidad',
   'em-puntofijo': 'Teorema del punto fijo',
+  'guia': 'Guía resuelta',
   'asistente': 'Asistente de ejercicios',
   'quiz': 'Autoevaluación',
 };
