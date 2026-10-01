@@ -61,6 +61,12 @@ const SETS = {
     sup: 2, hasMax: false, inf: -2, hasMin: false,
     note: 'sup = 2 e inf = −2, ninguno alcanzado (ambos extremos abiertos). No hay ni máximo ni mínimo, aunque el conjunto no sea un intervalo.',
   },
+  q_incomplete: {
+    label: 'A = { r ∈ ℚ : r² < 2 }  (Incompletitud de ℚ)',
+    sample: () => [1, 1.4, 1.41, 1.414, 1.4142, 1.41421, 1.414213, 1.4142135],
+    sup: Math.SQRT2, hasMax: false, inf: -Math.SQRT2, hasMin: false,
+    note: 'El supremo en ℝ es √2 ≈ 1.4142..., pero √2 ∉ ℚ. Muestra que ℚ carece del Axioma de Completitud.',
+  },
 };
 
 export function renderSupInf(root) {
@@ -106,6 +112,15 @@ export function renderSupInf(root) {
     + 'Pero $q < s$, contradiciendo que $s$ sea la <em>menor</em> cota superior.</p>'
     + '<p>Ambos casos son absurdos, luego no existe tal $s \\in \\mathbb{Q}$: el conjunto $A$ no tiene supremo en $\\mathbb{Q}$. '
     + 'En cambio, en $\\mathbb{R}$ el Axioma de Completitud garantiza que el supremo existe (y es $\\sqrt2$). $\\blacksquare$</p>'
+  ));
+
+  
+  root.appendChild(callout('thm', 'Densidad de ℚ y ℝ \\ ℚ',
+    '• <strong>Densidad de ℚ:</strong> Para todo $x, y \\in \\mathbb{R}$ con $x < y$, existe $q \\in \\mathbb{Q}$ tal que $x < q < y$.<br>'
+    + '• <strong>Densidad de irracinoales:</strong> Existe $z \\in \\mathbb{R} \\setminus \\mathbb{Q}$ tal que $x < z < y$.<br>'
+    + '• <strong>Principio de Arquímedes:</strong> Dado $x > 0$ y $y \\in \\mathbb{R}$, existe $n \\in \\mathbb{N}$ tal que $n x > y$.',
+    '<p><span class="proof-step">Idea de Arquímedes en la Densidad:</span> Dado $y - x > 0$, por Arquímedes existe $n \\in \\mathbb{N}$ tal que $\\frac{1}{n} < y - x$. '
+    + 'Tomando $m = \\lfloor n x \\rfloor + 1$, se satisface $x < \\frac{m}{n} < y$, eligiendo el racional $q = \\frac{m}{n}$. $\\blacksquare$</p>'
   ));
 
   root.appendChild(el('h2', { text: 'Caracterización ε del supremo' }));
