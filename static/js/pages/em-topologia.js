@@ -51,7 +51,7 @@ export function renderTopologia(root) {
     <thead>
       <tr style="border-bottom: 2px solid var(--border); background: var(--bg-soft); text-align: left;">
         <th style="padding: 8px;">Conjunto $E$</th>
-        <th style="padding: 8px;">Interior $E^\circ$</th>
+        <th style="padding: 8px;">Interior $E^\\circ$</th>
         <th style="padding: 8px;">Clausura $\\overline{E}$</th>
         <th style="padding: 8px;">Derivado $E'$</th>
         <th style="padding: 8px;">Frontera $\\partial E$</th>
@@ -64,37 +64,42 @@ export function renderTopologia(root) {
         <td style="padding: 8px;">$(0, 1)$</td>
         <td style="padding: 8px;">$[0, 1]$</td>
         <td style="padding: 8px;">$[0, 1]$</td>
-        <td style="padding: 8px;">$\{0, 1\}$</td>
+        <td style="padding: 8px;">$\\{0, 1\\}$</td>
         <td style="padding: 8px; color: var(--warn);">Ni abierto ni cerrado</td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px; font-weight: bold;">$\mathbb{Q}$</td>
-        <td style="padding: 8px;">$\emptyset$</td>
-        <td style="padding: 8px;">$\mathbb{R}$</td>
-        <td style="padding: 8px;">$\mathbb{R}$</td>
-        <td style="padding: 8px;">$\mathbb{R}$</td>
+        <td style="padding: 8px; font-weight: bold;">$\\mathbb{Q}$</td>
+        <td style="padding: 8px;">$\\emptyset$</td>
+        <td style="padding: 8px;">$\\mathbb{R}$</td>
+        <td style="padding: 8px;">$\\mathbb{R}$</td>
+        <td style="padding: 8px;">$\\mathbb{R}$</td>
         <td style="padding: 8px; color: var(--warn);">Ni abierto ni cerrado</td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px; font-weight: bold;">$\mathbb{Z}$</td>
-        <td style="padding: 8px;">$\emptyset$</td>
-        <td style="padding: 8px;">$\mathbb{Z}$</td>
-        <td style="padding: 8px;">$\emptyset$</td>
-        <td style="padding: 8px;">$\mathbb{Z}$</td>
+        <td style="padding: 8px; font-weight: bold;">$\\mathbb{Z}$</td>
+        <td style="padding: 8px;">$\\emptyset$</td>
+        <td style="padding: 8px;">$\\mathbb{Z}$</td>
+        <td style="padding: 8px;">$\\emptyset$</td>
+        <td style="padding: 8px;">$\\mathbb{Z}$</td>
         <td style="padding: 8px; color: var(--ok);">Cerrado</td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px; font-weight: bold;">$(0, 1) \cup \{2\}$</td>
+        <td style="padding: 8px; font-weight: bold;">$(0, 1) \\cup \\{2\\}$</td>
         <td style="padding: 8px;">$(0, 1)$</td>
-        <td style="padding: 8px;">$[0, 1] \cup \{2\}$</td>
+        <td style="padding: 8px;">$[0, 1] \\cup \\{2\\}$</td>
         <td style="padding: 8px;">$[0, 1]$</td>
-        <td style="padding: 8px;">$\{0, 1, 2\}$</td>
+        <td style="padding: 8px;">$\\{0, 1, 2\\}$</td>
         <td style="padding: 8px; color: var(--warn);">Ni abierto ni cerrado</td>
       </tr>
     </tbody>
   `;
   tableWrap.appendChild(table);
   root.appendChild(tableWrap);
+
+  // NOTA: Si usas MathJax en tu proyecto, llama al re-renderizado aquí:
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([tableWrap]);
+  }
 
   // EXPLORADOR INTERACTIVO 2D
   root.appendChild(el('h2', { text: 'Explorador Interactivo en R²' }));
