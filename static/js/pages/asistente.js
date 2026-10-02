@@ -41,8 +41,8 @@ const TEMAS = [
           template:
             'Supongamos $i = \\inf(A)$. Entonces $i$ es cota {{0}} de $A$. '
             + 'Dado $\\varepsilon > 0$, el número $i + \\varepsilon$ {{1}} es cota inferior (sería mayor que el ínfimo), '
-            + 'así que existe $a \\in A$ con $a {{2}} i + \\varepsilon$. '
-            + 'Recíprocamente, si $i$ es cota inferior y para todo $\\varepsilon > 0$ hay $a \\lt i+\\varepsilon$, '
+            + 'así que existe $a \\in A$ con $a$ {{2}} $i + \\varepsilon$. '
+            + 'Recíprocamente, si $i$ es cota inferior y para todo $\\varepsilon > 0$ hay $a < i + \\varepsilon$, '
             + 'entonces ninguna cota inferior puede ser {{3}} que $i$, luego $i$ es la {{4}} cota inferior.',
           blanks: [
             { answer: 'inferior', options: ['inferior', 'superior'] },
@@ -112,10 +112,10 @@ const TEMAS = [
           title: 'Si |xₙ − ℓ| ≤ aₙ y aₙ → 0, entonces xₙ → ℓ',
           hint: 'Fijás ε, usás que aₙ → 0 para conseguir n₀, y encadenás la desigualdad.',
           template:
-            'Sea $\\varepsilon > 0$. Como $a_n \\to {{0}}$, existe $n_0$ tal que $a_n < \\varepsilon$ para todo $n \\ge n_0$. '
-            + 'Por hipótesis $|x_n - \\ell| {{1}} a_n$. Entonces, para $n \\ge n_0$: '
-            + '$|x_n - \\ell| \\le a_n {{2}} \\varepsilon$. '
-            + 'Como esto vale para todo $\\varepsilon > 0$, concluimos que $x_n \\to {{3}}$.',
+            'Sea $\\varepsilon > 0$. Como $a_n \\to$ {{0}}, existe $n_0$ tal que $a_n < \\varepsilon$ para todo $n \\ge n_0$. '
+            + 'Por hipótesis $|x_n - \\ell|$ {{1}} $a_n$. Entonces, para $n \\ge n_0$: '
+            + '$|x_n - \\ell| \\le a_n$ {{2}} $\\varepsilon$. '
+            + 'Como esto vale para todo $\\varepsilon > 0$, concluimos que $x_n \\to$ {{3}}.',
           blanks: [
             { answer: '0', options: ['0', '\\ell', '+\\infty'] },
             { answer: '\\le', options: ['\\le', '\\ge', '='] },
@@ -148,7 +148,7 @@ const TEMAS = [
             + 'Dado $\\varepsilon > 0$, por la caracterización del ínfimo existe $n_0$ con $x_{n_0} < \\ell + \\varepsilon$. '
             + 'Como $(x_n)$ es {{1}}, para $n \\ge n_0$ vale $x_n \\le x_{n_0} < \\ell + \\varepsilon$. '
             + 'Además $x_n \\ge \\ell$ por ser $\\ell$ cota {{2}}. '
-            + 'Entonces $|x_n - \\ell| < \\varepsilon$ para $n \\ge n_0$, o sea $x_n \\to {{3}}$.',
+            + 'Entonces $|x_n - \\ell| < \\varepsilon$ para $n \\ge n_0$, o sea $x_n \\to$ {{3}}.',
           blanks: [
             { answer: 'inferiormente', options: ['inferiormente', 'superiormente'] },
             { answer: 'decreciente', options: ['decreciente', 'creciente'] },
@@ -231,12 +231,12 @@ const TEMAS = [
             + '$\\chi_B: A \\to \\{0,1\\}$, con $\\chi_B(a) = 1$ si $a \\in B$. '
             + 'Esta correspondencia es una {{1}} entre $\\mathcal{P}(A)$ y $\\{0,1\\}^A$. '
             + 'Si $\\#A = n$, hay $2$ elecciones por cada uno de los $n$ elementos, es decir {{2}} funciones. '
-            + 'Por lo tanto $\\#\\mathcal{P}(A) = {{3}}$.',
+            + 'Por lo tanto $\\#\\mathcal{P}(A) =$ {{3}}.',
           blanks: [
             { answer: 'indicadora', options: ['indicadora', 'inversa', 'constante'] },
             { answer: 'biyección', options: ['biyección', 'inyección', 'sobreyección'] },
-            { answer: '2^n', options: ['2^n', 'n^2', '2n'] },
-            { answer: '2^n', options: ['2^n', 'n!', 'n^2'] },
+            { answer: '$2^n$', options: ['$2^n$', '$n^2$', '$2n$'] },
+            { answer: '$2^n$', options: ['$2^n$', '$n!$', '$n^2$'] },
           ],
         }),
       },
@@ -283,14 +283,14 @@ const TEMAS = [
           hint: 'Todo intervalo contiene racionales e irracionales (densidad).',
           template:
             'Cualquier bola $(q-r, q+r)$ alrededor de un racional contiene números {{0}}, '
-            + 'así que ningún punto de $\\mathbb{Q}$ es interior: $\\mathbb{Q}^\\circ = {{1}}$. '
+            + 'así que ningún punto de $\\mathbb{Q}$ es interior: $\\mathbb{Q}^\\circ =$ {{1}}. '
             + 'Por otro lado, todo real es límite de racionales (densidad), '
-            + 'de modo que toda bola corta a $\\mathbb{Q}$: la clausura es $\\overline{\\mathbb{Q}} = {{2}}$. '
+            + 'de modo que toda bola corta a $\\mathbb{Q}$: la clausura es $\\overline{\\mathbb{Q}} =$ {{2}}. '
             + 'En consecuencia $\\mathbb{Q}$ no es ni abierto ni {{3}}.',
           blanks: [
             { answer: 'irracionales', options: ['irracionales', 'enteros', 'naturales'] },
-            { answer: '\\varnothing', options: ['\\varnothing', '\\mathbb{Q}', '\\mathbb{R}'] },
-            { answer: '\\mathbb{R}', options: ['\\mathbb{R}', '\\mathbb{Q}', '\\varnothing'] },
+            { answer: '$\\varnothing$', options: ['$\\varnothing$', '$\\mathbb{Q}$', '$\\mathbb{R}$'] },
+            { answer: '$\\mathbb{R}$', options: ['$\\mathbb{R}$', '$\\mathbb{Q}$', '$\\varnothing$'] },
             { answer: 'cerrado', options: ['cerrado', 'acotado', 'compacto'] },
           ],
         }),
@@ -339,13 +339,13 @@ const TEMAS = [
           template:
             'Sea $(x_n) \\subseteq A$ una sucesión de {{0}}. Como es de Cauchy en $E$ y $E$ es {{1}}, '
             + 'converge a algún $x \\in E$. Ahora bien, $A$ es {{2}} y $(x_n) \\subseteq A$ con $x_n \\to x$, '
-            + 'de modo que el límite cumple $x \\in {{3}}$. Por lo tanto toda sucesión de Cauchy en $A$ '
+            + 'de modo que el límite cumple $x \\in$ {{3}}. Por lo tanto toda sucesión de Cauchy en $A$ '
             + 'converge dentro de $A$: $(A,d)$ es completo.',
           blanks: [
             { answer: 'Cauchy', options: ['Cauchy', 'monótona', 'acotada'] },
             { answer: 'completo', options: ['completo', 'compacto', 'abierto'] },
             { answer: 'cerrado', options: ['cerrado', 'abierto', 'denso'] },
-            { answer: 'A', options: ['A', 'E \\setminus A', '\\varnothing'] },
+            { answer: '$A$', options: ['$A$', '$E \\setminus A$', '$\\varnothing$'] },
           ],
         }),
       },
@@ -374,12 +374,12 @@ const TEMAS = [
             + 'se tiene $d(x_{n+1}, x_n) \\le k^n d(x_1, x_0)$, de donde la sucesión es de {{2}}. '
             + 'Por completitud converge a un $x^\\ast$, y como $T$ es continua, $T(x^\\ast) = x^\\ast$: es punto fijo. '
             + 'Si $x^\\ast, y^\\ast$ son ambos fijos, $d(x^\\ast,y^\\ast) = d(Tx^\\ast, Ty^\\ast) \\le k\\,d(x^\\ast,y^\\ast)$; '
-            + 'como $k<1$ esto obliga $d(x^\\ast,y^\\ast) = {{3}}$, es decir el punto fijo es único.',
+            + 'como $k<1$ esto obliga $d(x^\\ast,y^\\ast) =$ {{3}}, es decir el punto fijo es único.',
           blanks: [
             { answer: 'contracción', options: ['contracción', 'isometría', 'biyección'] },
             { answer: 'completo', options: ['completo', 'compacto', 'acotado'] },
             { answer: 'Cauchy', options: ['Cauchy', 'monótona', 'constante'] },
-            { answer: '0', options: ['0', '1', 'k'] },
+            { answer: '$0$', options: ['$0$', '$1$', '$k$'] },
           ],
         }),
       },
