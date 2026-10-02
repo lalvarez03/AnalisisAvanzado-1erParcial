@@ -358,76 +358,61 @@
       <div class="fase-head">
         <div class="fase-num">4</div>
         <div>
-          <h2 class="fase-title">Topología métrica — Espacios métricos</h2>
-          <p class="fase-sub">Distancia, abiertos/cerrados, compacidad y continuidad.</p>
+          <h2 class="fase-title">Topología Métrica — Clasificación y Relaciones</h2>
+          <p class="fase-sub">Operadores topológicos, identidades, caracterización secuencial y casos clásicos.</p>
         </div>
       </div>
       <div class="fase-body">
         <div class="defs-clave">
-          <h3>🔑 Definiciones clave</h3>
+          <h3>🔑 Definiciones Clave ($E \subseteq M$)</h3>
           <dl>
-            <div class="def-item"><dt>Métrica $(E,d)$</dt>
-              <dd>$d\ge0$ con: $d(x,y)=0\iff x=y$; $d(x,y)=d(y,x)$; $d(x,z)\le d(x,y)+d(y,z)$.</dd></div>
-            <div class="def-item"><dt>Distancia euclídea $d_2$</dt>
-              <dd>$d_2(x,y)=\left(\sum_{i=1}^n (x_i-y_i)^2\right)^{1/2}$.</dd></div>
-            <div class="def-item"><dt>Distancia taxicab $d_1$</dt>
-              <dd>$d_1(x,y)=\sum_{i=1}^n |x_i-y_i|$.</dd></div>
-            <div class="def-item"><dt>Distancia del máximo $d_\infty$</dt>
-              <dd>$d_\infty(x,y)=\max_{1\le i\le n} |x_i-y_i|$.</dd></div>
-            <div class="def-item"><dt>Métrica discreta</dt>
-              <dd>$\delta(x,y)=0$ si $x=y$, y $\delta(x,y)=1$ si $x\ne y$.</dd></div>
-            <div class="def-item"><dt>Bola abierta / cerrada</dt>
-              <dd>$B(x,r)=\{y:d(x,y)&lt;r\}$; $\ \overline{B}(x,r)=\{y:d(x,y)\le r\}$.</dd></div>
-            <div class="def-item"><dt>Entorno de $x$</dt>
-              <dd>Conjunto $V$ que contiene alguna bola $B(x,r)$ con $r&gt;0$.</dd></div>
-            <div class="def-item"><dt>Acotado / diámetro</dt>
-              <dd>$A$ acotado si cabe en una bola; $\operatorname{diam}(A)=\sup\{d(x,y):x,y\in A\}$.</dd></div>
-            <div class="def-item"><dt>Distancia punto–conjunto</dt>
-              <dd>$d(x,A)=\inf\{d(x,a):a\in A\}$.</dd></div>
-            <div class="def-item"><dt>Interior / clausura / frontera</dt>
-              <dd>$x\in A^\circ$: hay $B(x,r)\subseteq A$. $\ x\in\overline{A}$: toda $B(x,r)$ corta $A$. $\ \partial A=\overline{A}\setminus A^\circ$.</dd></div>
-            <div class="def-item"><dt>Abierto / cerrado</dt>
-              <dd>Abierto: $A=A^\circ$. Cerrado: $A=\overline{A}$ ($\iff A^c$ abierto).</dd></div>
-            <div class="def-item"><dt>Acumulación / aislado / denso</dt>
-              <dd>$x\in A'$: toda bola tiene un punto de $A$ distinto de $x$. Aislado: $B(x,r)\cap A=\{x\}$. Denso: $\overline{A}=E$.</dd></div>
-            <div class="def-item"><dt>Compacto</dt>
-              <dd>Todo cubrimiento abierto admite subcubrimiento finito.</dd></div>
-            <div class="def-item"><dt>Continuidad en $x_0$</dt>
-              <dd>$\forall\varepsilon&gt;0\ \exists\delta&gt;0:\ d(x,x_0)&lt;\delta\Rightarrow\rho(f(x),f(x_0))&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Punto Interior ($E^\circ$)</dt>
+              <dd>$\exists r > 0: B(x,r) \subseteq E$. $E^\circ$ es el mayor abierto en $E$.</dd></div>
+            <div class="def-item"><dt>Adherencia ($\overline{E}$)</dt>
+              <dd>$\forall r > 0: B(x,r) \cap E \neq \emptyset$. $\overline{E}$ es el menor cerrado que contiene a $E$.</dd></div>
+            <div class="def-item"><dt>Acumulación ($E'$)</dt>
+              <dd>$\forall r > 0: (B(x,r) \setminus \{x\}) \cap E \neq \emptyset$ (infinitos puntos).</dd></div>
+            <div class="def-item"><dt>Frontera ($\partial E$)</dt>
+              <dd>$\forall r > 0: B(x,r) \cap E \neq \emptyset$ y $B(x,r) \cap E^c \neq \emptyset$.</dd></div>
+            <div class="def-item"><dt>Punto Aislado</dt>
+              <dd>$x \in E \setminus E'$: existe $B(x,r) \cap E = \{x\}$.</dd></div>
+            <div class="def-item"><dt>Conjunto Denso</dt>
+              <dd>$\overline{E} = M$ (ej. $\mathbb{Q}$ es denso en $\mathbb{R}$).</dd></div>
           </dl>
         </div>
 
         <div class="m-cols">
           <div class="m-card">
-            <h2>Métricas en ℝⁿ</h2>
-            <div class="m-formula">$d_\infty\le d_2\le d_1\le n\,d_\infty$</div>
-            <p>$d_1,d_2,d_\infty$ son equivalentes: definen la misma topología.</p>
-            <p>Bolas: $B_1$ (rombo) $\subseteq B_2$ (círculo) $\subseteq B_\infty$ (cuadrado).</p>
+            <h2>Relaciones y Descomposiciones</h2>
+            <div class="m-formula">$E^\circ \subseteq E \subseteq \overline{E}$</div>
+            <div class="m-formula">$\overline{E} = E \cup E' = E \cup \partial E$</div>
+            <div class="m-formula">$\partial E = \overline{E} \cap \overline{E^c} = \overline{E} \setminus E^\circ$</div>
+            <p>• $A$ es abierto $\iff A = A^\circ$.</p>
+            <p>• $F$ es cerrado $\iff F = \overline{F} \iff E' \subseteq F$.</p>
           </div>
 
           <div class="m-card">
-            <h2>Identidades</h2>
-            <div class="m-formula">$(A^\circ)^c=\overline{A^c}$; $\ \overline{A}^{\,c}=(A^c)^\circ$</div>
-            <p>$(A\cap B)^\circ=A^\circ\cap B^\circ$; $\ \overline{A\cup B}=\overline{A}\cup\overline{B}$.</p>
-            <p>$\overline{A}=A\cup A'$; $\ A$ cerrado $\iff A'\subseteq A$.</p>
+            <h2>Caracterización Secuencial</h2>
+            <p><span class="m-tag thm">Clausura</span> $x \in \overline{E} \iff \exists (x_n) \subseteq E: x_n \to x$.</p>
+            <p><span class="m-tag thm">Derivado</span> $x \in E' \iff \exists (x_n) \subseteq E \setminus \{x\}$ distintas $\to x$.</p>
+            <p><span class="m-tag thm">Cerrado</span> $E$ es cerrado $\iff [(x_n) \subseteq E, x_n \to x \implies x \in E]$.</p>
           </div>
 
-          <div class="m-card">
-            <h2>Compacidad · Heine-Borel</h2>
-            <p><span class="m-tag thm">Heine-Borel</span>En $\mathbb{R}^n$: compacto $\iff$ cerrado y acotado.</p>
-            <ul>
-              <li>Compacto $\Rightarrow$ cerrado y acotado (siempre).</li>
-              <li>Cerrado en compacto es compacto.</li>
-              <li>Imagen continua de compacto es compacta.</li>
-            </ul>
-          </div>
-
-          <div class="m-card">
-            <h2>Continuidad</h2>
-            <p><span class="m-tag thm">≡</span>Sucesional: $x_n\to x_0\Rightarrow f(x_n)\to f(x_0)$.</p>
-            <p><span class="m-tag thm">≡</span>Topológica: preimagen de abierto es abierta.</p>
-            <p><strong>Homeomorfismo:</strong> biyección continua con inversa continua.</p>
-            <p><strong>Isometría:</strong> $\rho(f(x),f(y))=d(x,y)$.</p>
+          <div class="m-card" style="grid-column: span 2;">
+            <h2>Casos Clásicos en $(\mathbb{R}, |\cdot|)$</h2>
+            <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); text-align:left;">
+                  <th>$E$</th><th>$E^\circ$</th><th>$\overline{E}$</th><th>$E'$</th><th>$\partial E$</th><th>Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>$(0,1]$</td><td>$(0,1)$</td><td>$[0,1]$</td><td>$[0,1]$</td><td>$\{0,1\}$</td><td>Ni abierto ni cerrado</td></tr>
+                <tr><td>$\mathbb{Q}$</td><td>$\emptyset$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>Ni abierto ni cerrado</td></tr>
+                <tr><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>Cerrado</td></tr>
+                <tr><td>$(0,1) \cup \{2\}$</td><td>$(0,1)$</td><td>$[0,1] \cup \{2\}$</td><td>$[0,1]$</td><td>$\{0,1,2\}$</td><td>Ni abierto ni cerrado</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
