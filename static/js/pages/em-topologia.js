@@ -96,9 +96,9 @@ export function renderTopologia(root) {
   tableWrap.appendChild(table);
   root.appendChild(tableWrap);
 
-  // NOTA: Si usas MathJax en tu proyecto, llama al re-renderizado aquí:
+  // Forzar el renderizado de MathJax sobre el nuevo nodo insertado
   if (window.MathJax && window.MathJax.typesetPromise) {
-    window.MathJax.typesetPromise([tableWrap]);
+    window.MathJax.typesetPromise([tableWrap]).catch((err) => console.error(err));
   }
 
   // EXPLORADOR INTERACTIVO 2D
