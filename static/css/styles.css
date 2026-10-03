@@ -207,6 +207,52 @@ p { color: #d5ddf0; }
 
 a { color: var(--accent); }
 
+/* =========================================================
+   Estilizado personalizado de barras de scroll (Overflow)
+   ========================================================= */
+
+/* 1. Ancho y fondo general del scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+/* 2. Tirador (thumb) sutil y redondeado */
+::-webkit-scrollbar-thumb {
+  background: var(--panel-2);
+  border-radius: 4px;
+  border: 2px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
+}
+
+/* Soporte nativo para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-2) var(--bg);
+}
+
+/* =========================================================
+   Ajuste del Sidebar y Contenido Principal
+   ========================================================= */
+
+/* Espaciado interno para evitar que el scroll pegue con los bordes */
+.sidebar {
+  padding-right: 2px;
+}
+
+/* El contenido principal no debe centrarse con margen global si tapa el scroll */
+.content {
+  box-sizing: border-border-box;
+  padding: 34px 46px 90px;
+}
+
 /* ---------- Cards / callouts ---------- */
 .card {
   background: var(--panel);
