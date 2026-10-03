@@ -255,16 +255,101 @@
             <div class="def-item"><dt>Sucesión</dt>
               <dd>Función $a:\mathbb{N}\to\mathbb{R}$; se nota $(a_n)$.</dd></div>
             <div class="def-item"><dt>Límite (convergencia)</dt>
-              <dd>$a_n\to\ell$ si $\forall\varepsilon&gt;0\ \exists n_0\ \forall n\ge n_0:\ |a_n-\ell|&lt;\varepsilon$.</dd></div>
+              <dd>$a_n\to\ell$ si $\forall\varepsilon>0\ \exists n_0\ \forall n\ge n_0:\ |a_n-\ell|<\varepsilon$.</dd></div>
             <div class="def-item"><dt>Divergencia a $+\infty$</dt>
-              <dd>$\forall M&gt;0\ \exists n_0\ \forall n\ge n_0:\ a_n&gt;M$ (análogo a $-\infty$).</dd></div>
+              <dd>$\forall M>0\ \exists n_0\ \forall n\ge n_0:\ a_n>M$ (análogo a $-\infty$).</dd></div>
             <div class="def-item"><dt>Sucesión acotada</dt>
-              <dd>Existe $M&gt;0$ con $|a_n|\le M$ para todo $n$.</dd></div>
+              <dd>Existe $M>0$ con $|a_n|\le M$ para todo $n$.</dd></div>
             <div class="def-item"><dt>Monótona</dt>
               <dd>Creciente si $a_{n+1}\ge a_n\ \forall n$; decreciente si $a_{n+1}\le a_n\ \forall n$.</dd></div>
             <div class="def-item"><dt>Subsucesión</dt>
-              <dd>$(a_{n_k})_k$ con índices $n_1&lt;n_2&lt;\cdots$ estrictamente crecientes.</dd></div>
+              <dd>$(a_{n_k})_k$ con índices $n_1<n_2<\cdots$ estrictamente crecientes.</dd></div>
           </dl>
+        </div>
+
+        <!-- TABLAS DE NOTACIÓN -->
+        <div class="m-card" style="margin-bottom: 20px;">
+          <h2>Notación Sucesiones vs. Conjuntos</h2>
+          <div style="overflow-x: auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); color:var(--cyan);">
+                  <th style="padding:6px;">Notación</th>
+                  <th style="padding:6px;">Nombre Formal</th>
+                  <th style="padding:6px;">¿Qué es realmente?</th>
+                  <th style="padding:6px;">Ejemplo práctico ($a_n = \frac{1}{n}$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$a_n$</td>
+                  <td style="padding:6px;"><strong>Término $n$-ésimo</strong></td>
+                  <td style="padding:6px;">Un único número real (el valor en posición $n$).</td>
+                  <td style="padding:6px;">$a_3 = \frac{1}{3}$</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$(a_n)$ o $(a_n)_{n \in \mathbb{N}}$</td>
+                  <td style="padding:6px;"><strong>Sucesión</strong></td>
+                  <td style="padding:6px;">La función / lista ordenada infinita completa.</td>
+                  <td style="padding:6px;">$(1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots)$</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px;">$\{a_n\}$ o $\{a_n : n \in \mathbb{N}\}$</td>
+                  <td style="padding:6px;"><strong>Conjunto imagen</strong></td>
+                  <td style="padding:6px;">La colección de valores (sin orden ni repeticiones).</td>
+                  <td style="padding:6px;">$\{1, \frac{1}{2}, \frac{1}{3}, \dots\} \subset \mathbb{R}$<br><small style="color:var(--text-dim);">($\sup=1$, $\inf=0$)</small></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="m-card" style="margin-bottom: 20px;">
+          <h2>Notación Subsucesiones</h2>
+          <div style="overflow-x: auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); color:var(--cyan);">
+                  <th style="padding:6px;">Notación</th>
+                  <th style="padding:6px;">Nombre Formal</th>
+                  <th style="padding:6px;">¿Qué representa?</th>
+                  <th style="padding:6px;">Ejemplo ($a_n = \frac{1}{n}$, $n_k = 2k$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$k$</td>
+                  <td style="padding:6px;"><strong>Índice de subsucesión</strong></td>
+                  <td style="padding:6px;">Contador de pasos ($1, 2, 3, \dots$).</td>
+                  <td style="padding:6px;">Para $k=3$, seleccionamos el 3.º elemento.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$n_k$</td>
+                  <td style="padding:6px;"><strong>Índice seleccionado</strong></td>
+                  <td style="padding:6px;">Posición original elegida en el paso $k$.</td>
+                  <td style="padding:6px;">$n_3 = 2(3) = 6$ (posición 6 original).</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$a_{n_k}$</td>
+                  <td style="padding:6px;"><strong>Término $k$-ésimo</strong></td>
+                  <td style="padding:6px;">Un único número real extraído.</td>
+                  <td style="padding:6px;">$a_{n_3} = a_6 = \frac{1}{6}$</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$(a_{n_k})_{k \in \mathbb{N}}$</td>
+                  <td style="padding:6px;"><strong>Subsucesión completa</strong></td>
+                  <td style="padding:6px;">La nueva lista ordenada infinita.</td>
+                  <td style="padding:6px;">$(a_2, a_4, a_6, \dots) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{6}, \dots)$</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px;">$\{a_{n_k} : k \in \mathbb{N}\}$</td>
+                  <td style="padding:6px;"><strong>Conjunto de términos</strong></td>
+                  <td style="padding:6px;">El conjunto de valores alcanzados.</td>
+                  <td style="padding:6px;">$\{\frac{1}{2}, \frac{1}{4}, \frac{1}{6}, \dots\} \subset \mathbb{R}$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div class="m-cols">

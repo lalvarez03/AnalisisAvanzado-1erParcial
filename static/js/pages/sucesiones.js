@@ -47,6 +47,101 @@ export function renderSucesiones(root) {
     + '$n_1 < n_2 < n_3 < \\cdots$ (estrictamente crecientes).'
   ));
 
+  root.appendChild(el('p', { 
+    style: 'margin-top: 16px;', 
+    html: '<strong>Notación Sucesiones</strong>' 
+  }));
+
+  // Tabla 1: Notación General
+  const tblNotacionGen = el('table', { class: 'tbl' });
+  tblNotacionGen.innerHTML = `
+    <thead>
+      <tr>
+        <th>Notación</th>
+        <th>Nombre Formal</th>
+        <th>¿Qué es realmente?</th>
+        <th>Ejemplo ($a_n = \\frac{1}{n}$)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>$a_n$</td>
+        <td><strong>Término $n$-ésimo</strong></td>
+        <td>Un único número real (valor en posición $n$).</td>
+        <td>$a_3 = \\frac{1}{3}$</td>
+      </tr>
+      <tr>
+        <td>$(a_n)_{n \\in \\mathbb{N}}$</td>
+        <td><strong>Sucesión</strong></td>
+        <td>La función / lista ordenada infinita completa.</td>
+        <td>$(1, \\frac{1}{2}, \\frac{1}{3}, \\frac{1}{4}, \\dots)$</td>
+      </tr>
+      <tr>
+        <td>$\\{a_n : n \\in \\mathbb{N}\\}$</td>
+        <td><strong>Conjunto imagen</strong></td>
+        <td>Colección de valores (sin orden ni repeticiones).</td>
+        <td>$\\{1, \\frac{1}{2}, \\frac{1}{3}, \\dots\\} \\subset \\mathbb{R}$<br><small style="color:var(--text-dim);">($\\sup=1$, $\\inf=0$)</small></td>
+      </tr>
+    </tbody>
+  `;
+  root.appendChild(tblNotacionGen);
+
+  root.appendChild(el('p', { 
+    style: 'margin-top: 16px;', 
+    html: '<strong>Notación Subsucesiones</strong>' 
+  }));
+
+  // Tabla 2: Subsucesiones
+  const tblNotacionSub = el('table', { class: 'tbl' });
+  tblNotacionSub.innerHTML = `
+    <thead>
+      <tr>
+        <th>Notación</th>
+        <th>Nombre Formal</th>
+        <th>¿Qué representa?</th>
+        <th>Ejemplo ($a_n = \\frac{1}{n}$, $n_k = 2k$)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>$k$</td>
+        <td><strong>Índice subsucesión</strong></td>
+        <td>Contador de pasos ($1, 2, 3, \\dots$).</td>
+        <td>Para $k=3$, elegimos el 3.º elemento.</td>
+      </tr>
+      <tr>
+        <td>$n_k$</td>
+        <td><strong>Índice seleccionado</strong></td>
+        <td>Posición original elegida en paso $k$.</td>
+        <td>$n_3 = 2(3) = 6$ (posición 6 original).</td>
+      </tr>
+      <tr>
+        <td>$a_{n_k}$</td>
+        <td><strong>Término $k$-ésimo</strong></td>
+        <td>Un único número real extraído.</td>
+        <td>$a_{n_3} = a_6 = \\frac{1}{6}$</td>
+      </tr>
+      <tr>
+        <td>$(a_{n_k})_{k \\in \\mathbb{N}}$</td>
+        <td><strong>Subsucesión</strong></td>
+        <td>La nueva lista ordenada infinita.</td>
+        <td>$(a_2, a_4, a_6, \\dots) = (\\frac{1}{2}, \\frac{1}{4}, \\frac{1}{6}, \\dots)$</td>
+      </tr>
+      <tr>
+        <td>$\\{a_{n_k} : k \\in \\mathbb{N}\\}$</td>
+        <td><strong>Conjunto término</strong></td>
+        <td>El conjunto de valores alcanzados.</td>
+        <td>$\\{\\frac{1}{2}, \\frac{1}{4}, \\frac{1}{6}, \\dots\\} \\subset \\mathbb{R}$</td>
+      </tr>
+    </tbody>
+  `;
+  root.appendChild(tblNotacionSub);
+
+  // Re-renderizado de MathJax para las tablas creadas
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([tblNotacionGen, tblNotacionSub]);
+  }
+
   root.appendChild(el('h2', { text: 'El juego ε–n₀' }));
   root.appendChild(el('p', { html:
     'Elegí una sucesión y una tolerancia $\\varepsilon$. La app calcula el <strong>mínimo $n_0$</strong> a partir '
