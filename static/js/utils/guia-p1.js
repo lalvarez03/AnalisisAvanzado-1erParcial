@@ -93,12 +93,13 @@ export const GUIA_P1 = [
     conclusion: 'La caracterización $\\varepsilon$ es la forma operativa de la minimalidad: “corriéndose a la derecha de $i$ cualquier distancia $\\varepsilon$, siempre aparece un elemento de $A$”. Sólo se usó la definición de ínfimo.',
   },
   {
-    fuente: 'Práctica 1 · Ej. 4', enunciado: E(4),
+    fuente: 'Práctica 1 · Ej. 4',
+    enunciado: E(4),
     idea: 'Para cada conjunto se exhibe el candidato a sup/inf y se verifican las dos condiciones de la definición (cota + minimalidad/maximalidad); luego se decide máximo/mínimo según pertenezca o no.',
     pasos: [
       {
         idea: '(a) $A = (a,b]$',
-        detalle: '<p><strong>$\\sup A = b$.</strong> $b$ es cota superior ($x \\le b$ para todo $x \\in (a,b]$). Y es la menor: si $t < b$, tomando $x = \\max(t, \\tfrac{a+b}{2})$... más directo: dado $t<b$, el punto medio entre $\\max(t,a)$ y $b$ pertenece a $(a,b]$ y supera a $t$, luego $t$ no es cota superior. Como $b \\in (a,b]$, es $\\max A = b$.</p>'
+        detalle: '<p><strong>$\\sup A = b$.</strong> $b$ es cota superior ($x \\le b$ para todo $x \\in (a,b]$). Y es la menor: si $t < b$, tomando $x = \\max(t, \\tfrac{a+b}{2})$... más directo: dado $t < b$, el punto medio entre $\\max(t,a)$ y $b$ pertenece a $(a,b]$ y supera a $t$, luego $t$ no es cota superior. Como $b \\in (a,b]$, es $\\max A = b$.</p>'
           + '<p><strong>$\\inf A = a$.</strong> $a$ es cota inferior. Dado $\\varepsilon>0$, el punto $a + \\min(\\varepsilon, b-a)/2 \\in (a,b]$ es $< a+\\varepsilon$, así que por la caracterización $\\varepsilon$ (Ej. 3) $a=\\inf A$. Como $a \\notin (a,b]$, <em>no hay mínimo</em>.</p>',
       },
       {
