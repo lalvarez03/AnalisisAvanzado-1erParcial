@@ -27,27 +27,31 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;           /* Cambiar a 100vh justo el alto de la pantalla */
+  overflow: hidden;        /* Evitar scroll global en body */
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;  /* Topbar arriba, layout abajo */
 }
 
 /* ---------- Topbar ---------- */
 .topbar {
   height: 60px;
+  flex-shrink: 0;          /* Asegura que no se reduzca de tamaño */
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 0 18px;
   background: linear-gradient(90deg, #141b2c, #1a2236);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
+  position: relative;      /* Ya no necesita ser sticky porque el body no scrollea */
   z-index: 50;
 }
+
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-logo {
   font-size: 26px;
@@ -101,20 +105,26 @@ html, body {
 }
 
 /* ---------- Layout ---------- */
-.layout { display: flex; min-height: calc(100vh - 60px); }
+.layout { 
+  display: flex; 
+  flex: 1;                 /* Ocupa todo el alto restante debajo de la topbar */
+  overflow: hidden;        /* Mantiene ordenados sidebar y content */
+}
 
+/* ---------- Sidebar ---------- */
 .sidebar {
   width: 280px;
   flex-shrink: 0;
   background: var(--bg-soft);
   border-right: 1px solid var(--border);
-  overflow-y: auto;
-  height: calc(100vh - 60px);
-  position: sticky;
-  top: 60px;
+  overflow-y: auto;        /* Mantiene su propio scroll independiente */
+  height: 100%;            /* Ocupa el 100% del layout */
+  position: relative;      /* Quitar sticky */
+  top: 0;
   display: flex;
   flex-direction: column;
 }
+
 .nav { padding: 14px 10px; flex: 1; }
 .nav-group { margin-bottom: 18px; }
 .nav-group-title {
@@ -182,6 +192,8 @@ html, body {
   max-width: 980px;
   margin: 0 auto;
   width: 100%;
+  overflow-y: auto;        /* <--- AQUÍ va el scroll del contenido principal */
+  height: 100%;
   animation: fade 0.35s ease;
 }
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
