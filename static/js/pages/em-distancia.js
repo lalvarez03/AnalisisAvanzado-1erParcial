@@ -48,6 +48,15 @@ export function renderDistancia(root) {
     + 'La forma de la bola depende de la métrica (ver abajo).'
   ));
 
+  root.appendChild(callout('thm', 'El Espacio Métrico C([0,1])',
+    'El conjunto $C([0,1])$ de funciones continuas $f:[0,1] \\to \\mathbb{R}$ es un espacio métrico clave en análisis.<br><br>'
+    + '• <strong>Métrica del máximo (uniforme):</strong> $d_\\infty(f,g) = \\max_{t \\in [0,1]} |f(t) - g(t)|$. '
+    + 'El máximo existe por el <em>Teorema de Weierstrass</em> (función continua en conjunto compacto). La convergencia en $d_\\infty$ equivale a la <strong>convergencia uniforme</strong>.<br>'
+    + '• <strong>Métrica $L^1$:</strong> $d_1(f,g) = \\int_0^1 |f(t) - g(t)|\\, dt$ (mide el área entre las curvas).<br>'
+    + '• <strong>Métrica $L^2$:</strong> $d_2(f,g) = \\sqrt{\\int_0^1 |f(t) - g(t)|^2\\, dt}$.<br><br>'
+    + '<em>Diferencia clave con $\\mathbb{R}^n$:</em> En $C([0,1])$, estas métricas <strong>no son equivalentes</strong> y generan topologías distintas.'
+  ));
+  
   root.appendChild(el('h2', { text: 'La forma de la bola B(0, r)' }));
   root.appendChild(el('p', { html:
     'Elegí la métrica y el radio. El área coloreada es $\\{y : d(0,y) < r\\}$. '

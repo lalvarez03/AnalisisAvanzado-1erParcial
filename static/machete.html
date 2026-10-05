@@ -466,6 +466,8 @@
         </div>
       </div>
       <div class="fase-body">
+        
+        <!-- DEFINICIONES CLAVE (ANCHO COMPLETO ARRIBA) -->
         <div class="defs-clave">
           <h3>🔑 Definiciones Clave ($E \subseteq M$)</h3>
           <dl>
@@ -484,40 +486,75 @@
           </dl>
         </div>
 
-        <div class="m-cols">
-          <div class="m-card">
-            <h2>Relaciones y Descomposiciones</h2>
-            <div class="m-formula">$E^\circ \subseteq E \subseteq \overline{E}$</div>
-            <div class="m-formula">$\overline{E} = E \cup E' = E \cup \partial E$</div>
-            <div class="m-formula">$\partial E = \overline{E} \cap \overline{E^c} = \overline{E} \setminus E^\circ$</div>
-            <p>• $A$ es abierto $\iff A = A^\circ$.</p>
-            <p>• $F$ es cerrado $\iff F = \overline{F} \iff E' \subseteq F$.</p>
+        <!-- LAYOUT 2 COLUMNAS (IZQUIERDA: RELACIONES + SECUENCIAL | DERECHA: MÉTRICAS) -->
+        <div class="fase-grid-2col">
+          
+          <!-- COLUMNA IZQUIERDA -->
+          <div class="col-left">
+            <div class="m-card">
+              <h2>RELACIONES Y DESCOMPOSICIONES</h2>
+              <div class="m-formula">$E^\circ \subseteq E \subseteq \overline{E}$</div>
+              <div class="m-formula">$\overline{E} = E \cup E' = E \cup \partial E$</div>
+              <div class="m-formula">$\partial E = \overline{E} \cap \overline{E^c} = \overline{E} \setminus E^\circ$</div>
+              <ul>
+                <li>$A \text{ es abierto} \iff A = A^\circ$</li>
+                <li>$F \text{ es cerrado} \iff F = \overline{F} \iff F' \subseteq F$</li>
+              </ul>
+            </div>
+
+            <div class="m-card">
+              <h2>CARACTERIZACIÓN SECUENCIAL</h2>
+              <p><span class="m-tag def">CLAUSURA</span> $x \in \overline{E} \iff \exists (x_n) \subseteq E : x_n \to x$.</p>
+              <p><span class="m-tag def">DERIVADO</span> $x \in E' \iff \exists (x_n) \subseteq E \setminus \{x\} \text{ distintas} \to x$.</p>
+              <p><span class="m-tag def">CERRADO</span> $E \text{ es cerrado} \iff [(x_n) \subseteq E, x_n \to x \implies x \in E]$.</p>
+            </div>
           </div>
 
-          <div class="m-card">
-            <h2>Caracterización Secuencial</h2>
-            <p><span class="m-tag thm">Clausura</span> $x \in \overline{E} \iff \exists (x_n) \subseteq E: x_n \to x$.</p>
-            <p><span class="m-tag thm">Derivado</span> $x \in E' \iff \exists (x_n) \subseteq E \setminus \{x\}$ distintas $\to x$.</p>
-            <p><span class="m-tag thm">Cerrado</span> $E$ es cerrado $\iff [(x_n) \subseteq E, x_n \to x \implies x \in E]$.</p>
+          <!-- COLUMNA DERECHA -->
+          <div class="col-right">
+            <div class="m-card height-fill">
+              <h2>LAS MÉTRICAS $d_1$, $d_2$ Y $d_\infty$ EN $\mathbb{R}^n$ Y EN $C([0,1])$</h2>
+              
+              <h3>1. En $\mathbb{R}^n$ (para $x, y \in \mathbb{R}^n$)</h3>
+              <ul>
+                <li><strong>Euclídea ($d_2$):</strong> $\displaystyle d_2(x,y) = (\sum_{i=1}^n (x_i - y_i)^2)^{1/2}$</li>
+                <li><strong>Taxicab / Manhattan ($d_1$):</strong> $\displaystyle d_1(x,y) = \sum_{i=1}^n |x_i - y_i|$</li>
+                <li><strong>Del Máximo / Supremo ($d_\infty$):</strong> $\displaystyle d_\infty(x,y) = \max_{1 \le i \le n} |x_i - y_i|$</li>
+              </ul>
+
+              <h3>2. En el Espacio de Funciones Continuas $C([0,1])$</h3>
+              <p>Dado el conjunto $C([0,1]) = \{f:[0,1] \to \mathbb{R} \mid f \text{ es continua}\}$, se definen las analogías continuas:</p>
+              <ul>
+                <li><strong>Métrica de la norma $L^1$ ($d_1$):</strong> $\displaystyle d_1(f,g) = \int_0^1 |f(t) - g(t)|\, dt$</li>
+                <li><strong>Métrica de la norma $L^2$ ($d_2$):</strong> $\displaystyle d_2(f,g) = \left(\int_0^1 |f(t) - g(t)|^2\, dt\right)^{1/2}$</li>
+                <li><strong>Métrica de la Convergencia Uniforme ($d_\infty$):</strong> $\displaystyle d_\infty(f,g) = \max_{t \in [0,1]} |f(t) - g(t)|$</li>
+              </ul>
+              <p style="font-size:12.5px; color:var(--text-dim); margin-top:10px;">
+                <em>Nota:</em> En $d_\infty(f,g)$, el máximo siempre existe por el <strong>Teorema de Weierstrass</strong>, ya que $|f - g|$ es continua sobre el compacto $[0,1]$. Cumple la desigualdad triangular pues $|f(t)-h(t)| \le |f(t)-g(t)| + |g(t)-h(t)| \le d_\infty(f,g) + d_\infty(g,h)$ para todo $t$.
+              </p>
+            </div>
           </div>
 
-          <div class="m-card" style="grid-column: span 2;">
-            <h2>Casos Clásicos en $(\mathbb{R}, |\cdot|)$</h2>
-            <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
-              <thead>
-                <tr style="border-bottom:1px solid var(--border); text-align:left;">
-                  <th>$E$</th><th>$E^\circ$</th><th>$\overline{E}$</th><th>$E'$</th><th>$\partial E$</th><th>Tipo</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>$(0,1]$</td><td>$(0,1)$</td><td>$[0,1]$</td><td>$[0,1]$</td><td>$\{0,1\}$</td><td>Ni abierto ni cerrado</td></tr>
-                <tr><td>$\mathbb{Q}$</td><td>$\emptyset$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>Ni abierto ni cerrado</td></tr>
-                <tr><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>Cerrado</td></tr>
-                <tr><td>$(0,1) \cup \{2\}$</td><td>$(0,1)$</td><td>$[0,1] \cup \{2\}$</td><td>$[0,1]$</td><td>$\{0,1,2\}$</td><td>Ni abierto ni cerrado</td></tr>
-              </tbody>
-            </table>
-          </div>
         </div>
+
+        <!-- CASOS CLÁSICOS (ANCHO COMPLETO ABAJO) -->
+        <div class="m-card" style="margin-top: 16px;">
+          <h2>Casos Clásicos en $(\mathbb{R}, |\cdot|)$</h2>
+          <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border); text-align:left;">
+                <th>$E$</th><th>$E^\circ$</th><th>$\overline{E}$</th><th>$E'$</th><th>$\partial E$</th><th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$(0,1]$</td><td>$(0,1)$</td><td>$[0,1]$</td><td>$[0,1]$</td><td>$\{0,1\}$</td><td>Ni abierto ni cerrado</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$\mathbb{Q}$</td><td>$\emptyset$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>Ni abierto ni cerrado</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>Cerrado</td></tr>
+              <tr><td>$(0,1) \cup \{2\}$</td><td>$(0,1)$</td><td>$[0,1] \cup \{2\}$</td><td>$[0,1]$</td><td>$\{0,1,2\}$</td><td>Ni abierto ni cerrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
 

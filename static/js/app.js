@@ -20,6 +20,7 @@ import { renderPuntoFijo } from './pages/em-puntofijo.js';
 import { renderGuia } from './pages/guia.js';
 import { renderAsistente } from './pages/asistente.js';
 import { renderQuiz } from './pages/quiz.js';
+import { initPomodoro } from './pomodoro.js';
 
 const registry = {
   'inicio': renderInicio,
@@ -43,3 +44,4 @@ const registry = {
 };
 
 initNavigation(registry);
+initPomodoro();

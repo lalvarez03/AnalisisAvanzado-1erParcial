@@ -677,3 +677,77 @@ mjx-container[jax="SVG"] > svg { max-width: 100%; height: auto; }
   color: #d5ddf0;
   animation: fade 0.25s ease;
 }
+
+/* -----------------------------------------*/
+/* ---------------- Machete --------------- */
+/* -----------------------------------------*/
+.fase-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Divide la pantalla en 2 partes iguales */
+  gap: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* Columna izquierda apila sus tarjetas verticalmente */
+.col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Hace que la tarjeta derecha ocupe toda la altura disponible para alinearse bien */
+.height-fill {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Responsividad para pantallas pequeñas/móviles */
+@media (max-width: 900px) {
+  .fase-grid-2col {
+    grid-template-columns: 1fr; /* Pasa a 1 sola columna en dispositivos móviles */
+  }
+}
+
+/* -------------------------------------------*/
+/* ---------------- Pomodoro ---------------- */
+/* -------------------------------------------*/
+.pomodoro-widget {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel, #1e293b);
+  border: 1px solid var(--border, #334155);
+  padding: 4px 10px;
+  border-radius: 8px;
+  margin-left: auto; /* Empuja el widget y el botón machete a la derecha */
+}
+
+.pomodoro-display {
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cyan, #38d9d9);
+  min-width: 48px;
+  text-align: center;
+}
+
+.pomo-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim, #94a3b8);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.pomo-btn:hover {
+  color: var(--text, #f8fafc);
+  background: rgba(255, 255, 255, 0.1);
+}
