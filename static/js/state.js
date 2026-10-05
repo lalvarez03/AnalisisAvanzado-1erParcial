@@ -18,16 +18,17 @@ function loadVisited() {
 export function loadPomodoroState() {
   try {
     const raw = localStorage.getItem(POMODORO_KEY);
-    if (!raw) return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0 };
+    if (!raw) return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work' };
     
     const data = JSON.parse(raw);
     return {
       timeLeft: typeof data.timeLeft === 'number' ? data.timeLeft : DEFAULT_POMO_TIME,
       isRunning: false,
-      completedCount: typeof data.completedCount === 'number' ? data.completedCount : 0
+      completedCount: typeof data.completedCount === 'number' ? data.completedCount : 0,
+      mode: data.mode === 'break' ? 'break' : 'work'
     };
   } catch {
-    return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0 };
+    return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work' };
   }
 }
 
@@ -36,7 +37,8 @@ export function savePomodoroState(pomoState) {
     localStorage.setItem(POMODORO_KEY, JSON.stringify({
       timeLeft: pomoState.timeLeft,
       isRunning: pomoState.isRunning,
-      completedCount: pomoState.completedCount
+      completedCount: pomoState.completedCount,
+      mode: pomoState.mode
     }));
   } catch { /* ignorar errores */ }
 }

@@ -727,6 +727,7 @@ mjx-container[jax="SVG"] > svg { max-width: 100%; height: auto; }
   margin-left: auto; /* Empuja el widget y el botón machete a la derecha */
 }
 
+/* Color cian por defecto */
 .pomodoro-display {
   font-family: monospace;
   font-size: 14px;
@@ -734,6 +735,12 @@ mjx-container[jax="SVG"] > svg { max-width: 100%; height: auto; }
   color: var(--cyan, #38d9d9);
   min-width: 48px;
   text-align: center;
+  transition: color 0.3s ease;
+}
+
+/* Color verde para el modo descanso */
+.pomodoro-display.is-break {
+  color: var(--ok, #35c98a);
 }
 
 .pomo-btn {

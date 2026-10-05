@@ -3,26 +3,40 @@ import { getState, savePomodoroState } from './state.js';
 
 let timerInterval = null;
 
-function playAlarmSound() {
+// Alarma sonora continua de ~2 segundos con la Web Audio API
+function play2SecondAlarm() {
   try {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const beepCount = 3;
+    const startTime = audioCtx.currentTime;
+    
+    // Configuración para 3 segundos de duración total
+    const totalDuration = 3.0; 
+    const pulseDuration = 0.1; // Pitidos más cortos y rápidos
+    const pulseGap = 0.05;      // Espacio entre pitidos
+    
+    // Calculamos la cantidad de ráfagas en 3 segundos (~11 pitidos)
+    const totalPulses = Math.floor(totalDuration / (pulseDuration + pulseGap));
 
-    for (let i = 0; i < beepCount; i++) {
+    for (let i = 0; i < totalPulses; i++) {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
+      // Frecuencia más alta: alterna entre 1200 Hz y 1600 Hz (frecuencia aguda tipo reloj digital)
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, audioCtx.currentTime + i * 0.4);
+      osc.frequency.setValueAtTime(i % 2 === 0 ? 1200 : 1600, startTime + i * (pulseDuration + pulseGap));
 
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime + i * 0.4);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + i * 0.4 + 0.25);
+      const pulseStart = startTime + i * (pulseDuration + pulseGap);
+      
+      // Envolvente de volumen rápida
+      gain.gain.setValueAtTime(0, pulseStart);
+      gain.gain.linearRampToValueAtTime(0.4, pulseStart + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, pulseStart + pulseDuration);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      osc.start(audioCtx.currentTime + i * 0.4);
-      osc.stop(audioCtx.currentTime + i * 0.4 + 0.25);
+      osc.start(pulseStart);
+      osc.stop(pulseStart + pulseDuration);
     }
   } catch (e) {
     console.warn('No se pudo reproducir el sonido de alarma:', e);
@@ -40,6 +54,7 @@ export function initPomodoro() {
 
   const state = getState().pomodoro;
 
+  // Asegurar que no inicie solo al cargar la app
   state.isRunning = false;
   savePomodoroState(state);
 
@@ -53,6 +68,17 @@ export function initPomodoro() {
     display.textContent = formatTime(state.timeLeft);
     startBtn.textContent = state.isRunning ? '⏸' : '▶';
     countDisplay.textContent = `${state.completedCount} 🍅`;
+
+    // Cambiar estetica según el modo (Trabajo vs Descanso)
+    if (state.mode === 'break') {
+      display.classList.add('is-break');
+      resetBtn.textContent = '⏭️';
+      resetBtn.title = 'Saltear descanso';
+    } else {
+      display.classList.remove('is-break');
+      resetBtn.textContent = '↺';
+      resetBtn.title = 'Reiniciar temporizador';
+    }
   }
 
   function startTimer() {
@@ -68,20 +94,28 @@ export function initPomodoro() {
         updateUI();
       } else {
         clearInterval(timerInterval);
-        state.isRunning = false;
-        
-        // Sumar pomodoro completado y reiniciar tiempo a 25 min
-        state.completedCount++;
-        state.timeLeft = 25 * 60;
-        
-        savePomodoroState(state);
-        updateUI();
-        
-        playAlarmSound();
-        
-        setTimeout(() => {
-          alert('⏰ ¡Tiempo de Pomodoro finalizado!');
-        }, 100);
+        play2SecondAlarm();
+
+        if (state.mode === 'work') {
+          // Finalizó Pomodoro de trabajo -> Pasar a Descanso (5 min)
+          state.completedCount++;
+          state.mode = 'break';
+          state.timeLeft = 5 * 60;
+          savePomodoroState(state);
+          updateUI();
+
+          // Iniciar descanso automáticamente
+          startTimer();
+        } else {
+          // Finalizó Descanso -> Arrancar automáticamente nuevo Pomodoro de trabajo (25 min)
+          state.mode = 'work';
+          state.timeLeft = 25 * 60;
+          savePomodoroState(state);
+          updateUI();
+
+          // Iniciar pomodoro automáticamente
+          startTimer();
+        }
       }
     }, 1000);
   }
@@ -93,10 +127,19 @@ export function initPomodoro() {
     updateUI();
   }
 
-  function resetTimer() {
+  function handleResetOrSkip() {
     clearInterval(timerInterval);
-    state.timeLeft = 25 * 60;
     state.isRunning = false;
+
+    if (state.mode === 'break') {
+      // Saltear descanso -> Volver a modo Trabajo
+      state.mode = 'work';
+      state.timeLeft = 25 * 60;
+    } else {
+      // Reiniciar Pomodoro actual
+      state.timeLeft = 25 * 60;
+    }
+
     savePomodoroState(state);
     updateUI();
   }
@@ -115,8 +158,23 @@ export function initPomodoro() {
     }
   });
 
-  resetBtn.addEventListener('click', resetTimer);
+  resetBtn.addEventListener('click', handleResetOrSkip);
   countResetBtn.addEventListener('click', resetCount);
 
   updateUI();
+  const finishDevBtn = document.getElementById('pomo-finish-dev-btn');
+
+if (finishDevBtn) {
+  finishDevBtn.addEventListener('click', () => {
+    // Establece el tiempo restante en 1 segundo para que en el próximo tick se ejecute todo el flujo completo (alarma, cambio a descanso/trabajo, incremento de contador, etc.)
+    state.timeLeft = 1;
+    savePomodoroState(state);
+    updateUI();
+    
+    // Si el temporizador estaba pausado, lo iniciamos para que ejecute el final inmediatamente
+    if (!state.isRunning) {
+      startTimer();
+    }
+  });
+}
 }
