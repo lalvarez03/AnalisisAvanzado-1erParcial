@@ -18,17 +18,18 @@ function loadVisited() {
 export function loadPomodoroState() {
   try {
     const raw = localStorage.getItem(POMODORO_KEY);
-    if (!raw) return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work' };
+    if (!raw) return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work', targetEndTime: null };
     
     const data = JSON.parse(raw);
     return {
       timeLeft: typeof data.timeLeft === 'number' ? data.timeLeft : DEFAULT_POMO_TIME,
       isRunning: false,
       completedCount: typeof data.completedCount === 'number' ? data.completedCount : 0,
-      mode: data.mode === 'break' ? 'break' : 'work'
+      mode: data.mode === 'break' ? 'break' : 'work',
+      targetEndTime: null
     };
   } catch {
-    return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work' };
+    return { timeLeft: DEFAULT_POMO_TIME, isRunning: false, completedCount: 0, mode: 'work', targetEndTime: null };
   }
 }
 
