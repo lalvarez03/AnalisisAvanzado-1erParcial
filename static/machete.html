@@ -27,32 +27,79 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow-y: auto; /* Garantiza scroll vertical */
+      overflow-y: auto;
       background: var(--bg);
     }
 
+    /* ---- Navbar Superior Adaptable ---- */
     .machete-top {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 100;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 14px;
-      padding: 14px 22px;
+      gap: 12px 18px;
+      padding: 10px 18px;
       background: linear-gradient(90deg, #141b2c, #1a2236);
       border-bottom: 1px solid var(--border);
+    }
+
+    .machete-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .machete-top h1 { 
+      font-size: 18px; 
+      margin: 0; 
+      line-height: 1.2; 
+    }
+    .machete-top small { 
+      color: var(--text-dim); 
+      font-size: 11px; 
+      display: block; 
+    }
+
+    /* Navegación por fases incrustada en el Navbar */
+    .m-toc { 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      margin: 0;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none; /* Oculta scrollbar en Firefox */
+      -webkit-overflow-scrolling: touch;
+    }
+    .m-toc::-webkit-scrollbar { display: none; } /* Oculta scrollbar en Chrome/Safari */
+
+    .m-toc a {
+      background: var(--panel); 
+      border: 1px solid var(--border);
+      color: var(--text-dim); 
+      border-radius: 999px; 
+      padding: 5px 12px;
+      font-size: 12px; 
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .m-toc a:hover { 
+      border-color: var(--accent); 
+      color: var(--text); 
+      background: var(--panel-2);
     }
 
     .machete-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 22px;
-      /* Evita que colapsen los márgenes y bloqueen el desbordamiento */
+      padding: 18px 22px;
       box-sizing: border-box; 
     }
-    .machete-top h1 { font-size: 20px; margin: 0; }
-    .machete-top small { color: var(--text-dim); }
 
+    /* Layout responsivo de tarjetas y columnas */
     .m-cols {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -68,16 +115,16 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
-      margin: 0 0 16px;
+      margin: 0;
     }
     .m-card h2 {
-      font-size: 15px; margin: 0 0 8px; border: none; padding: 0;
+      font-size: 15px; margin: 0; border: none; padding: 0;
       display: flex; align-items: center; gap: 8px;
       color: var(--cyan); text-transform: uppercase; letter-spacing: 0.04em;
     }
-    .m-card h3 { font-size: 13px; margin: 12px 0 4px; color: var(--accent); }
-    .m-card p, .m-card li { font-size: 13.5px; line-height: 1.55; color: #d5ddf0; margin: 4px 0; }
-    .m-card ul { margin: 4px 0; padding-left: 18px; }
+    .m-card h3 { font-size: 13px; margin: 0; color: var(--accent); }
+    .m-card p, .m-card li { font-size: 13.5px; line-height: 1.55; color: #d5ddf0; margin: 0; }
+    .m-card ul { margin: 0; padding-left: 18px; }
     .m-tag {
       display: inline-block; font-size: 10px; font-weight: 700;
       padding: 1px 7px; border-radius: 999px; margin-right: 6px;
@@ -88,12 +135,12 @@
     .m-tag.tip { background: rgba(53,201,138,0.18); color: var(--ok); }
     .m-formula {
       background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 8px; padding: 6px 10px; margin: 6px 0; overflow-x: auto;
+      border-radius: 8px; padding: 6px 10px; margin: 0; overflow-x: auto;
     }
 
     /* ---- Fases ---- */
     .fase {
-      margin: 30px 0;
+      margin: 24px 0;
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
@@ -101,21 +148,21 @@
     }
     .fase-head {
       display: flex; align-items: center; gap: 14px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       background: linear-gradient(90deg, rgba(91,140,255,0.16), rgba(124,92,255,0.10));
       border-bottom: 1px solid var(--border);
     }
     .fase-num {
       flex-shrink: 0;
-      width: 46px; height: 46px;
+      width: 42px; height: 42px;
       display: grid; place-items: center;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff; font-weight: 800; font-size: 20px;
+      color: #fff; font-weight: 800; font-size: 18px;
       border-radius: 12px;
     }
-    .fase-title { font-size: 20px; margin: 0; color: var(--text); }
-    .fase-sub { font-size: 13px; color: var(--text-dim); margin: 2px 0 0; }
-    .fase-body { padding: 18px 20px; }
+    .fase-title { font-size: 18px; margin: 0; color: var(--text); }
+    .fase-sub { font-size: 12.5px; color: var(--text-dim); margin: 2px 0 0; }
+    .fase-body { padding: 16px 18px; }
 
     /* Bloque de definiciones clave */
     .defs-clave {
@@ -142,13 +189,24 @@
     }
     .defs-clave dd { margin: 2px 0 0; padding: 0; font-size: 13px; color: #cdd7f2; line-height: 1.5; }
 
-    .m-toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px; }
-    .m-toc a {
-      background: var(--panel); border: 1px solid var(--border);
-      color: var(--text-dim); border-radius: 999px; padding: 6px 14px;
-      font-size: 13px; text-decoration: none;
+    /* ---- Ajustes Responsivos Móviles ---- */
+    @media (max-width: 768px) {
+      .machete-top {
+        padding: 10px 12px;
+      }
+      .machete-brand small {
+        display: none; /* Oculta subtítulo en móviles para ganar espacio vertical */
+      }
+      .print-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      .m-toc {
+        width: 100%;
+        order: 3; /* Desplaza el menú de fases debajo de la marca en pantallas chicas */
+        margin-top: 4px;
+      }
     }
-    .m-toc a:hover { border-color: var(--accent); color: var(--text); }
 
     @media print {
       .machete-top, .m-toc, .print-btn { display: none; }
@@ -161,29 +219,33 @@
 </head>
 <body>
   <header class="machete-top">
-    <span class="brand-logo">📄</span>
-    <div>
-      <h1>Machete — Análisis Avanzado</h1>
-      <small>Resumen por fases · definiciones + resultados clave · DM · FCEN · UBA</small>
+    <div class="machete-brand">
+      <span class="brand-logo" style="font-size: 20px;">📄</span>
+      <div>
+        <h1>Machete — Análisis Avanzado</h1>
+        <small>Resumen por fases · definiciones + resultados clave · DM · FCEN · UBA</small>
+      </div>
     </div>
-    <button class="btn print-btn" style="margin-left:auto;" onclick="window.print()">🖨 Imprimir / PDF</button>
+
+    <!-- Botones de navegación por fases dentro de la barra superior -->
+    <nav class="m-toc">
+      <a href="#f1">Fase 1 · Sup-Inf</a>
+      <a href="#f2">Fase 2 · Sucesiones</a>
+      <a href="#f3">Fase 3 · Cardinalidad</a>
+      <a href="#f4">Fase 4 · Métricas</a>
+      <a href="#f5">Fase 5 · Completitud</a>
+    </nav>
+
+    <button class="btn print-btn" style="margin-left:auto;" onclick="window.print()">🖨 Imprimir</button>
   </header>
 
   <div class="machete-wrap">
-    <div class="m-toc">
-      <a href="#f1">Fase 1 · Fundamentos de ℝ</a>
-      <a href="#f2">Fase 2 · Convergencia</a>
-      <a href="#f3">Fase 3 · Cardinalidad</a>
-      <a href="#f4">Fase 4 · Topología métrica</a>
-      <a href="#f5">Fase 5 · Completitud</a>
-    </div>
-
     <!-- =================== FASE 1 =================== -->
     <section class="fase" id="f1">
       <div class="fase-head">
         <div class="fase-num">1</div>
         <div>
-          <h2 class="fase-title">Fundamentos de ℝ — Supremos e ínfimos</h2>
+          <h2 class="fase-title">Supremos e ínfimos</h2>
           <p class="fase-sub">El axioma que distingue ℝ de ℚ y las herramientas de cotas.</p>
         </div>
       </div>
@@ -491,6 +553,15 @@
           
           <!-- COLUMNA IZQUIERDA -->
           <div class="col-left">
+            <div class="m-card">
+              <h2>BOLAS Y ENTORNO ($x \in M, r > 0$)</h2>
+              <div class="m-formula">$B(x,r) = \{y \in M \mid d(x,y) < r\}$ <small>(Abierta)</small></div>
+              <div class="m-formula">$\overline{B}(x,r) = \{y \in M \mid d(x,y) \le r\}$ <small>(Cerrada)</small></div>
+              <div class="m-formula">$S(x,r) = \{y \in M \mid d(x,y) = r\}$ <small>(Esfera)</small></div>
+              <ul>
+                <li><strong>Entorno de $x$:</strong> Todo conjunto $U \subseteq M$ que contiene a una bola abierta $B(x,r)$.</li>
+              </ul>
+            </div>
             <div class="m-card">
               <h2>RELACIONES Y DESCOMPOSICIONES</h2>
               <div class="m-formula">$E^\circ \subseteq E \subseteq \overline{E}$</div>
