@@ -12,7 +12,7 @@ import { REGISTRO, MATERIA_POR_DEFECTO, buscarMateria } from '../materias/regist
 import { activarMateria, materiaActiva, hayMateriaActiva, plan, claveMateria } from './core/materia.js';
 import {
   getState, markVisited, progressPercent, runCleanups, recargarProgreso,
-  toggleVisited, setManyVisited, resetProgress,
+  toggleVisited, resetProgress,
 } from './state.js';
 import { typeset, el } from './utils/dom.js';
 import { renderHub } from './core/hub.js';
@@ -105,23 +105,13 @@ function buildSidebar() {
   UNIDADES.forEach((u) => {
     const group = el('div', { class: 'nav-group', style: `--unit:${u.color}`, 'data-unit': u.id });
 
-    // Encabezado: título (colapsa el grupo) + check de grupo (marca/desmarca todos los temas).
+    // Encabezado: solo título (colapsa el grupo). Los checks de grupo se quitaron.
     const rotulo = u.etiqueta || String(u.num);
-    const groupCheck = el('button', {
-      class: 'nav-group-check', type: 'button', role: 'checkbox', 'aria-checked': 'false',
-      title: `Marcar o desmarcar todos los temas de ${rotulo}`, 'aria-label': `Marcar o desmarcar todos los temas de ${rotulo}`,
-    }, '✓');
-    groupCheck.addEventListener('click', () => {
-      const todos = u.paginas.every((p) => getState().visited.has(p.id));
-      setManyVisited(u.paginas.map((p) => p.id), !todos);
-      onProgressChanged();
-    });
     group.appendChild(el('div', { class: 'nav-group-head' }, [
       el('div', { class: 'nav-group-title' }, [
         el('span', { class: 'nav-num', text: rotulo }),
         el('span', { class: 'nav-group-name', text: u.titulo }),
       ]),
-      groupCheck,
     ]));
 
     u.paginas.forEach((p) => {
@@ -138,11 +128,13 @@ function buildSidebar() {
     });
 
     if ((m.estudio || []).some((e) => e.id === u.id)) {
-      const ej = el('a', { class: 'nav-link nav-ej', href: '#estudio', title: 'Ir a los ejercicios de ' + rotulo }, '✏️ Ejercicios de ' + rotulo);
+      const ej = el('a', { class: 'nav-link nav-ej', href: '#estudio', title: 'Estudiar ' + rotulo }, '🗺️ Estudiar ' + rotulo);
       ej.addEventListener('click', (e) => {
         e.preventDefault();
         try { localStorage.setItem(claveMateria('practica'), u.id); } catch { /* ignore */ }
-        if (/(^|\/)estudio$/.test(location.hash)) render('estudio'); else location.hash = 'estudio';
+        // Siempre re-renderizamos 'estudio' con la práctica correcta, aunque ya estemos en esa página.
+        render('estudio');
+        location.hash = 'estudio';
       });
       group.appendChild(ej);
     }
@@ -194,9 +186,7 @@ function syncProgressUI() {
     const group = document.querySelector(`.nav-group[data-unit="${u.id}"]`);
     if (!group) return;
     const n = u.paginas.filter((p) => visited.has(p.id)).length;
-    const gc = group.querySelector('.nav-group-check');
     group.classList.toggle('all-done', n === u.paginas.length);
-    if (gc) gc.setAttribute('aria-checked', n === u.paginas.length ? 'true' : (n > 0 ? 'mixed' : 'false'));
   });
   updateProgress();
 }
@@ -360,8 +350,15 @@ function render(page) {
   updateProgress();
   document.title = (resolved === 'inicio' ? '' : PAGE_TITLES[resolved] + ' · ') + materiaActiva().nombre;
   typeset(contentEl);
-  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  // Scroll al tope: contentEl tiene overflow-y:auto, así que scrollea él (no window).
+  // Se resetea en dos momentos: inmediatamente (evita flash) y en el siguiente frame
+  // de layout (después de que el DOM se expanda con el contenido recién insertado).
   contentEl.scrollTop = 0;
+  window.scrollTo(0, 0);
+  requestAnimationFrame(() => {
+    contentEl.scrollTop = 0;
+    window.scrollTo(0, 0);
+  });
   closeSidebar();
 }
 
