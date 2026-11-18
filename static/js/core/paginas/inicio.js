@@ -132,7 +132,7 @@ export function renderInicio(root) {
 
   root.appendChild(el('h2', { class: 'home-h2', text: 'Práctica y repaso' }));
   const grid = el('div', { class: 'home-grid' });
-  HERRAMIENTAS.forEach((h) => {
+  HERRAMIENTAS.filter((h) => !h.grupo).forEach((h) => {
     grid.appendChild(el('a', { class: 'home-card', href: '#' + h.id }, [
       el('div', { class: 'ic', text: h.ic }),
       el('h4', { text: h.titulo }),
@@ -147,6 +147,20 @@ export function renderInicio(root) {
     ]));
   }
   root.appendChild(grid);
+
+  const extra = HERRAMIENTAS.filter((h) => h.grupo === 'extra');
+  if (extra.length) {
+    root.appendChild(el('h2', { class: 'home-h2', text: 'Extra' }));
+    const gridExtra = el('div', { class: 'home-grid' });
+    extra.forEach((h) => {
+      gridExtra.appendChild(el('a', { class: 'home-card', href: '#' + h.id }, [
+        el('div', { class: 'ic', text: h.ic }),
+        el('h4', { text: h.titulo }),
+        el('p', { text: h.desc }),
+      ]));
+    });
+    root.appendChild(gridExtra);
+  }
 
   root.appendChild(el('div', { class: 'callout tip' }, [
     el('div', { class: 'tag', text: 'Tip de estudio' }),

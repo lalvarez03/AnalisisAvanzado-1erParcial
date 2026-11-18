@@ -88,9 +88,9 @@ export const UNIDADES = [
 // Herramientas de práctica (no pertenecen a una unidad). Los ids 'estudio', 'guia' y 'feedback'
 // tienen implementación genérica en el núcleo; 'asistente' y 'quiz' son propios de esta materia.
 export const HERRAMIENTAS = [
-  { id: 'estudio', ic: '🗺️', titulo: 'Estudiar por práctica', desc: 'Recetas, mapa de ejercicios y errores comunes de cada guía.' },
-  { id: 'guia', ic: '📖', titulo: 'Guía resuelta', desc: 'Todos los ejercicios de P1–P7 resueltos paso a paso.' },
-  { id: 'asistente', ic: '🧩', titulo: 'Asistente de ejercicios', desc: 'Armá demostraciones arrastrando los pasos.' },
-  { id: 'quiz', ic: '✍️', titulo: 'Autoevaluación', desc: 'Preguntas para ponerte a prueba.' },
-  { id: 'feedback', ic: '💬', titulo: 'Tu opinión', desc: 'Contanos qué te sirvió y qué no (hasta 2 imágenes).' },
+  { id: 'quiz',      ic: '✍️',  titulo: 'Autoevaluación',       desc: 'Preguntas para ponerte a prueba.' },
+  { id: 'asistente', ic: '🧩',  titulo: 'Asistente de ejercicios', desc: 'Armá demostraciones arrastrando los pasos.' },
+  { id: 'estudio',   ic: '🗺️', titulo: 'Estudiar por práctica', desc: 'Recetas, mapa de ejercicios y errores comunes de cada guía.' },
+  { id: 'guia',      ic: '📖',  titulo: 'Guía resuelta',         desc: 'Todos los ejercicios de P1–P7 resueltos paso a paso.' },
+  { id: 'feedback',  ic: '💬',  titulo: 'Tu opinión',            desc: 'Contanos qué te sirvió y qué no (hasta 2 imágenes).', grupo: 'extra' },
 ];

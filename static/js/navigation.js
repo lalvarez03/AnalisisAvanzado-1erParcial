@@ -149,17 +149,27 @@ function buildSidebar() {
     nav.appendChild(group);
   });
 
-  const tools = el('div', { class: 'nav-group nav-tools', style: '--unit:#9aa6c4' });
-  tools.appendChild(el('div', { class: 'nav-group-title' }, [
-    el('span', { class: 'nav-num', text: '★' }),
-    el('span', { class: 'nav-group-name', text: 'Práctica y repaso' }),
-  ]));
-  HERRAMIENTAS.forEach((h) => {
-    tools.appendChild(el('div', { class: 'nav-row nav-row-tool' }, [
-      el('a', { class: 'nav-link', 'data-page': h.id, href: '#' + h.id }, h.ic + ' ' + h.titulo),
+  const herramientasPrincipales = HERRAMIENTAS.filter((h) => !h.grupo);
+  const herramientasExtra      = HERRAMIENTAS.filter((h) => h.grupo === 'extra');
+
+  function buildToolGroup(lista, titulo, sigil) {
+    const group = el('div', { class: 'nav-group nav-tools', style: '--unit:#9aa6c4' });
+    group.appendChild(el('div', { class: 'nav-group-title' }, [
+      el('span', { class: 'nav-num', text: sigil }),
+      el('span', { class: 'nav-group-name', text: titulo }),
     ]));
-  });
-  nav.appendChild(tools);
+    lista.forEach((h) => {
+      group.appendChild(el('div', { class: 'nav-row nav-row-tool' }, [
+        el('a', { class: 'nav-link', 'data-page': h.id, href: '#' + h.id }, h.ic + ' ' + h.titulo),
+      ]));
+    });
+    return group;
+  }
+
+  nav.appendChild(buildToolGroup(herramientasPrincipales, 'Práctica y repaso', '★'));
+  if (herramientasExtra.length) {
+    nav.appendChild(buildToolGroup(herramientasExtra, 'Extra', '✦'));
+  }
 
   // Reiniciar todo el progreso de ESTA materia.
   const reset = el('button', { class: 'nav-reset', type: 'button', title: 'Desmarcar todos los temas de esta materia' }, '↺ Reiniciar progreso');
