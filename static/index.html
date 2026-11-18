@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Análisis Avanzado — Aprendizaje Interactivo</title>
+  <title>Estudio — Materias</title>
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- MathJax para renderizar LaTeX -->
@@ -24,25 +24,32 @@
 <body>
   <header class="topbar">
     <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
-    <div class="brand">
-      <span class="brand-logo">∑</span>
+    <a class="brand" href="#materias" title="Ir al menú de materias">
+      <span class="brand-logo" id="brand-logo">🎓</span>
       <div class="brand-text">
-        <strong>Análisis Avanzado</strong>
-        <small>Supremos e Infimos · Sucesiones · Cardinalidad · Espacios Métricos — UBA</small>
+        <strong id="brand-title">Estudio</strong>
+        <small id="brand-sub">Menú de materias</small>
       </div>
-    </div>
+    </a>
     <div class="pomodoro-widget" id="pomodoro-widget">
-      <span class="pomodoro-display" id="pomo-display">25:00</span>
+      <span class="pomo-mode" id="pomo-mode" title="Modo actual">🍅</span>
+      <span class="pomodoro-display" id="pomo-display" title="Clic (en pausa) para editar el tiempo actual">25:00</span>
       <button id="pomo-start-btn" class="pomo-btn" title="Iniciar / Pausar">▶</button>
       <button id="pomo-reset-btn" class="pomo-btn" title="Reiniciar temporizador">↺</button>
-      
+      <button id="pomo-skip-btn" class="pomo-btn" title="Pasar a la siguiente fase">⏭</button>
+
       <span class="pomodoro-divider">|</span>
-      
-      <!-- Contador de Pomodoros cumplidos -->
+
+      <!-- Contador de Pomodoros cumplidos: se puede subir y bajar -->
+      <button id="pomo-count-dec-btn" class="pomo-btn pomo-step" title="Restar un pomodoro" aria-label="Restar un pomodoro">−</button>
       <span class="pomodoro-count" id="pomo-count-display" title="Pomodoros completados">0 🍅</span>
-      <button id="pomo-count-reset-btn" class="pomo-btn" title="Resetear contador de pomodoros">🗑️</button>
+      <button id="pomo-count-inc-btn" class="pomo-btn pomo-step" title="Sumar un pomodoro" aria-label="Sumar un pomodoro">＋</button>
+      <button id="pomo-count-reset-btn" class="pomo-btn" title="Poner el contador en 0">🗑️</button>
+
+      <span class="pomodoro-divider">|</span>
+      <button id="pomo-settings-btn" class="pomo-btn" title="Configurar tiempos" aria-haspopup="dialog" aria-expanded="false">⚙️</button>
     </div>
-    <a class="machete-btn" href="machete.html" target="_blank" rel="noopener" title="Abrir machete en otra pestaña">
+    <a class="machete-btn" id="machete-link" href="machete.html" target="_blank" rel="noopener" title="Abrir machete en otra pestaña">
       <span class="machete-ic">📄</span><span class="machete-label">Machete</span>
     </a>
     <div class="progress-badge" id="progress-badge" title="Progreso de lectura">0%</div>
@@ -50,42 +57,8 @@
 
   <div class="layout">
     <aside class="sidebar" id="sidebar">
-      <nav class="nav">
-        <a class="nav-link" data-page="inicio" href="#inicio">Menú Principal</a>
-
-        <div class="nav-group">
-          <div class="nav-group-title">Supremos, Infimos Y Sucesiones</div>
-          <a class="nav-link" data-page="sup-inf" href="#sup-inf">Supremos e ínfimos</a>
-          <a class="nav-link" data-page="sucesiones" href="#sucesiones">Sucesiones</a>
-        </div>
-
-        <div class="nav-group">
-          <div class="nav-group-title">Cardinalidad</div>
-          <a class="nav-link" data-page="card-equivalencia" href="#card-equivalencia">Equivalencia de conjuntos</a>
-          <a class="nav-link" data-page="card-numerables" href="#card-numerables">Finitos y numerables</a>
-          <a class="nav-link" data-page="card-hilbert" href="#card-hilbert">Hotel de Hilbert</a>
-          <a class="nav-link" data-page="card-cantor" href="#card-cantor">Cantor: ℝ no es numerable</a>
-          <a class="nav-link" data-page="card-orden" href="#card-orden">Orden entre cardinales</a>
-        </div>
-
-        <div class="nav-group">
-          <div class="nav-group-title">Espacios Métricos</div>
-          <a class="nav-link" data-page="em-distancia" href="#em-distancia">Distancia y bolas</a>
-          <a class="nav-link" data-page="em-topologia" href="#em-topologia">Interior, clausura, frontera</a>
-          <a class="nav-link" data-page="em-acumulacion" href="#em-acumulacion">Acumulación y aislados</a>
-          <a class="nav-link" data-page="em-compacidad" href="#em-compacidad">Compacidad · Heine-Borel</a>
-          <a class="nav-link" data-page="em-cauchy" href="#em-cauchy">Cauchy y completitud</a>
-          <a class="nav-link" data-page="em-continuidad" href="#em-continuidad">Continuidad</a>
-          <a class="nav-link" data-page="em-puntofijo" href="#em-puntofijo">Teorema del punto fijo</a>
-        </div>
-
-        <div class="nav-group">
-          <div class="nav-group-title">Práctica</div>
-          <a class="nav-link" data-page="asistente" href="#asistente">Asistente de ejercicios</a>
-          <a class="nav-link" data-page="guia" href="#guia">Guía resuelta</a>
-          <a class="nav-link" data-page="quiz" href="#quiz">Autoevaluación</a>
-        </div>
-      </nav>
+      <!-- El menú se genera desde js/curriculum.js (ver navigation.js) -->
+      <nav class="nav" id="nav"></nav>
       <footer class="sidebar-foot">
         <small>Basado en las notas y prácticas de la materia.</small>
       </footer>

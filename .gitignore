@@ -49,6 +49,9 @@ exports/
 *.7z
 *.tar.gz
 
+# === Feedback recibido (puede contener datos personales; no versionar) ===
+feedback/
+
 # === PDFs de material de la materia (no versionar) ===
 Archivos/
 

@@ -14,7 +14,7 @@ const LEMAS = `<p><strong>Convenciones y lemas usados en la práctica:</strong><
 <li><strong>(L4) Cantor.</strong> $[0,1)$ no es numerable; su cardinal es $c=2^{\\aleph_0}$, y $\\{0,1\\}^{\\mathbb{N}}\\sim\\mathcal{P}(\\mathbb{N})\\sim\\mathbb{R}$.</li>
 </ul>`;
 
-export const GUIA_P2 = [
+const BASE_P2 = [
   {
     fuente: 'Práctica 2 · Ej. 1', enunciado: E(1),
     idea: 'En cada caso se exhibe una biyección explícita con un conjunto de cardinal conocido, o se lo reconoce como subconjunto infinito de un numerable.',
@@ -223,3 +223,171 @@ export const GUIA_P2 = [
     conclusion: '$\\#\\mathbb{R}[X] = c$: aunque hay “infinitos grados”, el conjunto de polinomios reales no supera al continuo. Se apoya en $\\#\\mathbb{R}^{k}=c$ (Ej. 14) y en la unión numerable de copias de tamaño $c$ (Ej. 7b).',
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Ejercicios agregados para completar la guía 2026: 3, 5, 9, 12, 13, 16, 17.
+// ---------------------------------------------------------------------------
+const EXTRA_P2 = [
+  {
+    fuente: 'Práctica 2 · Ej. 3', enunciado: E(3),
+    idea: 'Un conjunto infinito siempre contiene una copia de $\\mathbb{N}$. Elegimos $C$ numerable dentro de $B\\setminus A$: $C$ y $C\\cup A$ son ambos numerables, luego equivalentes. Después "pegamos" esa biyección con la identidad en el resto.',
+    pasos: [
+      {
+        idea: '(a) Elegir $C$ numerable dentro de $B\\setminus A$',
+        detalle: '<p>$B\\setminus A$ es infinito, así que contiene un subconjunto numerable $C=\\{c_1,c_2,\\dots\\}$ (se eligen $c_1\\in B\\setminus A$, luego $c_2\\in(B\\setminus A)\\setminus\\{c_1\\}$, etc.; nunca se agota por ser infinito).</p>',
+      },
+      {
+        idea: '(a) $C\\sim C\\cup A$',
+        detalle: '<p>$C\\cup A$ es unión de dos conjuntos contables (Ej. 2), luego contable; y es infinito (contiene a $C$). Entonces es numerable. $C$ también es numerable, y dos conjuntos numerables son coordinables: existe una biyección $\\varphi:C\\to C\\cup A$.</p>',
+      },
+      {
+        idea: '(b) Descomponer $B$ y $B\\setminus A$',
+        detalle: '<p>Sea $R=(B\\setminus A)\\setminus C$ (lo que sobra). Como $C\\subseteq B\\setminus A$ y $A\\subseteq B$, valen las uniones <em>disjuntas</em> $B\\setminus A=R\\cup C$ y $B=R\\cup(C\\cup A)$ (disjuntas porque $C\\cap A=\\varnothing$ y $R\\cap(C\\cup A)=\\varnothing$).</p>',
+      },
+      {
+        idea: '(b) Biyección $B\\setminus A\\to B$',
+        detalle: '<p>Definimos $\\Phi:B\\setminus A\\to B$ por $\\Phi(x)=x$ si $x\\in R$ y $\\Phi(x)=\\varphi(x)$ si $x\\in C$. Es biyectiva: es la identidad en $R$ y una biyección $C\\to C\\cup A$, con imágenes disjuntas que reconstruyen $B$. Luego $B\\setminus A\\sim B$. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'Quitarle a un conjunto una parte contable no cambia su cardinal, siempre que lo que queda sea infinito. Es el mismo mecanismo del Hotel de Hilbert: "hacer lugar" a los elementos de $A$ reacomodando una copia de $\\mathbb{N}$.',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 5', enunciado: E(5),
+    idea: 'Disjuntar una unión: a cada $A_n$ le quitamos todo lo que ya apareció en los anteriores.',
+    pasos: [
+      {
+        idea: '(a) Definición de $B_n$',
+        detalle: '<p>$B_1=A_1$ y, para $n\\ge2$, $B_n=A_n\\setminus\\bigcup_{k<n}A_k$. Claramente $B_n\\subseteq A_n$.</p>',
+      },
+      {
+        idea: '(a) Disjuntos dos a dos',
+        detalle: '<p>Sean $m<n$. $B_m\\subseteq A_m$ y $B_n\\cap A_m=\\varnothing$ (a $A_n$ le sacamos todo $A_k$, $k<n$, en particular $A_m$). Luego $B_m\\cap B_n=\\varnothing$.</p>',
+      },
+      {
+        idea: '(a) $\\bigcup_{n\\le m}B_n=\\bigcup_{n\\le m}A_n$',
+        detalle: '<p>($\\subseteq$) $B_n\\subseteq A_n$. ($\\supseteq$) Sea $x\\in\\bigcup_{n\\le m}A_n$ y sea $n\\le m$ el <em>menor</em> índice con $x\\in A_n$. Entonces $x\\notin A_k$ para $k<n$, así que $x\\in B_n$.</p>',
+      },
+      {
+        idea: '(b) Para toda $(B_n)$ con esas propiedades, $A=\\bigcup B_n$',
+        detalle: '<p>($\\supseteq$) $B_n\\subseteq A_n\\subseteq A$. ($\\subseteq$) Si $x\\in A$, existe $m$ con $x\\in A_m\\subseteq\\bigcup_{n\\le m}A_n=\\bigcup_{n\\le m}B_n\\subseteq\\bigcup_nB_n$. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'Toda unión numerable puede reescribirse como unión numerable <em>disjunta</em>. Es la herramienta que usa el Ej. 6 para sumar cardinales, y la que se necesita para pasar de "unión" a "suma" cuando se miden tamaños.',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 9', enunciado: E(9),
+    idea: 'Los dos primeros ítems son lógica de pertenencia ($X\\subseteq A$). El tercero usa la imagen directa como biyección entre partes.',
+    pasos: [
+      {
+        idea: '(a) $\\mathcal{P}(A)\\cap\\mathcal{P}(B)=\\mathcal{P}(A\\cap B)$',
+        detalle: '<p>$X\\in\\mathcal{P}(A)\\cap\\mathcal{P}(B)\\iff X\\subseteq A\\ \\text{y}\\ X\\subseteq B\\iff X\\subseteq A\\cap B\\iff X\\in\\mathcal{P}(A\\cap B)$.</p>',
+      },
+      {
+        idea: '(b) $\\mathcal{P}(A)\\cup\\mathcal{P}(B)\\subseteq\\mathcal{P}(A\\cup B)$',
+        detalle: '<p>Si $X\\subseteq A$ o $X\\subseteq B$, entonces $X\\subseteq A\\cup B$. La igualdad falla: $A=\\{1\\}$, $B=\\{2\\}$, $X=\\{1,2\\}\\in\\mathcal{P}(A\\cup B)$ pero $X\\notin\\mathcal{P}(A)\\cup\\mathcal{P}(B)$.</p>',
+      },
+      {
+        idea: '(c) $A\\sim B\\Rightarrow\\mathcal{P}(A)\\sim\\mathcal{P}(B)$',
+        detalle: '<p>Sea $\\varphi:A\\to B$ biyección. Definimos $\\Phi:\\mathcal{P}(A)\\to\\mathcal{P}(B)$, $\\Phi(X)=\\varphi(X)$, y $\\Psi:\\mathcal{P}(B)\\to\\mathcal{P}(A)$, $\\Psi(Y)=\\varphi^{-1}(Y)$. Por las propiedades recordadas al comienzo de la guía: $\\varphi^{-1}(\\varphi(X))=X$ (porque $\\varphi$ es inyectiva) y $\\varphi(\\varphi^{-1}(Y))=Y$ (porque es sobreyectiva). Así $\\Psi\\circ\\Phi=\\mathrm{id}$ y $\\Phi\\circ\\Psi=\\mathrm{id}$: $\\Phi$ es biyectiva. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'El conjunto de partes respeta equivalencias (cardinales iguales dan partes de igual cardinal), $\\cap$ pasa a $\\cap$ pero $\\cup$ solo da inclusión.',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 12', enunciado: E(12),
+    idea: '(a) Infinitos primos (Euclides) + subconjunto infinito de $\\mathbb{N}$. (b) Cada natural se escribe de modo único como potencia de $2$ por un impar.',
+    pasos: [
+      {
+        idea: '(a) Hay infinitos primos',
+        detalle: '<p>Si $p_1,\\dots,p_k$ fueran todos, $N=p_1\\cdots p_k+1>1$ tiene algún divisor primo $q$. Pero $q\\ne p_i$ para todo $i$ (si $q=p_i$ dividiría a $N$ y a $p_1\\cdots p_k$, luego a $1$). Contradicción.</p>',
+      },
+      {
+        idea: '(a) Numerable',
+        detalle: '<p>El conjunto de primos es un subconjunto infinito de $\\mathbb{N}$, y un subconjunto infinito de un numerable es numerable (si $p_1<p_2<\\cdots$ son los primos ordenados, $n\\mapsto p_n$ es biyección). $\\blacksquare$</p>',
+      },
+      {
+        idea: '(b) Descomposición $\\mathbb{N}=\\bigsqcup_{k\\ge0}A_k$',
+        detalle: '<p>Sea $A_k=\\{2^k(2j+1):j\\ge0\\}$, $k=0,1,2,\\dots$. Todo $n\\ge1$ se escribe <em>de manera única</em> como $n=2^k\\cdot m$ con $m$ impar (factorización en primos: el exponente de $2$ está determinado). Luego los $A_k$ son disjuntos y cubren $\\mathbb{N}$.</p>',
+      },
+      {
+        idea: '(b) Cada $A_k$ es numerable',
+        detalle: '<p>$j\\mapsto2^k(2j+1)$ es una biyección $\\mathbb{N}_0\\to A_k$. ($A_0$ son los impares, $A_1=\\{2,6,10,\\dots\\}$, $A_2=\\{4,12,20,\\dots\\}$, etc.) $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: '$\\mathbb{N}$ es unión disjunta de $\\aleph_0$ conjuntos numerables: $\\aleph_0\\cdot\\aleph_0=\\aleph_0$ hecho a mano. (Los números primos son un ejemplo de que "subconjunto de densidad cero" no implica "cardinal menor".)',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 13', enunciado: E(13),
+    idea: 'Cota superior trivial ($\\subseteq\\mathcal{P}(\\mathbb{N})$) y una inyección de $\\mathcal{P}(\\mathbb{N})$ que fabrica, para cada $X$, un conjunto "mitad y mitad". CSB cierra.',
+    pasos: [
+      {
+        idea: 'Cota superior',
+        detalle: '<p>$\\mathcal{F}:=\\{B\\subseteq\\mathbb{N}:\\#B=\\#(\\mathbb{N}\\setminus B)=\\aleph_0\\}\\subseteq\\mathcal{P}(\\mathbb{N})$, así que $\\#\\mathcal{F}\\le c$.</p>',
+      },
+      {
+        idea: 'Inyección $\\mathcal{P}(\\mathbb{N})\\to\\mathcal{F}$',
+        detalle: '<p>Para $X\\subseteq\\mathbb{N}$ ($\\mathbb{N}=\\{1,2,\\dots\\}$) definimos $\\Theta(X)=\\{2x:x\\in X\\}\\cup\\{2x-1:x\\notin X\\}$. Para cada $n\\in\\mathbb{N}$, de los dos números $2n-1,2n$ exactamente <em>uno</em> pertenece a $\\Theta(X)$.</p>',
+      },
+      {
+        idea: '$\\Theta(X)\\in\\mathcal{F}$',
+        detalle: '<p>Hay un elemento de $\\Theta(X)$ en cada par $\\{2n-1,2n\\}$: infinitos. Y el otro elemento del par queda en el complemento: también infinitos. Entonces $\\Theta(X)$ y su complemento son infinitos.</p>',
+      },
+      {
+        idea: '$\\Theta$ es inyectiva y conclusión',
+        detalle: '<p>Se recupera $X$ desde $B=\\Theta(X)$: $x\\in X\\iff2x\\in B$. Así $\\Theta$ es inyectiva y $c=\\#\\mathcal{P}(\\mathbb{N})\\le\\#\\mathcal{F}\\le c$. Por Cantor–Schröder–Bernstein, $\\#\\mathcal{F}=c$. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'Casi todos los subconjuntos de $\\mathbb{N}$ son "grandes y con complemento grande": hay $c$ de ellos. Los únicos que se pierden (finitos y cofinitos) forman un conjunto numerable (Ej. 11).',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 16', enunciado: E(16),
+    idea: 'En ambos casos, el conjunto es una unión numerable de conjuntos numerables (cada parte se identifica con $\\mathbb{Z}^k$ o $\\mathbb{Q}^k$), así que es numerable. Se agrega que es infinito.',
+    pasos: [
+      {
+        idea: '(a) Una sucesión entera convergente es eventualmente constante',
+        detalle: '<p>Si $a_n\\to\\ell$, para $\\varepsilon=\\tfrac12$ existe $n_0$ con $|a_n-\\ell|<\\tfrac12$ para $n\\ge n_0$. Entonces $|a_n-a_m|<1$ para $n,m\\ge n_0$; como son enteros, $a_n=a_{n_0}$ para todo $n\\ge n_0$.</p>',
+      },
+      {
+        idea: '(a) Contar',
+        detalle: '<p>Sea $S_{n_0,\\ell}=\\{(a_n):a_n=\\ell\\ \\forall n\\ge n_0\\}$ ($n_0\\in\\mathbb{N}$, $\\ell\\in\\mathbb{Z}$). Está en biyección con $\\mathbb{Z}^{\\,n_0-1}$ (se eligen libremente los primeros $n_0-1$ términos), numerable (producto finito de numerables). El conjunto pedido es $\\bigcup_{n_0,\\ell}S_{n_0,\\ell}$, unión numerable de conjuntos contables: contable (Ej. 6a). Es infinito (contiene las constantes). Cardinal: $\\aleph_0$.</p>',
+      },
+      {
+        idea: '(b) Una sucesión periódica queda determinada por un período',
+        detalle: '<p>$(a_n)\\subseteq\\mathbb{Q}$ es periódica si existe $T\\ge1$ con $a_{n+T}=a_n$ para todo $n$. Para cada $T$, el conjunto $P_T$ de sucesiones con período $T$ está en biyección con $\\mathbb{Q}^T$ (se eligen $a_1,\\dots,a_T$ y el resto se repite). $\\mathbb{Q}^T$ es numerable.</p>',
+      },
+      {
+        idea: '(b) Unir sobre $T$',
+        detalle: '<p>El conjunto es $\\bigcup_{T\\ge1}P_T$: unión numerable de numerables, contable, e infinito (constantes racionales). Cardinal: $\\aleph_0$. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'Ambos conjuntos tienen cardinal $\\aleph_0$ (aunque están dentro de $\\mathbb{Z}^{\\mathbb{N}}$ y $\\mathbb{Q}^{\\mathbb{N}}$, que tienen cardinal $c$). Lo que los hace chicos es que "convergente en $\\mathbb{Z}$" y "periódica" son sucesiones con <em>finita información</em>.',
+  },
+  {
+    fuente: 'Práctica 2 · Ej. 17', enunciado: E(17),
+    idea: '(a) Cada intervalo con más de un punto contiene un racional: eso inyecta $I$ en $\\mathbb{Q}$. (b) Cada discontinuidad de una monótona es un salto; los saltos definen intervalos disjuntos.',
+    pasos: [
+      {
+        idea: '(a) Un racional por intervalo',
+        detalle: '<p>$A_i$ es un intervalo con $\\#A_i>1$: contiene dos puntos $u<v$ y todo $[u,v]\\subseteq A_i$. Por densidad de $\\mathbb{Q}$ hay un racional en $(u,v)\\subseteq A_i$. Fijamos una enumeración $\\mathbb{Q}=\\{q_1,q_2,\\dots\\}$ y definimos $\\rho(i)=$ el racional de $A_i$ de menor índice (esto evita elecciones arbitrarias).</p>',
+      },
+      {
+        idea: '(a) $\\rho$ es inyectiva',
+        detalle: '<p>Si $\\rho(i)=\\rho(j)$, ese racional está en $A_i\\cap A_j$, que es vacío si $i\\ne j$. Luego $i=j$. Entonces $\\rho:I\\to\\mathbb{Q}$ es inyectiva e $I$ es contable. $\\blacksquare$</p>',
+      },
+      {
+        idea: '(b) Saltos de una monótona',
+        detalle: '<p>Supongamos $f$ creciente (si es decreciente se aplica a $-f$). Para cada $x$ existen $f(x^-)=\\sup_{y<x}f(y)$ y $f(x^+)=\\inf_{y>x}f(y)$, con $f(x^-)\\le f(x)\\le f(x^+)$, y $f$ es continua en $x$ sii $f(x^-)=f(x^+)$. Sea $D$ el conjunto de discontinuidades; para $x\\in D$, $A_x=(f(x^-),f(x^+))$ es un intervalo con más de un punto.</p>',
+      },
+      {
+        idea: '(b) Los $A_x$ son disjuntos',
+        detalle: '<p>Si $x<y$ están en $D$, tomando $z\\in(x,y)$: $f(x^+)\\le f(z)\\le f(y^-)$. Entonces todo punto de $A_x$ es $<f(x^+)\\le f(y^-)\\le$ todo punto de $A_y$: $A_x\\cap A_y=\\varnothing$. Por (a), $D$ es contable. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'Una función monótona tiene a lo sumo una cantidad numerable de discontinuidades. La idea: cada salto "consume" un intervalo de la recta vertical, y no puede haber más de $\\aleph_0$ intervalos disjuntos porque cada uno contiene un racional distinto.',
+  },
+];
+
+// Combinadas y ordenadas por número de ejercicio.
+export const GUIA_P2 = [...BASE_P2, ...EXTRA_P2].sort(
+  (a, b) => Number(a.fuente.match(/Ej\. (\d+)/)[1]) - Number(b.fuente.match(/Ej\. (\d+)/)[1])
+);

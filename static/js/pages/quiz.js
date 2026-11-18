@@ -215,6 +215,53 @@ const COMPACIDAD_COMPLETITUD = [
   }
 ];
 
+const ESPACIOS_NORMADOS = [
+  {
+    q: '¿Cuál de las siguientes NO define una norma en $\\mathbb{R}^2$?',
+    options: [
+      '$\\|x\\|_1 = |x_1| + |x_2|$',
+      '$\\|x\\|_\\infty = \\max\\{|x_1|,|x_2|\\}$',
+      '$\\|x\\| = |x_1\\, x_2|$',
+      '$\\|x\\|_2 = \\sqrt{x_1^2 + x_2^2}$',
+    ],
+    answer: 2,
+    explain: 'Fallan el axioma de identidad (N1): $\\|(1,0)\\| = |1\\cdot0| = 0$ pero $(1,0)\\ne0$. Una norma debe anularse sólo en el vector nulo. Las otras tres sí son normas (Práctica 6, Ej. 1).',
+  },
+  {
+    q: 'En $\\mathbb{R}^n$, que dos normas sean equivalentes significa que…',
+    options: [
+      'tienen la misma bola unitaria',
+      'definen los mismos abiertos y la misma noción de convergencia',
+      'una es siempre menor o igual que la otra',
+      'sólo puede pasar en dimensión infinita',
+    ],
+    answer: 1,
+    explain: 'Dos normas equivalentes ($c\\,\\|x\\|_a\\le\\|x\\|_b\\le C\\,\\|x\\|_a$) inducen la misma topología: los mismos abiertos, cerrados y sucesiones convergentes. En dimensión finita <strong>todas</strong> las normas son equivalentes.',
+  },
+  {
+    q: 'Para un operador lineal $T:E\\to F$ entre espacios normados, la continuidad es equivalente a que $T$ sea…',
+    options: [
+      'biyectiva',
+      'acotada: existe $M$ con $\\|Tx\\|\\le M\\,\\|x\\|$',
+      'monótona',
+      'uniformemente discontinua',
+    ],
+    answer: 1,
+    explain: 'Para un lineal, continuo en un punto $\\Leftrightarrow$ continuo $\\Leftrightarrow$ uniformemente continuo $\\Leftrightarrow$ acotado ($\\|Tx\\|\\le M\\|x\\|$) $\\Leftrightarrow$ manda acotados en acotados (Práctica 6, Ej. 8). La linealidad convierte la continuidad en Lipschitz.',
+  },
+  {
+    q: 'La derivación $\\delta p = p\'$ en $\\mathbb{R}[t]$ con $\\|\\cdot\\|_\\infty$ es…',
+    options: [
+      'lineal y continua',
+      'lineal pero NO continua (amplifica: $\\|\\delta(t^n)\\|_\\infty=n$)',
+      'no lineal',
+      'acotada de norma $1$',
+    ],
+    answer: 1,
+    explain: 'Es lineal, pero $\\|t^n\\|_\\infty=1$ mientras $\\|\\delta(t^n)\\|_\\infty=\\|n\\,t^{n-1}\\|_\\infty=n\\to\\infty$: no es acotada, luego no es continua (Práctica 6, Ej. 12). Derivar amplifica; integrar (operador con kernel continuo) sí es continuo.',
+  },
+];
+
 export function renderQuiz(root) {
   root.appendChild(pageHeader(
     'Autoevaluación',
@@ -229,7 +276,8 @@ export function renderQuiz(root) {
       { value: 'sucesiones', label: '2. Sucesiones y Series (3 preguntas)' },
       { value: 'card', label: '3. Cardinalidad (6 preguntas)' },
       { value: 'em', label: '4. Espacios Métricos y Topología (5 preguntas)' },
-      { value: 'compac', label: '5. Compacidad, Completitud y Continuidad (4 preguntas)' }
+      { value: 'compac', label: '5. Compacidad, Completitud y Continuidad (4 preguntas)' },
+      { value: 'normados', label: '6. Espacios Normados (4 preguntas)' }
     ],
     value: 'sup_inf',
   });
@@ -257,6 +305,9 @@ export function renderQuiz(root) {
     } else if (val === 'compac') {
       data = COMPACIDAD_COMPLETITUD;
       title = 'Compacidad, Completitud y Continuidad';
+    } else if (val === 'normados') {
+      data = ESPACIOS_NORMADOS;
+      title = 'Espacios Normados';
     }
 
     const quiz = buildQuiz(data, { title });

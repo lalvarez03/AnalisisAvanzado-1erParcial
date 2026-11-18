@@ -1,0 +1,216 @@
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    /* ---- Navbar Superior Adaptable ---- */
+    .machete-top {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 18px;
+      padding: 10px 18px;
+      background: linear-gradient(90deg, #141b2c, #1a2236);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .machete-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .machete-top h1 { 
+      font-size: 18px; 
+      margin: 0; 
+      line-height: 1.2; 
+    }
+    .machete-top small { 
+      color: var(--text-dim); 
+      font-size: 11px; 
+      display: block; 
+    }
+
+    /* Navegación por fases incrustada en el Navbar */
+    .m-toc { 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      margin: 0;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none; /* Oculta scrollbar en Firefox */
+      -webkit-overflow-scrolling: touch;
+    }
+    .m-toc::-webkit-scrollbar { display: none; } /* Oculta scrollbar en Chrome/Safari */
+
+    .m-toc a {
+      background: var(--panel); 
+      border: 1px solid var(--border);
+      color: var(--text-dim); 
+      border-radius: 999px; 
+      padding: 5px 12px;
+      font-size: 12px; 
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .m-toc a:hover { 
+      border-color: var(--accent); 
+      color: var(--text); 
+      background: var(--panel-2);
+    }
+
+    .machete-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 22px;
+      box-sizing: border-box; 
+    }
+
+    /* Layout responsivo de tarjetas y columnas */
+    .m-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .m-cols { grid-template-columns: 1fr; } }
+
+    .m-card {
+      min-width: 0;
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 0;
+    }
+    .m-card h2 {
+      font-size: 15px; margin: 0; border: none; padding: 0;
+      display: flex; align-items: center; gap: 8px;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .m-card h3 { font-size: 13px; margin: 0; color: var(--accent); }
+    .m-card p, .m-card li { font-size: 13.5px; line-height: 1.55; color: #d5ddf0; margin: 0; }
+    .m-card ul { margin: 0; padding-left: 18px; }
+    .m-tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 1px 7px; border-radius: 999px; margin-right: 6px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .m-tag.def { background: rgba(56,217,217,0.18); color: var(--cyan); }
+    .m-tag.thm { background: rgba(124,92,255,0.20); color: #b6a4ff; }
+    .m-tag.tip { background: rgba(53,201,138,0.18); color: var(--ok); }
+    .m-formula {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 10px; margin: 0; overflow-x: auto;
+    }
+
+    /* ---- Fases ---- */
+    .fase {
+      margin: 24px 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(28, 36, 56, 0.4);
+    }
+    .fase-head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px;
+      background: linear-gradient(90deg, rgba(91,140,255,0.16), rgba(124,92,255,0.10));
+      border-bottom: 1px solid var(--border);
+    }
+    .fase-num {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800; font-size: 18px;
+      border-radius: 12px;
+    }
+    .fase-title { font-size: 18px; margin: 0; color: var(--text); }
+    .fase-sub { font-size: 12.5px; color: var(--text-dim); margin: 2px 0 0; }
+    .fase-body { padding: 16px 18px; }
+
+    /* Bloque de definiciones clave */
+    .defs-clave {
+      background: rgba(56, 217, 217, 0.06);
+      border: 1px solid rgba(56, 217, 217, 0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+    }
+    .defs-clave > h3 {
+      margin: 0 0 8px; font-size: 14px; color: var(--cyan);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .defs-clave dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 24px;
+    }
+    @media (max-width: 760px) { .defs-clave dl { grid-template-columns: 1fr; } }
+    .defs-clave .def-item { padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.06); }
+    .defs-clave dt {
+      font-weight: 700; color: var(--text); font-size: 13.5px;
+    }
+    .defs-clave dd { margin: 2px 0 0; padding: 0; font-size: 13px; color: #cdd7f2; line-height: 1.5; }
+
+    /* ---- Ajustes Responsivos Móviles ---- */
+    @media (max-width: 768px) {
+      .machete-top {
+        padding: 10px 12px;
+      }
+      .machete-brand small {
+        display: none; /* Oculta subtítulo en móviles para ganar espacio vertical */
+      }
+      .print-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      .m-toc {
+        width: 100%;
+        order: 3; /* Desplaza el menú de fases debajo de la marca en pantallas chicas */
+        margin-top: 4px;
+      }
+    }
+
+    @media print {
+      .machete-top, .m-toc, .print-btn { display: none; }
+      body { background: #fff; color: #000; }
+      .fase, .m-card, .defs-clave { border-color: #ccc; background: #fff; break-inside: avoid; }
+      .fase-head { background: #eee; }
+      .m-card p, .m-card li, .defs-clave dd { color: #000; }
+    }
+
+    /* ---- Añadidos: columnas, tablas, chips y estado de carga ---- */
+    .fase-grid-2col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+    .fase-grid-2col .col-left, .fase-grid-2col .col-right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    @media (max-width: 900px) { .fase-grid-2col { grid-template-columns: 1fr; } }
+    .m-cols.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 1100px) { .m-cols.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 900px) { .m-cols.three { grid-template-columns: 1fr; } }
+    .m-card > * + * { margin-top: 8px; }
+    .m-card h2 + * { margin-top: 10px; }
+    .m-tag.warn { background: rgba(255,180,84,0.18); color: var(--warn); }
+    .m-tag.err { background: rgba(255,107,122,0.18); color: var(--err); }
+    .m-table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: left; }
+    .m-table th { padding: 6px; color: var(--cyan); border-bottom: 1px solid var(--border); }
+    .m-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+    .fase-prac {
+      margin-left: auto; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+      color: var(--text-dim); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; white-space: nowrap;
+    }
+    .m-load { color: var(--text-dim); padding: 40px 0; text-align: center; }
+    .m-card .m-warnbox { border-left: 3px solid var(--warn); background: rgba(255,180,84,0.07); padding: 6px 10px; border-radius: 6px; }
+    .machete-top .back-link { color: var(--text-dim); text-decoration: none; font-size: 12px; border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
+    .machete-top .back-link:hover { color: var(--text); border-color: var(--accent); }
+    @media print { .back-link { display: none; } .fase-prac { display: none; } }

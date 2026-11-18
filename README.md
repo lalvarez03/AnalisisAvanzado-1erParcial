@@ -29,9 +29,29 @@ las nociones topológicas en tiempo real.
 - Continuidad (ε–δ)
 - Teorema del punto fijo de Banach
 
+**Sucesiones de funciones (Práctica 7)**
+- Convergencia puntual vs. uniforme con visualización de la franja $\varepsilon$
+- Continuidad, integral y derivada del límite; series y criterio M de Weierstrass
+
+**Progreso y feedback**
+- El avance se maneja con checkboxes en el menú lateral (por tema, por práctica o todo junto).
+- "Tu opinión": comentario positivo/negativo con hasta 2 imágenes. En GitHub Pages se envía a un
+  Google Apps Script (planilla + Drive + mail; ver `docs/feedback-apps-script.md` y `static/js/config.js`);
+  con el servidor local se guarda en `feedback/` (ignorada por git).
+
+**Estudiar por práctica**
+- Un espacio por cada guía (P1–P7): teoría necesaria, recetas, mapa de ejercicios,
+  errores comunes y ejercicios resueltos paso a paso
+
+**Espacios Normados (Práctica 6)**
+- Normas ‖·‖₁, ‖·‖₂, ‖·‖∞ en ℝⁿ; bolas y su forma (rombo, círculo, cuadrado)
+- Equivalencia de normas en dimensión finita; Cesàro; subespacios
+- Espacios ℓ∞, ℓ² y ℝₙ[t]; operadores lineales (continuo ⟺ acotado)
+- Norma de un operador; derivación (no continua) vs. operador integral
+
 Más un **Asistente de ejercicios** donde armás demostraciones de la Práctica 1
 arrastrando los pasos al orden correcto (o completando huecos), y una
-**autoevaluación** con preguntas basadas en las Prácticas 2 y 3.
+**autoevaluación** con preguntas basadas en las Prácticas 2, 3, 5 y 6.
 
 ## Cómo ejecutar
 
@@ -88,8 +108,22 @@ py -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 El frontend usa **ES Modules nativos** (sin bundler): el navegador carga
 `app.js` con `type="module"` y este importa el resto.
 
+## Varias materias (componentes)
+
+La app tiene una capa superior (menú de materias, router, Pomodoro, progreso) y cada materia es un
+componente autocontenido en `static/materias/<id>/` (plan, páginas, ejercicios resueltos, resultados clave,
+espacio de estudio y machete). El progreso se guarda por materia.
+
+```bash
+# Crear una materia nueva (genera la carpeta y la registra en static/materias/registry.js)
+py tools/nueva_materia.py algebra-lineal "Álgebra Lineal" --icono 🧮 --color "#35c98a"
+```
+
+El machete de cada materia se abre en `machete.html?m=<id>`. La guía para crear y mantener materias es la
+skill local `.kiro/skills/materias-componentes/SKILL.md`.
+
 ## Sobre el contenido
 
 Las definiciones, teoremas y ejercicios siguen las notas de clase y las
-Prácticas 1–3 de Análisis Avanzado. Es material de estudio complementario y no
-reemplaza las demostraciones completas del curso.
+Prácticas 1–6 de Análisis Avanzado, más el segundo parcial 2024. Es material de
+estudio complementario y no reemplaza las demostraciones completas del curso.

@@ -1,0 +1,1018 @@
+    <!-- =================== FASE 1 =================== -->
+    <section class="fase" id="f1" data-practica="Práctica 1">
+      <div class="fase-head">
+        <div class="fase-num">1</div>
+        <div>
+          <h2 class="fase-title">Supremos e ínfimos</h2>
+          <p class="fase-sub">El axioma que distingue ℝ de ℚ y las herramientas de cotas.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Cota superior de $A$</dt>
+              <dd>$c \in \mathbb{R}$ tal que $a \le c$ para todo $a \in A$.</dd></div>
+            <div class="def-item"><dt>Cota inferior de $A$</dt>
+              <dd>$c \in \mathbb{R}$ tal que $c \le a$ para todo $a \in A$.</dd></div>
+            <div class="def-item"><dt>Conjunto acotado</dt>
+              <dd>Acotado sup. si tiene cota superior; acotado inf. si tiene cota inferior; acotado si ambas.</dd></div>
+            <div class="def-item"><dt>Supremo $\sup A$</dt>
+              <dd>La <em>menor</em> cota superior: es cota superior y $\sup A \le t$ para toda cota superior $t$.</dd></div>
+            <div class="def-item"><dt>Ínfimo $\inf A$</dt>
+              <dd>La <em>mayor</em> cota inferior: es cota inferior y $t \le \inf A$ para toda cota inferior $t$.</dd></div>
+            <div class="def-item"><dt>Máximo / mínimo</dt>
+              <dd>$\max A = \sup A$ si $\sup A \in A$; $\ \min A = \inf A$ si $\inf A \in A$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Axioma de completitud</h2>
+            <p><span class="m-tag thm">axioma</span>Todo $A\subseteq\mathbb{R}$ no vacío y acotado superiormente tiene supremo en $\mathbb{R}$.</p>
+            <p>Distingue $\mathbb{R}$ de $\mathbb{Q}$: en $\mathbb{Q}$, $\{r:r^2&lt;2\}$ no tiene supremo.</p>
+            <p><strong>Versión ínfimo</strong> (equivalente): todo $A\ne\varnothing$ acotado inferiormente tiene ínfimo.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Caracterización ε</h2>
+            <div class="m-formula">$s=\sup A \iff s \text{ es cota sup. y } \forall\varepsilon&gt;0\ \exists a\in A:\ s-\varepsilon&lt;a\le s$</div>
+            <div class="m-formula">$i=\inf A \iff i \text{ es cota inf. y } \forall\varepsilon&gt;0\ \exists a\in A:\ i\le a&lt;i+\varepsilon$</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Propiedades</h2>
+            <ul>
+              <li>$A\subseteq B$ acotado sup. $\Rightarrow \sup A \le \sup B$.</li>
+              <li>$\inf(-A) = -\sup A$; $\ \sup(-A) = -\inf A$.</li>
+              <li>$c&gt;0$: $\sup(cA)=c\sup A$.</li>
+              <li>sup e inf son <strong>únicos</strong> cuando existen.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Arquímedes y densidad</h2>
+            <p>$\forall x\in\mathbb{R}\ \exists n\in\mathbb{N}: n&gt;x$. Consecuencia: $\forall\varepsilon&gt;0\ \exists n:\ 0&lt;\tfrac1n&lt;\varepsilon$.</p>
+            <p><strong>Densidad:</strong> entre dos reales siempre hay un racional y un irracional.</p>
+            <p><strong>Parte entera:</strong> existe un único $\lfloor x\rfloor\in\mathbb{Z}$ con $\lfloor x\rfloor\le x&lt;\lfloor x\rfloor+1$.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Receta: probar $\sup A=s$</h2>
+            <ol>
+              <li>Ver que $s$ es <strong>cota superior</strong> ($a\le s\ \forall a\in A$).</li>
+              <li>Dado $\varepsilon&gt;0$, exhibir $a\in A$ con $a&gt;s-\varepsilon$ (¡$a$ depende de $\varepsilon$!).</li>
+              <li>Si además $s\in A$: es el <strong>máximo</strong>.</li>
+            </ol>
+            <p><span class="m-tag tip">truco</span>Si $x&lt;y+\varepsilon\ \forall\varepsilon&gt;0$, entonces $x\le y$. Si $|x-y|&lt;\varepsilon\ \forall\varepsilon$, entonces $x=y$.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Ejemplos que conviene saber</h2>
+            <table class="m-table">
+              <thead><tr><th>$A$</th><th>$\sup$</th><th>$\inf$</th><th>máx / mín</th></tr></thead>
+              <tbody>
+                <tr><td>$(a,b]$</td><td>$b$</td><td>$a$</td><td>máx $b$ · sin mín</td></tr>
+                <tr><td>$\{1/2^n\}$</td><td>$1/2$</td><td>$0$</td><td>máx $1/2$ · sin mín</td></tr>
+                <tr><td>$\{1/2^n\}\cup\{0\}$</td><td>$1/2$</td><td>$0$</td><td>máx $1/2$ · mín $0$</td></tr>
+                <tr><td>$\{x^2-x-1\}$</td><td>no acotado</td><td>$-5/4$</td><td>mín $-5/4$</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 2 =================== -->
+    <section class="fase" id="f2" data-practica="Práctica 1">
+      <div class="fase-head">
+        <div class="fase-num">2</div>
+        <div>
+          <h2 class="fase-title">Convergencia — Sucesiones</h2>
+          <p class="fase-sub">Comportamiento a largo plazo: límites, monotonía y subsucesiones.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Sucesión</dt>
+              <dd>Función $a:\mathbb{N}\to\mathbb{R}$; se nota $(a_n)$.</dd></div>
+            <div class="def-item"><dt>Límite (convergencia)</dt>
+              <dd>$a_n\to\ell$ si $\forall\varepsilon>0\ \exists n_0\ \forall n\ge n_0:\ |a_n-\ell|<\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Divergencia a $+\infty$</dt>
+              <dd>$\forall M>0\ \exists n_0\ \forall n\ge n_0:\ a_n>M$ (análogo a $-\infty$).</dd></div>
+            <div class="def-item"><dt>Sucesión acotada</dt>
+              <dd>Existe $M>0$ con $|a_n|\le M$ para todo $n$.</dd></div>
+            <div class="def-item"><dt>Monótona</dt>
+              <dd>Creciente si $a_{n+1}\ge a_n\ \forall n$; decreciente si $a_{n+1}\le a_n\ \forall n$.</dd></div>
+            <div class="def-item"><dt>Subsucesión</dt>
+              <dd>$(a_{n_k})_k$ con índices $n_1<n_2<\cdots$ estrictamente crecientes.</dd></div>
+          </dl>
+        </div>
+
+        <!-- TABLAS DE NOTACIÓN -->
+        <div class="m-card" style="margin-bottom: 20px;">
+          <h2>Notación Sucesiones vs. Conjuntos</h2>
+          <div style="overflow-x: auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); color:var(--cyan);">
+                  <th style="padding:6px;">Notación</th>
+                  <th style="padding:6px;">Nombre Formal</th>
+                  <th style="padding:6px;">¿Qué es realmente?</th>
+                  <th style="padding:6px;">Ejemplo práctico ($a_n = \frac{1}{n}$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$a_n$</td>
+                  <td style="padding:6px;"><strong>Término $n$-ésimo</strong></td>
+                  <td style="padding:6px;">Un único número real (el valor en posición $n$).</td>
+                  <td style="padding:6px;">$a_3 = \frac{1}{3}$</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$(a_n)$ o $(a_n)_{n \in \mathbb{N}}$</td>
+                  <td style="padding:6px;"><strong>Sucesión</strong></td>
+                  <td style="padding:6px;">La función / lista ordenada infinita completa.</td>
+                  <td style="padding:6px;">$(1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots)$</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px;">$\{a_n\}$ o $\{a_n : n \in \mathbb{N}\}$</td>
+                  <td style="padding:6px;"><strong>Conjunto imagen</strong></td>
+                  <td style="padding:6px;">La colección de valores (sin orden ni repeticiones).</td>
+                  <td style="padding:6px;">$\{1, \frac{1}{2}, \frac{1}{3}, \dots\} \subset \mathbb{R}$<br><small style="color:var(--text-dim);">($\sup=1$, $\inf=0$)</small></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="m-card" style="margin-bottom: 20px;">
+          <h2>Notación Subsucesiones</h2>
+          <div style="overflow-x: auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); color:var(--cyan);">
+                  <th style="padding:6px;">Notación</th>
+                  <th style="padding:6px;">Nombre Formal</th>
+                  <th style="padding:6px;">¿Qué representa?</th>
+                  <th style="padding:6px;">Ejemplo ($a_n = \frac{1}{n}$, $n_k = 2k$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$k$</td>
+                  <td style="padding:6px;"><strong>Índice de subsucesión</strong></td>
+                  <td style="padding:6px;">Contador de pasos ($1, 2, 3, \dots$).</td>
+                  <td style="padding:6px;">Para $k=3$, seleccionamos el 3.º elemento.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$n_k$</td>
+                  <td style="padding:6px;"><strong>Índice seleccionado</strong></td>
+                  <td style="padding:6px;">Posición original elegida en el paso $k$.</td>
+                  <td style="padding:6px;">$n_3 = 2(3) = 6$ (posición 6 original).</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$a_{n_k}$</td>
+                  <td style="padding:6px;"><strong>Término $k$-ésimo</strong></td>
+                  <td style="padding:6px;">Un único número real extraído.</td>
+                  <td style="padding:6px;">$a_{n_3} = a_6 = \frac{1}{6}$</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:6px;">$(a_{n_k})_{k \in \mathbb{N}}$</td>
+                  <td style="padding:6px;"><strong>Subsucesión completa</strong></td>
+                  <td style="padding:6px;">La nueva lista ordenada infinita.</td>
+                  <td style="padding:6px;">$(a_2, a_4, a_6, \dots) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{6}, \dots)$</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px;">$\{a_{n_k} : k \in \mathbb{N}\}$</td>
+                  <td style="padding:6px;"><strong>Conjunto de términos</strong></td>
+                  <td style="padding:6px;">El conjunto de valores alcanzados.</td>
+                  <td style="padding:6px;">$\{\frac{1}{2}, \frac{1}{4}, \frac{1}{6}, \dots\} \subset \mathbb{R}$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Resultados básicos</h2>
+            <p><span class="m-tag thm">thm</span><strong>Unicidad:</strong> el límite, si existe, es único.</p>
+            <p>Convergente $\Rightarrow$ acotada (no vale la vuelta).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Álgebra de límites</h2>
+            <p>Si $a_n\to a$, $b_n\to b$ (finitos):</p>
+            <ul>
+              <li>$c\,a_n\to c\,a$; $\ a_n+b_n\to a+b$; $\ a_nb_n\to ab$.</li>
+              <li>$b\ne0\Rightarrow a_n/b_n\to a/b$.</li>
+              <li>$a_n\le b_n\ \forall n \Rightarrow a\le b$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Herramientas</h2>
+            <p><span class="m-tag tip">sandwich</span>Si $|x_n-\ell|\le a_n$ y $a_n\to0$, entonces $x_n\to\ell$.</p>
+            <p>Sucesión nula $\times$ acotada $\Rightarrow$ producto $\to 0$.</p>
+            <p><span class="m-tag thm">thm</span><strong>Monótona + acotada $\Rightarrow$ converge</strong> (a su sup o ínf).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Subsucesiones</h2>
+            <ul>
+              <li>$a_n\to\ell \Rightarrow$ toda subsucesión $\to\ell$.</li>
+              <li>Dos subsucesiones con límites distintos $\Rightarrow$ diverge (ej. $(-1)^n$).</li>
+              <li>No acotada sup. $\Rightarrow$ subsucesión $\to+\infty$.</li>
+              <li>$a_{2k}$ y $a_{2k-1}\to\ell \Rightarrow a_n\to\ell$.</li>
+              <li>Si toda subsucesión tiene una sub-subsucesión $\to\ell$, entonces $a_n\to\ell$.</li>
+              <li><span class="m-tag thm">Bolzano–Weierstrass</span>Toda sucesión acotada tiene una subsucesión convergente.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Series</h2>
+            <p>$\sum a_n$ converge si las sumas parciales $S_N=\sum_{n\le N}a_n$ convergen.</p>
+            <ul>
+              <li><strong>Condición necesaria:</strong> $\sum a_n$ converge $\Rightarrow a_n\to0$ (la vuelta es falsa: armónica).</li>
+              <li><strong>Geométrica:</strong> $\sum_{n\ge0}r^n$ converge $\iff|r|&lt;1$, y suma $\frac1{1-r}$.</li>
+              <li><strong>$a_n\ge0$:</strong> converge $\iff$ sumas parciales acotadas. Comparación: $0\le a_n\le b_n$, $\sum b_n$ converge $\Rightarrow\sum a_n$ converge.</li>
+              <li><strong>Cociente:</strong> $a_n/b_n\to L\in(0,\infty)$ $\Rightarrow$ mismo carácter.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Cómo probar $a_n\to\ell$ por definición</h2>
+            <ol>
+              <li>Calcular $|a_n-\ell|$ y acotarlo por algo simple que dependa de $n$ y tienda a $0$.</li>
+              <li>Despejar: pedir que esa cota sea $&lt;\varepsilon$ (queda "$n&gt;g(\varepsilon)$").</li>
+              <li>Escribir "dado $\varepsilon&gt;0$ sea $n_0&gt;g(\varepsilon)$" (existe por Arquímedes).</li>
+            </ol>
+            <p><span class="m-tag warn">ojo</span>Un límite jamás depende de un $n_0$ "mágico": $n_0$ se elige <em>después</em> de $\varepsilon$.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 3 =================== -->
+    <section class="fase" id="f3" data-practica="Práctica 2">
+      <div class="fase-head">
+        <div class="fase-num">3</div>
+        <div>
+          <h2 class="fase-title">Cardinalidad</h2>
+          <p class="fase-sub">Comparar tamaños de conjuntos con biyecciones.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Inyectiva / sobreyectiva / biyectiva</dt>
+              <dd>Iny.: $f(x)=f(y)\Rightarrow x=y$. Sobre.: $\operatorname{Im}f=B$. Biy.: ambas.</dd></div>
+            <div class="def-item"><dt>Coordinables ($A\sim B$)</dt>
+              <dd>Existe una biyección $f:A\to B$. Es relación de equivalencia.</dd></div>
+            <div class="def-item"><dt>Cardinal</dt>
+              <dd>Clase de coordinabilidad: $A$ y $B$ tienen el mismo cardinal $\iff A\sim B$.</dd></div>
+            <div class="def-item"><dt>Finito / numerable / contable</dt>
+              <dd>Finito: $A\sim\{1,\dots,n\}$. Numerable: $A\sim\mathbb{N}$ ($\aleph_0$). Contable: finito o numerable.</dd></div>
+            <div class="def-item"><dt>No numerable</dt>
+              <dd>Infinito y no coordinable con $\mathbb{N}$ (ej. $\mathbb{R}$, cardinal $c$).</dd></div>
+            <div class="def-item"><dt>Comparación $|A|\le|B|$</dt>
+              <dd>Existe una inyección $A\hookrightarrow B$.</dd></div>
+            <div class="def-item"><dt>Conjunto de partes $\mathcal{P}(A)$</dt>
+              <dd>El conjunto de todos los subconjuntos de $A$; cumple $\mathcal{P}(A)\sim\{0,1\}^A$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Numerables</h2>
+            <ul>
+              <li>$\mathbb{Z},\ \mathbb{Q},\ \mathbb{N}^k,$ primos: numerables.</li>
+              <li>Unión (numerable) de contables es contable.</li>
+              <li>Subconjunto infinito de numerable es numerable.</li>
+              <li>Subconjuntos finitos de un numerable: numerable.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>No numerabilidad</h2>
+            <p><span class="m-tag thm">Cantor</span>$[0,1)$ y $\mathbb{R}$ no son numerables (diagonal). Cardinal $c=2^{\aleph_0}$.</p>
+            <p>Los irracionales tienen cardinal $c$.</p>
+            <div class="m-formula">$\aleph_0 &lt; c &lt; 2^{c} &lt; \cdots$</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Partes y potencias</h2>
+            <ul>
+              <li>Si $\#A=n$, $\#\mathcal{P}(A)=2^n$.</li>
+              <li><span class="m-tag thm">Cantor</span>$|A|&lt;|\mathcal{P}(A)|$ siempre.</li>
+              <li>$\mathcal{P}(\mathbb{N})\sim\mathbb{R}$, $\ \#\mathcal{P}(\mathbb{N})=c$.</li>
+              <li>$|\mathbb{R}^k|=c\ \forall k$; $\ |\mathbb{R}[X]|=c$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Cantor–Schröder–Bernstein</h2>
+            <p><span class="m-tag thm">CSB</span>Inyecciones $A\hookrightarrow B$ y $B\hookrightarrow A$ $\Rightarrow A\sim B$.</p>
+            <p>Herramienta para probar igualdad de cardinales sin dar la biyección explícita.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Hotel de Hilbert y aritmética</h2>
+            <ul>
+              <li>Un infinito es coordinable con una parte propia: $\mathbb{N}\sim2\mathbb{N}\sim\mathbb{N}\setminus\{0\}$.</li>
+              <li>$\aleph_0+k=\aleph_0$, $\ \aleph_0+\aleph_0=\aleph_0$, $\ \aleph_0\cdot\aleph_0=\aleph_0$.</li>
+              <li>Todo infinito contiene un numerable: $\aleph_0$ es el menor cardinal infinito.</li>
+              <li>$A$ contable, $B\setminus A$ infinito $\Rightarrow B\setminus A\sim B$.</li>
+              <li>$c\cdot c=c$ (intercalar dígitos); unión numerable de conjuntos de cardinal $c$ tiene cardinal $c$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Receta: calcular un cardinal</h2>
+            <ol>
+              <li><strong>Numerable:</strong> biyección con $\mathbb{N}$, o subconjunto infinito de un numerable, o unión numerable de contables + infinito.</li>
+              <li><strong>Cardinal $c$:</strong> cota superior (está dentro de $\mathbb{R}^k$, $\mathcal{P}(\mathbb{N})$ o $\{0,1\}^{\mathbb{N}}$) y cota inferior (contiene un intervalo o inyecta $\mathcal{P}(\mathbb{N})$); cerrar con CSB.</li>
+              <li><strong>Objetos "finitos"</strong> (polinomios, palabras, sucesiones eventualmente constantes, periódicas): numerables. <strong>Objetos "infinitos"</strong> (sucesiones arbitrarias, subconjuntos de $\mathbb{N}$): $c$.</li>
+            </ol>
+            <p><span class="m-tag warn">ojo</span>El desarrollo binario/decimal no es único ($0{,}0\overline1=0{,}1$): usar CSB o evitar colas de unos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 4 =================== -->
+    <section class="fase" id="f4" data-practica="Práctica 3">
+      <div class="fase-head">
+        <div class="fase-num">4</div>
+        <div>
+          <h2 class="fase-title">Topología Métrica — Clasificación y Relaciones</h2>
+          <p class="fase-sub">Operadores topológicos, identidades, caracterización secuencial y casos clásicos.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        
+        <!-- DEFINICIONES CLAVE (ANCHO COMPLETO ARRIBA) -->
+        <div class="defs-clave">
+          <h3>🔑 Definiciones Clave ($E \subseteq M$)</h3>
+          <dl>
+            <div class="def-item"><dt>Punto Interior ($E^\circ$)</dt>
+              <dd>$\exists r > 0: B(x,r) \subseteq E$. $E^\circ$ es el mayor abierto en $E$.</dd></div>
+            <div class="def-item"><dt>Adherencia ($\overline{E}$)</dt>
+              <dd>$\forall r > 0: B(x,r) \cap E \neq \emptyset$. $\overline{E}$ es el menor cerrado que contiene a $E$.</dd></div>
+            <div class="def-item"><dt>Acumulación ($E'$)</dt>
+              <dd>$\forall r > 0: (B(x,r) \setminus \{x\}) \cap E \neq \emptyset$ (infinitos puntos).</dd></div>
+            <div class="def-item"><dt>Frontera ($\partial E$)</dt>
+              <dd>$\forall r > 0: B(x,r) \cap E \neq \emptyset$ y $B(x,r) \cap E^c \neq \emptyset$.</dd></div>
+            <div class="def-item"><dt>Punto Aislado</dt>
+              <dd>$x \in E \setminus E'$: existe $B(x,r) \cap E = \{x\}$.</dd></div>
+            <div class="def-item"><dt>Conjunto Denso</dt>
+              <dd>$\overline{E} = M$ (ej. $\mathbb{Q}$ es denso en $\mathbb{R}$).</dd></div>
+          </dl>
+        </div>
+
+        <!-- LAYOUT 2 COLUMNAS (IZQUIERDA: RELACIONES + SECUENCIAL | DERECHA: MÉTRICAS) -->
+        <div class="fase-grid-2col">
+          
+          <!-- COLUMNA IZQUIERDA -->
+          <div class="col-left">
+            <div class="m-card">
+              <h2>BOLAS Y ENTORNO ($x \in M, r > 0$)</h2>
+              <div class="m-formula">$B(x,r) = \{y \in M \mid d(x,y) < r\}$ <small>(Abierta)</small></div>
+              <div class="m-formula">$\overline{B}(x,r) = \{y \in M \mid d(x,y) \le r\}$ <small>(Cerrada)</small></div>
+              <div class="m-formula">$S(x,r) = \{y \in M \mid d(x,y) = r\}$ <small>(Esfera)</small></div>
+              <ul>
+                <li><strong>Entorno de $x$:</strong> Todo conjunto $U \subseteq M$ que contiene a una bola abierta $B(x,r)$.</li>
+              </ul>
+            </div>
+            <div class="m-card">
+              <h2>RELACIONES Y DESCOMPOSICIONES</h2>
+              <div class="m-formula">$E^\circ \subseteq E \subseteq \overline{E}$</div>
+              <div class="m-formula">$\overline{E} = E \cup E' = E \cup \partial E$</div>
+              <div class="m-formula">$\partial E = \overline{E} \cap \overline{E^c} = \overline{E} \setminus E^\circ$</div>
+              <ul>
+                <li>$A \text{ es abierto} \iff A = A^\circ$</li>
+                <li>$F \text{ es cerrado} \iff F = \overline{F} \iff F' \subseteq F$</li>
+              </ul>
+            </div>
+
+            <div class="m-card">
+              <h2>CARACTERIZACIÓN SECUENCIAL</h2>
+              <p><span class="m-tag def">CLAUSURA</span> $x \in \overline{E} \iff \exists (x_n) \subseteq E : x_n \to x$.</p>
+              <p><span class="m-tag def">DERIVADO</span> $x \in E' \iff \exists (x_n) \subseteq E \setminus \{x\} \text{ distintas} \to x$.</p>
+              <p><span class="m-tag def">CERRADO</span> $E \text{ es cerrado} \iff [(x_n) \subseteq E, x_n \to x \implies x \in E]$.</p>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA -->
+          <div class="col-right">
+            <div class="m-card height-fill">
+              <h2>LAS MÉTRICAS $d_1$, $d_2$ Y $d_\infty$ EN $\mathbb{R}^n$ Y EN $C([0,1])$</h2>
+              
+              <h3>1. En $\mathbb{R}^n$ (para $x, y \in \mathbb{R}^n$)</h3>
+              <ul>
+                <li><strong>Euclídea ($d_2$):</strong> $\displaystyle d_2(x,y) = (\sum_{i=1}^n (x_i - y_i)^2)^{1/2}$</li>
+                <li><strong>Taxicab / Manhattan ($d_1$):</strong> $\displaystyle d_1(x,y) = \sum_{i=1}^n |x_i - y_i|$</li>
+                <li><strong>Del Máximo / Supremo ($d_\infty$):</strong> $\displaystyle d_\infty(x,y) = \max_{1 \le i \le n} |x_i - y_i|$</li>
+              </ul>
+
+              <h3>2. En el Espacio de Funciones Continuas $C([0,1])$</h3>
+              <p>Dado el conjunto $C([0,1]) = \{f:[0,1] \to \mathbb{R} \mid f \text{ es continua}\}$, se definen las analogías continuas:</p>
+              <ul>
+                <li><strong>Métrica de la norma $L^1$ ($d_1$):</strong> $\displaystyle d_1(f,g) = \int_0^1 |f(t) - g(t)|\, dt$</li>
+                <li><strong>Métrica de la norma $L^2$ ($d_2$):</strong> $\displaystyle d_2(f,g) = \left(\int_0^1 |f(t) - g(t)|^2\, dt\right)^{1/2}$</li>
+                <li><strong>Métrica de la Convergencia Uniforme ($d_\infty$):</strong> $\displaystyle d_\infty(f,g) = \max_{t \in [0,1]} |f(t) - g(t)|$</li>
+              </ul>
+              <p style="font-size:12.5px; color:var(--text-dim); margin-top:10px;">
+                <em>Nota:</em> En $d_\infty(f,g)$, el máximo siempre existe por el <strong>Teorema de Weierstrass</strong>, ya que $|f - g|$ es continua sobre el compacto $[0,1]$. Cumple la desigualdad triangular pues $|f(t)-h(t)| \le |f(t)-g(t)| + |g(t)-h(t)| \le d_\infty(f,g) + d_\infty(g,h)$ para todo $t$.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- OPERACIONES, DISTANCIA A CONJUNTOS Y EQUIVALENCIA DE MÉTRICAS -->
+        <div class="m-cols" style="margin-top: 16px;">
+          <div class="m-card">
+            <h2>Abiertos y cerrados: operaciones</h2>
+            <ul>
+              <li>Unión <strong>arbitraria</strong> de abiertos es abierta; intersección <strong>finita</strong> es abierta (falla para infinitos: $\bigcap(-\tfrac1n,\tfrac1n)=\{0\}$).</li>
+              <li>Intersección <strong>arbitraria</strong> de cerrados es cerrada; unión <strong>finita</strong> es cerrada.</li>
+              <li>$\varnothing$ y $E$ son abiertos y cerrados a la vez. $B(x,r)$ es abierta; $\{x\}$ y $\overline B(x,r)$ son cerrados.</li>
+              <li>$\overline{B(x,r)}\subseteq\overline B(x,r)$ (puede ser estricta: métrica discreta).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Álgebra de interior y clausura</h2>
+            <div class="m-formula">$E\setminus A^\circ=\overline{E\setminus A}$ $\quad$ $E\setminus\overline A=(E\setminus A)^\circ$</div>
+            <ul>
+              <li>$(A\cap B)^\circ=A^\circ\cap B^\circ$ $\quad$ $\overline{A\cup B}=\overline A\cup\overline B$.</li>
+              <li>$A^\circ\cup B^\circ\subseteq(A\cup B)^\circ$ $\quad$ $\overline{A\cap B}\subseteq\overline A\cap\overline B$ (inclusiones, no igualdades).</li>
+              <li>$\partial A=\partial(E\setminus A)$ y es cerrada.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Distancia a un conjunto</h2>
+            <div class="m-formula">$d(x,A)=\inf\{d(x,a):a\in A\}$</div>
+            <ul>
+              <li>$|d(x,A)-d(y,A)|\le d(x,y)$ (1-Lipschitz, continua).</li>
+              <li>$d(x,A)=0\iff x\in\overline A$.</li>
+              <li>$\{d(x,A)&lt;r\}$ abierto; $\{d(x,A)\le r\}$ cerrado.</li>
+              <li>$b_d(A,B)=\inf d(a,b)$ no es métrica: puede ser $0$ con $A\cap B=\varnothing$ (ej. $(0,1)$ y $(1,2)$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Métricas equivalentes</h2>
+            <div class="m-formula">$d_\infty\le d_2\le d_1\le n\,d_\infty$</div>
+            <p>$B_1(x,r)\subseteq B_2(x,r)\subseteq B_\infty(x,r)\subseteq B_1(x,nr)$.</p>
+            <p>Equivalentes $\Rightarrow$ mismos abiertos, cerrados, convergencia, continuidad y compacidad.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>¿Es una métrica? (Práctica 3)</h2>
+            <ul>
+              <li>$|x-y|$, $d_1,d_2,d_\infty$, $d_\infty$ en $C[0,1]$, discreta: <strong>sí</strong>.</li>
+              <li>$\sqrt{|x-y|}$ en $\mathbb{R}$: <strong>sí</strong> ($\sqrt{a+b}\le\sqrt a+\sqrt b$).</li>
+              <li>$(x-y)^2$: <strong>no</strong> (falla la triangular: $d(0,2)=4&gt;1+1$).</li>
+              <li>$|x^2-y^2|$: <strong>no</strong> (no distingue $x$ de $-x$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Diámetro</h2>
+            <p>$\operatorname{diam}A\le\operatorname{diam}B$ si $A\subseteq B$; y $\operatorname{diam}A=\operatorname{diam}\overline A$. Acotado $\iff$ contenido en una bola.</p>
+          </div>
+        </div>
+
+        <!-- CASOS CLÁSICOS (ANCHO COMPLETO ABAJO) -->
+        <div class="m-card" style="margin-top: 16px;">
+          <h2>Casos Clásicos en $(\mathbb{R}, |\cdot|)$</h2>
+          <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border); text-align:left;">
+                <th>$E$</th><th>$E^\circ$</th><th>$\overline{E}$</th><th>$E'$</th><th>$\partial E$</th><th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$(0,1]$</td><td>$(0,1)$</td><td>$[0,1]$</td><td>$[0,1]$</td><td>$\{0,1\}$</td><td>Ni abierto ni cerrado</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$\mathbb{Q}$</td><td>$\emptyset$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>$\mathbb{R}$</td><td>Ni abierto ni cerrado</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>$\emptyset$</td><td>$\mathbb{Z}$</td><td>Cerrado</td></tr>
+              <tr><td>$(0,1) \cup \{2\}$</td><td>$(0,1)$</td><td>$[0,1] \cup \{2\}$</td><td>$[0,1]$</td><td>$\{0,1,2\}$</td><td>Ni abierto ni cerrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== FASE 5 =================== -->
+    <section class="fase" id="f5" data-practica="Práctica 3">
+      <div class="fase-head">
+        <div class="fase-num">5</div>
+        <div>
+          <h2 class="fase-title">Completitud</h2>
+          <p class="fase-sub">Sucesiones de Cauchy, espacios completos y el teorema de intersección de Cantor.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Convergencia métrica</dt>
+              <dd>$x_n\to x$ si $d(x_n,x)\to 0$, o sea $\forall\varepsilon&gt;0\ \exists n_0\ \forall n\ge n_0:\ d(x_n,x)&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Sucesión de Cauchy</dt>
+              <dd>$\forall\varepsilon&gt;0\ \exists N\ \forall n,m\ge N:\ d(x_n,x_m)&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Espacio completo</dt>
+              <dd>Toda sucesión de Cauchy converge a un punto del espacio.</dd></div>
+            <div class="def-item"><dt>Diámetro</dt>
+              <dd>$\operatorname{diam}(A)=\sup\{d(x,y):x,y\in A\}$.</dd></div>
+            <div class="def-item"><dt>Sucesión acotada (en un métrico)</dt>
+              <dd>$\{x_n\}$ está contenida en alguna bola: $\exists x_0,R:\ d(x_n,x_0)\le R\ \forall n$.</dd></div>
+            <div class="def-item"><dt>Completitud de $\mathbb{R}$</dt>
+              <dd>Equivale al axioma del supremo: toda sucesión de Cauchy de reales converge.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Cauchy y completitud</h2>
+            <p>Convergente $\Rightarrow$ Cauchy. Completo: vale la vuelta.</p>
+            <ul>
+              <li>$(\mathbb{R}^n, d_1),(d_2),(d_\infty)$ son completos.</li>
+              <li>Cerrado en completo es completo.</li>
+              <li>$\mathbb{Q}$ <strong>no</strong> es completo (Cauchy $\to\sqrt2\notin\mathbb{Q}$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Cantor (intersección)</h2>
+            <p><span class="m-tag thm">thm</span>$E$ completo, $A_{n+1}\subseteq A_n$ cerrados no vacíos con $\operatorname{diam}(A_n)\to0$:</p>
+            <div class="m-formula">$\displaystyle\bigcap_{n}A_n=\{x\}$ (un único punto).</div>
+          </div>
+
+          <div class="m-card">
+            <h2>Ejemplos y contraejemplos</h2>
+            <table class="m-table">
+              <thead><tr><th>Completos</th><th>No completos</th></tr></thead>
+              <tbody>
+                <tr><td>$\mathbb{R}$, $\mathbb{R}^n$ ($d_1,d_2,d_\infty$)</td><td>$\mathbb{Q}$ (Cauchy $\to\sqrt2$)</td></tr>
+                <tr><td>$[a,b]$, cualquier cerrado de un completo</td><td>$(0,1)$, $\mathbb{R}\setminus\{0\}$ (Cauchy $\tfrac1n$)</td></tr>
+                <tr><td>Discreto (Cauchy = eventualmente constante)</td><td>$C([0,1])$ con $d_1$</td></tr>
+                <tr><td>$(B(X),d_\infty)$, $(C(K),d_\infty)$, $\ell^\infty$, $\ell^2$</td><td>$\mathbb{R}[t]$ con $\|\cdot\|_\infty$</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="m-card">
+            <h2>Criterios útiles</h2>
+            <ul>
+              <li>Cauchy $\Rightarrow$ acotada.</li>
+              <li>Cauchy con una subsucesión $\to x$ $\Rightarrow$ toda la sucesión $\to x$.</li>
+              <li><span class="m-tag thm">thm</span>Compacto $\Rightarrow$ completo.</li>
+              <li>Un subconjunto completo de cualquier métrico es cerrado; un cerrado de un completo es completo.</li>
+              <li>Completitud <em>no</em> se conserva por equivalencia topológica (sí por $c\,d\le d'\le C\,d$).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =================== FASE 6 =================== -->
+    <section class="fase" id="f6" data-practica="Práctica 4">
+      <div class="fase-head">
+        <div class="fase-num">6</div>
+        <div>
+          <h2 class="fase-title">Funciones continuas</h2>
+          <p class="fase-sub">Continuidad ε–δ, secuencial y topológica; continuidad uniforme y Lipschitz.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Continua en $x$</dt>
+              <dd>$\forall\varepsilon&gt;0\ \exists\delta&gt;0\ \forall y:\ d(x,y)&lt;\delta\Rightarrow d'(f(x),f(y))&lt;\varepsilon$, es decir $f(B(x,\delta))\subseteq B(f(x),\varepsilon)$. Continua: en todo punto.</dd></div>
+            <div class="def-item"><dt>Uniformemente continua</dt>
+              <dd>$\forall\varepsilon&gt;0\ \exists\delta&gt;0\ \forall x,y:\ d(x,y)&lt;\delta\Rightarrow d'(f(x),f(y))&lt;\varepsilon$ ($\delta$ no depende del punto).</dd></div>
+            <div class="def-item"><dt>Lipschitz</dt>
+              <dd>$\exists C\ge0:\ d'(f(x),f(y))\le C\,d(x,y)\ \forall x,y$.</dd></div>
+            <div class="def-item"><dt>Homeomorfismo</dt>
+              <dd>Biyección continua con inversa continua. $M\sim N$ si existe uno.</dd></div>
+            <div class="def-item"><dt>Isometría</dt>
+              <dd>$d'(f(x),f(y))=d(x,y)$. Es Lipschitz-1, inyectiva y homeomorfismo sobre su imagen.</dd></div>
+            <div class="def-item"><dt>Densidad</dt>
+              <dd>$D$ es denso en $M$ si $\overline D=M$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Tres caracterizaciones</h2>
+            <ul>
+              <li><span class="m-tag thm">secuencial</span>$f$ continua en $x\iff(x_n\to x\Rightarrow f(x_n)\to f(x))$.</li>
+              <li><span class="m-tag thm">abiertos</span>$f$ continua $\iff f^{-1}(\text{abierto})$ es abierto $\iff f^{-1}(\text{cerrado})$ es cerrado.</li>
+              <li><span class="m-tag thm">clausura</span>$f$ continua $\iff f(\overline E)\subseteq\overline{f(E)}\ \forall E$.</li>
+            </ul>
+            <p>Un punto aislado es siempre punto de continuidad. Todo $f$ definida en un discreto es continua (y UC).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Qué conserva y qué no</h2>
+            <ul>
+              <li>Preimagen: conserva abiertos y cerrados.</li>
+              <li><strong>Imagen:</strong> no. $x^2$ lleva $(-1,1)$ en $[0,1)$; $\tfrac{x^2}{1+x^2}$ lleva $[0,\infty)$ en $[0,1)$; $e^x$ lleva $\mathbb{R}$ en $(0,\infty)$.</li>
+              <li>$\{f=g\}$ es cerrado; $\{f\ne g\}$ es abierto. $f(x_0)&gt;0\Rightarrow f&gt;0$ cerca de $x_0$.</li>
+              <li>Dos continuas iguales en un denso son iguales; $f$ suryectiva continua manda densos en densos.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Jerarquía</h2>
+            <div class="m-formula">Lipschitz $\Rightarrow$ unif. continua $\Rightarrow$ continua</div>
+            <ul>
+              <li>Ninguna recíproca: $\sqrt x$ es UC en $[0,\infty)$ pero no Lipschitz; $x^2$ es continua pero no UC en $\mathbb{R}$.</li>
+              <li>$|f'|\le C$ en un intervalo $\Rightarrow$ Lipschitz (valor medio).</li>
+              <li><span class="m-tag thm">Heine–Cantor</span>Continua en compacto $\Rightarrow$ UC.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Receta: refutar UC</h2>
+            <p><span class="m-tag tip">criterio</span>$f$ es UC $\iff\big(d(x_n,y_n)\to0\Rightarrow d'(f(x_n),f(y_n))\to0\big)$.</p>
+            <p>Para refutarla: dos sucesiones que se juntan cuyas imágenes no. Típico: $\tfrac1x$ con $\tfrac1n,\tfrac1{n+1}$; $\sin\tfrac1x$ con $\tfrac1{2n\pi+\pi/2},\tfrac1{2n\pi}$; $\sin(x^2)$ con $\sqrt{n\pi+\pi/2},\sqrt{n\pi}$.</p>
+            <p><span class="m-tag warn">ojo</span>Acotada y continua no implica UC; UC no implica acotada ($f(x)=x$).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>UC y completitud</h2>
+            <ul>
+              <li>UC manda Cauchy en Cauchy (continua simple no: $\tfrac1x$ en $(0,1)$).</li>
+              <li><span class="m-tag thm">extensión</span>$E$ denso en $M$, $N$ completo, $f:E\to N$ UC $\Rightarrow$ existe una única extensión UC a $M$.</li>
+              <li>$f:\mathbb{R}\to\mathbb{R}$ continua con límite $0$ en $\pm\infty$ $\Rightarrow$ UC.</li>
+              <li>$d(x_0,\cdot)$ y $d(\cdot,A)$ son 1-Lipschitz.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Funciones de Urysohn</h2>
+            <p>$A,B$ cerrados disjuntos no vacíos: $h(x)=\dfrac{d(x,A)}{d(x,A)+d(x,B)}$ es continua, $h|_A=0$, $h|_B=1$.</p>
+            <p>De ahí: existen abiertos disjuntos $U\supseteq A$, $V\supseteq B$ (en un métrico).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Métricas y continuidad (Práctica 4)</h2>
+            <ul>
+              <li>$\mathrm{id}:(\mathbb{R}^2,\delta)\to(\mathbb{R}^2,d_2)$ continua; en el otro sentido no.</li>
+              <li>Cambiar $d_2$ por $d_1,d_\infty$ no altera la continuidad (equivalentes).</li>
+              <li>En $C[0,1]$: evaluación e integral son continuas con $d_\infty$; con $d_1$ la evaluación no (pico fino y alto).</li>
+              <li>Continua en $d_1$ $\Rightarrow$ continua en $d_\infty$ (pues $d_1\le d_\infty$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Homeomorfismos</h2>
+            <ul>
+              <li>$d_1\sim d_2$ equivalentes $\iff\mathrm{id}$ es homeomorfismo.</li>
+              <li>$x\mapsto\frac{x}{1+|x|}$: homeomorfismo $\mathbb{R}\to(-1,1)$.</li>
+              <li>Biyección continua $\ne$ homeomorfismo (ej. $\mathrm{id}:(\mathbb{R},\delta)\to(\mathbb{R},|\cdot|)$), salvo dominio compacto.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 7 =================== -->
+    <section class="fase" id="f7" data-practica="Práctica 5">
+      <div class="fase-head">
+        <div class="fase-num">7</div>
+        <div>
+          <h2 class="fase-title">Compacidad y puntos fijos</h2>
+          <p class="fase-sub">Compactos, Heine–Borel, Weierstrass y el teorema de Banach.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Compacto</dt>
+              <dd>$K\subseteq M$ tal que toda sucesión $(x_n)\subseteq K$ tiene una subsucesión $x_{n_k}\to x\in K$.</dd></div>
+            <div class="def-item"><dt>Cubrimiento por abiertos</dt>
+              <dd>$\{U_i\}$ abiertos con $K\subseteq\bigcup U_i$. <em>Subcubrimiento finito:</em> alcanzan finitos de ellos.</dd></div>
+            <div class="def-item"><dt>Contracción</dt>
+              <dd>$f:M\to M$ con $d(f(x),f(y))\le\alpha\,d(x,y)$ para un $\alpha\in(0,1)$ <strong>fijo</strong>.</dd></div>
+            <div class="def-item"><dt>Punto fijo</dt>
+              <dd>$x^\ast$ con $f(x^\ast)=x^\ast$. Iteración: $x_{n+1}=f(x_n)$.</dd></div>
+            <div class="def-item"><dt>Consecuencias inmediatas</dt>
+              <dd>Compacto $\Rightarrow$ cerrado, acotado y <strong>completo</strong> (Cauchy + subsucesión convergente).</dd></div>
+            <div class="def-item"><dt>Homeomorfismo</dt>
+              <dd>Biyección continua cuya inversa también lo es.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Equivalencias</h2>
+            <p><span class="m-tag thm">thm</span>En un métrico, son equivalentes:</p>
+            <ol>
+              <li>$K$ es compacto (secuencial).</li>
+              <li>Todo subconjunto infinito de $K$ tiene un punto de acumulación en $K$.</li>
+              <li>Todo cubrimiento por abiertos tiene un subcubrimiento finito.</li>
+            </ol>
+          </div>
+
+          <div class="m-card">
+            <h2>Heine–Borel</h2>
+            <p>Compacto $\Rightarrow$ cerrado y acotado (siempre).</p>
+            <p><span class="m-tag thm">HB</span>En $\mathbb{R}^m$ (con $d_1,d_2$ o $d_\infty$): compacto $\iff$ cerrado y acotado.</p>
+            <p><span class="m-tag warn">ojo</span>Fuera de $\mathbb{R}^m$ es falso: $\overline B(0,1)$ en $\ell^\infty$, $\ell^2$, $C[0,1]$ es cerrada y acotada pero <strong>no</strong> compacta (testigos: $e_n$, $x^n$).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Operaciones</h2>
+            <ul>
+              <li>Finito $\Rightarrow$ compacto. En un discreto: compacto $\iff$ finito.</li>
+              <li>Cerrado dentro de compacto es compacto.</li>
+              <li>Unión <strong>finita</strong> de compactos es compacta; intersección <strong>arbitraria</strong> también.</li>
+              <li>Unión infinita: no ($\bigcup[\tfrac1i,1]=(0,1]$). $A\cap K$ con $A$ cualquiera: no.</li>
+              <li>$K$ compacto $\Rightarrow K\times K$, $K+K$, $K\cdot K$ compactos (imagen continua).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Compacto + continua</h2>
+            <ul>
+              <li><span class="m-tag thm">imagen</span>$f$ continua, $K$ compacto $\Rightarrow f(K)$ compacto.</li>
+              <li><span class="m-tag thm">Weierstrass</span>$f:K\to\mathbb{R}$ continua alcanza máx y mín.</li>
+              <li><span class="m-tag thm">Heine–Cantor</span>$f$ continua en compacto $\Rightarrow$ UC.</li>
+              <li>Biyección continua desde un compacto es homeomorfismo.</li>
+              <li>$f:K\to(0,\infty)$ continua $\Rightarrow\exists\alpha&gt;0:\ f&gt;\alpha$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Distancias y compactos</h2>
+            <ul>
+              <li>$K$ compacto: $d(x,K)=d(x,y)$ para algún $y\in K$.</li>
+              <li>$A$ compacto, $B$ cerrado, $A\cap B=\varnothing$ $\Rightarrow b_d(A,B)&gt;0$. Con $A$ solo cerrado falla ($\mathbb{N}$ y $\{n+\tfrac1n\}$).</li>
+              <li><span class="m-tag thm">encaje</span>$E$ compacto, $F_{n+1}\subseteq F_n$ cerrados no vacíos $\Rightarrow\bigcap F_n\ne\varnothing$. (Y recíprocamente: caracteriza la compacidad.)</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Teorema de Banach</h2>
+            <p><span class="m-tag thm">thm</span>$(M,d)$ completo, $f:M\to M$ contracción $\Rightarrow$ existe un único $x^\ast$ con $f(x^\ast)=x^\ast$, y $x_{n+1}=f(x_n)\to x^\ast$ desde cualquier $x_0$.</p>
+            <div class="m-formula">$d(x_n,x^\ast)\le\dfrac{\alpha^n}{1-\alpha}\,d(x_1,x_0)$</div>
+            <p><span class="m-tag warn">ojo</span>Hacen falta <strong>completitud</strong> ($x/3$ en $\mathbb{R}\setminus\{0\}$ no tiene punto fijo) y $\alpha&lt;1$ fijo ($d(f(x),f(y))&lt;d(x,y)$ no alcanza).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Otros puntos fijos</h2>
+            <ul>
+              <li><span class="m-tag thm">compacto</span>$M$ compacto, $f$ continua con $d(f(x),f(y))&lt;d(x,y)$ ($x\ne y$) $\Rightarrow$ único punto fijo.</li>
+              <li><strong>Iteradas:</strong> $f^n$ contracción en un completo $\Rightarrow f$ tiene único punto fijo (ej.: $\cos x=x$).</li>
+              <li><strong>Bolzano:</strong> $f:[a,b]\to[a,b]$ continua tiene punto fijo ($g=f-\mathrm{id}$).</li>
+              <li>$\mathrm{Fix}(f)=\{d(f(x),x)=0\}$ es cerrado si $f$ es continua.</li>
+              <li>$|f'|\le\alpha&lt;1$ $\Rightarrow$ contracción.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Recetas</h2>
+            <ul>
+              <li><strong>¿$K\subseteq\mathbb{R}^n$ compacto?</strong> Cerrado y acotado. Si no: sucesión que se escapa al infinito o a un punto de acumulación fuera de $K$.</li>
+              <li><strong>Refutar por cubrimientos:</strong> abiertos "uno por punto" (discretos) o crecientes que dejan puntos fuera.</li>
+              <li><strong>Mínimo:</strong> continua sobre compacto $\Rightarrow$ se alcanza. Es la herramienta de $d(x,K)$, $b_d$, $\alpha$.</li>
+              <li><strong>Borsuk en $S^1$:</strong> $g(t)=f(c(t))-f(c(t+\pi))$ cumple $g(t+\pi)=-g(t)$: Bolzano.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 8 =================== -->
+    <section class="fase" id="f8" data-practica="Práctica 6">
+      <div class="fase-head">
+        <div class="fase-num">8</div>
+        <div>
+          <h2 class="fase-title">Espacios normados y operadores</h2>
+          <p class="fase-sub">Dimensión finita vs. infinita, subespacios y operadores lineales acotados.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Norma</dt>
+              <dd>$\|x\|\ge0$ y $\|x\|=0\iff x=0$; $\|\alpha x\|=|\alpha|\|x\|$; $\|x+y\|\le\|x\|+\|y\|$. Induce $d(x,y)=\|x-y\|$.</dd></div>
+            <div class="def-item"><dt>Espacio de Banach</dt>
+              <dd>Espacio normado completo.</dd></div>
+            <div class="def-item"><dt>Normas equivalentes</dt>
+              <dd>$\exists c,C&gt;0:\ c\|x\|\le\|x\|'\le C\|x\|$ $\ \forall x$.</dd></div>
+            <div class="def-item"><dt>Operador acotado</dt>
+              <dd>$T$ lineal con $\|Tx\|_F\le M\|x\|_E$ para todo $x$.</dd></div>
+            <div class="def-item"><dt>Norma de $T$</dt>
+              <dd>$\|T\|=\sup_{\|x\|\le1}\|Tx\|=\sup_{\|x\|=1}\|Tx\|=\sup_{x\ne0}\frac{\|Tx\|}{\|x\|}$.</dd></div>
+            <div class="def-item"><dt>Espacios de sucesiones</dt>
+              <dd>$\ell^\infty$: acotadas con $\sup|a_n|$; $\ell^2$: $\sum|a_n|^2&lt;\infty$ con $(\sum|a_n|^2)^{1/2}$.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Normas en $\mathbb{R}^n$ y $C[0,1]$</h2>
+            <ul>
+              <li>$\|x\|_1=\sum|x_i|$, $\ \|x\|_2=(\sum x_i^2)^{1/2}$, $\ \|x\|_\infty=\max|x_i|$.</li>
+              <li>$\|f\|_\infty=\max|f|$, $\ \|f\|_1=\int_0^1|f|$.</li>
+              <li>La triangular de $\|\cdot\|_2$ sale de Cauchy–Schwarz (Minkowski).</li>
+              <li>Bolas: rombo ($\|\cdot\|_1$), círculo ($\|\cdot\|_2$), cuadrado ($\|\cdot\|_\infty$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Geometría de las bolas</h2>
+            <ul>
+              <li>$\overline{B(x,r)}=\overline B(x,r)$ (en un normado, a diferencia de un métrico general).</li>
+              <li>$\operatorname{diam}B(x,r)=2r$.</li>
+              <li>Toda bola es convexa: $ty+(1-t)z\in B(x,r)$.</li>
+              <li>Cesàro: $x_n\to x_0\Rightarrow\frac{x_1+\cdots+x_n}{n}\to x_0$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Dimensión finita vs. infinita</h2>
+            <table class="m-table">
+              <thead><tr><th></th><th>$\dim&lt;\infty$</th><th>$\dim=\infty$</th></tr></thead>
+              <tbody>
+                <tr><td>Normas</td><td>todas equivalentes</td><td>no ($t^n$: $\|t^n\|_\infty=1$, $\|t^n\|_1=\tfrac1{n+1}$)</td></tr>
+                <tr><td>Completo</td><td>sí (Banach)</td><td>depende ($\mathbb{R}[t]$ no)</td></tr>
+                <tr><td>Bola cerrada</td><td>compacta</td><td>no compacta (Riesz)</td></tr>
+                <tr><td>Subespacios</td><td>cerrados</td><td>pueden ser densos</td></tr>
+                <tr><td>Lineal</td><td>siempre continuo</td><td>puede no serlo (derivación)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="m-card">
+            <h2>Subespacios</h2>
+            <ul>
+              <li>$\overline S$ es subespacio.</li>
+              <li>$S\ne E\Rightarrow S^\circ=\varnothing$ (un subespacio propio no contiene ninguna bola).</li>
+              <li>$\dim S&lt;\infty\Rightarrow S$ cerrado.</li>
+              <li>Hiperplano: o cerrado o denso.</li>
+              <li>Ej.: $S=\{a\in E:\sum a_n=0\}$ es denso en $E$ = sucesiones casi nulas (se reparte la suma).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>$\ell^\infty$ y $\ell^2$</h2>
+            <ul>
+              <li>Bola cerrada de radio 1 no compacta: $\|e_n-e_m\|_\infty=1$, $\|e_n-e_m\|_2=\sqrt2$.</li>
+              <li>$\ell^\infty$ <strong>no es separable</strong>: $\{0,1\}^{\mathbb{N}}$ son $c$ puntos a distancia 1.</li>
+              <li>$\gamma(a)=\sum a_n/n$ es continua en $\ell^2$: $|\gamma(a)|\le\|a\|_2\,(\pi^2/6)^{1/2}$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Operadores: la gran equivalencia</h2>
+            <p><span class="m-tag thm">thm</span>Para $T$ lineal, son equivalentes: continuo en $0$ $\iff$ continuo en algún punto $\iff$ continuo $\iff$ unif. continuo $\iff$ acotado $\iff$ manda acotados en acotados.</p>
+            <p>Siempre: $\|Tx\|\le\|T\|\,\|x\|$.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Ejemplos de operadores</h2>
+            <ul>
+              <li>Evaluación $f\mapsto f(0)$ e integral $f\mapsto\int f$: continuas en $\|\cdot\|_\infty$ (norma 1).</li>
+              <li>Con $\|\cdot\|_1$: la integral sí (norma 1); la evaluación <strong>no</strong>.</li>
+              <li>$(Kf)(x)=\int_0^1k(x,y)f(y)\,dy$: $Kf$ es continua y $\|K\|\le\max_x\int_0^1|k(x,y)|\,dy$.</li>
+              <li>Derivación en $(\mathbb{R}[t],\|\cdot\|_\infty)$: lineal pero no acotada ($\delta t^n=nt^{n-1}$).</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Recetas</h2>
+            <ul>
+              <li><strong>Acotar $\|T\|$:</strong> $\le$ con una desigualdad ($\|Tx\|\le M\|x\|$) y $\ge$ con un $x$ que casi la alcanza.</li>
+              <li><strong>No continuo:</strong> $x_n$ con $\|x_n\|=1$ y $\|Tx_n\|\to\infty$.</li>
+              <li><strong>No compacto:</strong> $e_n$ equidistantes; <strong>no separable:</strong> un continuo de puntos separados.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FASE 9 =================== -->
+    <section class="fase" id="f9" data-practica="Práctica 7">
+      <div class="fase-head">
+        <div class="fase-num">9</div>
+        <div>
+          <h2 class="fase-title">Sucesiones y series de funciones</h2>
+          <p class="fase-sub">Convergencia puntual vs. uniforme y qué propiedades sobreviven al límite.</p>
+        </div>
+      </div>
+      <div class="fase-body">
+        <div class="defs-clave">
+          <h3>🔑 Definiciones clave</h3>
+          <dl>
+            <div class="def-item"><dt>Convergencia puntual</dt>
+              <dd>$f_n\to f$ si $\forall x\ \forall\varepsilon\ \exists n_0\ \forall n\ge n_0:\ d(f_n(x),f(x))&lt;\varepsilon$ ($n_0$ depende de $x$).</dd></div>
+            <div class="def-item"><dt>Convergencia uniforme</dt>
+              <dd>$f_n\Rightarrow f$ si $\forall\varepsilon\ \exists n_0\ \forall n\ge n_0\ \forall x:\ d(f_n(x),f(x))&lt;\varepsilon$; equivale a $\sup_xd(f_n(x),f(x))\to0$.</dd></div>
+            <div class="def-item"><dt>Uniformemente de Cauchy</dt>
+              <dd>$\forall\varepsilon\ \exists n_0\ \forall n,m\ge n_0:\ \sup_xd'(f_n(x),f_m(x))&lt;\varepsilon$.</dd></div>
+            <div class="def-item"><dt>Serie de funciones</dt>
+              <dd>$\sum f_n$ converge (puntual o uniforme) si lo hacen las sumas parciales $S_N=\sum_{n\le N}f_n$.</dd></div>
+            <div class="def-item"><dt>Uniformemente acotada</dt>
+              <dd>Existe $M$ con $|f_n(x)|\le M$ para todo $x$ y todo $n$.</dd></div>
+            <div class="def-item"><dt>$B(X)$, $C(K)$</dt>
+              <dd>Funciones acotadas / continuas sobre compacto, con $d_\infty$: completos.</dd></div>
+          </dl>
+        </div>
+
+        <div class="m-cols">
+          <div class="m-card">
+            <h2>Qué hereda el límite uniforme</h2>
+            <ul>
+              <li><span class="m-tag thm">continuidad</span>$f_n$ continuas, $f_n\Rightarrow f$ $\Rightarrow f$ continua. Igual con UC y con acotadas.</li>
+              <li><span class="m-tag thm">integral</span>$f_n\Rightarrow f$ en $[a,b]$: $\int f_n\to\int f$ (error $\le(b-a)\,d_\infty(f_n,f)$).</li>
+              <li><span class="m-tag thm">derivada</span>$f_n\to f$ puntual y $f_n'\Rightarrow g$ $\Rightarrow f'=g$.</li>
+              <li><span class="m-tag thm">completitud</span>Uniformemente de Cauchy en $Y$ completo $\Rightarrow$ converge uniforme.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Receta de 3 pasos</h2>
+            <ol>
+              <li>Límite puntual: fijar $x$, $n\to\infty$.</li>
+              <li>$M_n=\sup_x|f_n-f|$ (derivar $f_n-f$ para ubicar el máximo).</li>
+              <li>$M_n\to0$: uniforme. Si no: testigos $a_n$ con $|f_n(a_n)-f(a_n)|\ge\alpha$.</li>
+            </ol>
+            <p><span class="m-tag tip">atajo</span>Continuas con límite puntual discontinuo $\Rightarrow$ no uniforme.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Negación y testigos</h2>
+            <p>$f_n\not\Rightarrow f\iff\exists\alpha&gt;0$, $n_k\uparrow$, $a_k$ con $d(f_{n_k}(a_k),f(a_k))\ge\alpha$.</p>
+            <p>Típicos: $a_n=2^{-1/n}$ para $x^n$; $a_n=\tfrac1{\sqrt n}$ para $\frac{nx^2}{1+nx^2}$; $a_n=\tfrac{n\pi}2$ para $\sin(x/n)$.</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Ejemplos clásicos</h2>
+            <table class="m-table">
+              <thead><tr><th>$f_n$</th><th>Límite</th><th>¿Uniforme?</th></tr></thead>
+              <tbody>
+                <tr><td>$x^n$ en $[0,1]$</td><td>$0$ ($x&lt;1$), $1$ ($x=1$)</td><td>no (límite discontinuo); sí en $[0,r]$, $r&lt;1$</td></tr>
+                <tr><td>$\tfrac1n\sin nx$</td><td>$0$</td><td>sí en $\mathbb{R}$</td></tr>
+                <tr><td>$\sin(x/n)$</td><td>$0$</td><td>no en $\mathbb{R}$; sí en acotados</td></tr>
+                <tr><td>$xe^{-nx^2}$</td><td>$0$</td><td>sí ($\max=\tfrac{e^{-1/2}}{\sqrt{2n}}$)</td></tr>
+                <tr><td>$n^2x(1-x^2)^n$</td><td>$0$</td><td>no (pico que escapa); $\int f_n\to\infty$</td></tr>
+                <tr><td>$\frac{nx^2}{1+nx^2}$</td><td>$1$ ($x&gt;0$), $0$ ($x=0$)</td><td>no; $f_n'$ tampoco</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="m-card">
+            <h2>Operaciones</h2>
+            <ul>
+              <li>$f_n\Rightarrow f$, $g_n\Rightarrow g$ $\Rightarrow f_n+g_n\Rightarrow f+g$.</li>
+              <li>Producto: hace falta acotación uniforme ($x+\tfrac1n\Rightarrow x$ pero $(x+\tfrac1n)^2\not\Rightarrow x^2$ en $\mathbb{R}$).</li>
+              <li>$f_n\Rightarrow f$ con $f_n$ acotadas $\Rightarrow f$ acotada y $(f_n)$ uniformemente acotada. Con convergencia puntual no ($\min(x,n)\to x$).</li>
+              <li>$|f_n'|\le c\Rightarrow$ cada $f_n$ es $c$-Lipschitz $\Rightarrow$ el límite puntual es continuo.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Series: criterio M</h2>
+            <p><span class="m-tag thm">Weierstrass</span>$|u_n(x)|\le M_n$ en $D$ y $\sum M_n&lt;\infty$ $\Rightarrow\sum u_n$ converge absoluta y uniformemente en $D$.</p>
+            <ul>
+              <li>Suma de continuas con convergencia uniforme: continua e integrable término a término.</li>
+              <li>$\sin x=\sum\frac{(-1)^k}{(2k+1)!}x^{2k+1}$: uniforme en acotados, <strong>no</strong> en $\mathbb{R}$ (polinomios no acotados).</li>
+              <li>Uniforme en cada acotado $\Rightarrow$ suma <em>continua</em> en todo $\mathbb{R}$.</li>
+            </ul>
+          </div>
+
+          <div class="m-card">
+            <h2>Series geométricas de funciones</h2>
+            <p>Calcular la suma y el resto $R_N(x)=\sum_{n&gt;N}f_n(x)$ exacto; estudiar $\sup R_N$.</p>
+            <p>Ej.: $\sum xe^{-nx}$ tiene $R_N=\dfrac{xe^{-Nx}}{e^x-1}\le e^{-Na}$ en $[a,\infty)$ (uniforme), pero no es uniforme en $(0,\infty)$ ($x=1/N$: $R_N\ge e^{-2}$).</p>
+            <p class="m-warnbox">Ojo con el Ej. 7.11 del PDF: tal como figura ($x^{-n}e^x$) el enunciado no es correcto (ver Guía resuelta).</p>
+          </div>
+
+          <div class="m-card">
+            <h2>Errores típicos</h2>
+            <ul>
+              <li>Declarar "uniforme" sin mirar el sup.</li>
+              <li>Probar uniformidad en $[-R,R]$ y concluir que vale en $\mathbb{R}$.</li>
+              <li>Intercambiar límite con integral o derivada sin convergencia uniforme (de las derivadas).</li>
+              <li>Olvidar que $f_n\to0$ puntual no implica $\int f_n\to0$.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>

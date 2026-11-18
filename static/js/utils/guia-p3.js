@@ -5,7 +5,7 @@ import { consigna } from './ejercicios.js';
 
 const E = (n) => consigna(3, n);
 
-export const GUIA_P3 = [
+const BASE_P3 = [
   {
     fuente: 'Práctica 3 · Ej. 1', enunciado: E(1),
     idea: 'Verificar los tres axiomas de métrica (identidad, simetría, desigualdad triangular) en cada caso, enunciando el lema que sostiene la triangular.',
@@ -308,3 +308,64 @@ export const GUIA_P3 = [
     conclusion: 'En un espacio completo, un encaje de cerrados no vacíos con diámetros que tienden a $0$ tiene intersección igual a un único punto. Se usan: elección de representantes, el diámetro para la propiedad de Cauchy, la completitud y la cerradura para capturar el límite, y de nuevo el diámetro para la unicidad.',
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Ejercicios agregados para completar la guía 2026: 7 y 11.
+// ---------------------------------------------------------------------------
+const EXTRA_P3 = [
+  {
+    fuente: 'Práctica 3 · Ej. 7', enunciado: E(7),
+    idea: '(a) Monotonía del sup. (b) Un punto de $\\overline A$ se aproxima por puntos de $A$; con la triangular, las distancias entre puntos de $\\overline A$ no superan $\\operatorname{diam}A+2\\varepsilon$.',
+    pasos: [
+      {
+        idea: 'Recordar la definición',
+        detalle: '<p>$\\operatorname{diam}(A)=\\sup\\{d(x,y):x,y\\in A\\}$ (finito si $A$ es acotado).</p>',
+      },
+      {
+        idea: '(a) $A\\subseteq B\\Rightarrow\\operatorname{diam}A\\le\\operatorname{diam}B$',
+        detalle: '<p>Si $A\\subseteq B$, entonces $\\{d(x,y):x,y\\in A\\}\\subseteq\\{d(x,y):x,y\\in B\\}$. El sup de un subconjunto es menor o igual que el sup del conjunto (Práctica 1, Ej. 5a).</p>',
+      },
+      {
+        idea: '(b) $\\operatorname{diam}A\\le\\operatorname{diam}\\overline A$',
+        detalle: '<p>Como $A\\subseteq\\overline A$, se sigue de (a).</p>',
+      },
+      {
+        idea: '(b) $\\operatorname{diam}\\overline A\\le\\operatorname{diam}A$',
+        detalle: '<p>Sean $x,y\\in\\overline A$ y $\\varepsilon>0$. Existen $a,b\\in A$ con $d(x,a)<\\varepsilon$ y $d(y,b)<\\varepsilon$. Por la desigualdad triangular, $d(x,y)\\le d(x,a)+d(a,b)+d(b,y)<\\operatorname{diam}A+2\\varepsilon$. Como $\\varepsilon$ es arbitrario, $d(x,y)\\le\\operatorname{diam}A$ para todos $x,y\\in\\overline A$; tomando sup, $\\operatorname{diam}\\overline A\\le\\operatorname{diam}A$. $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: 'El diámetro no cambia al tomar clausura: agregar puntos límite no "estira" el conjunto. (En particular, la clausura de un acotado es acotada.)',
+  },
+  {
+    fuente: 'Práctica 3 · Ej. 11', enunciado: E(11),
+    idea: 'Para cada afirmación: probar la dirección que vale y fabricar un contraejemplo para la que no. La idea de fondo: $b_d(A,B)=0$ significa que los conjuntos "se rozan" (o se acercan arbitrariamente), no que se intersequen.',
+    pasos: [
+      {
+        idea: '(a) $b_d(A,B)=b_d(\\overline A,\\overline B)$ — VERDADERA',
+        detalle: '<p>($\\ge$) $A\\subseteq\\overline A$, $B\\subseteq\\overline B$: el inf sobre conjuntos más grandes es menor o igual: $b_d(\\overline A,\\overline B)\\le b_d(A,B)$. ($\\le$) Sean $x\\in\\overline A$, $y\\in\\overline B$, $\\varepsilon>0$; existen $a\\in A$, $b\\in B$ con $d(x,a),d(y,b)<\\varepsilon$, y $b_d(A,B)\\le d(a,b)\\le d(x,y)+2\\varepsilon$. Haciendo $\\varepsilon\\to0$ y tomando inf en $x,y$: $b_d(A,B)\\le b_d(\\overline A,\\overline B)$.</p>',
+      },
+      {
+        idea: '(b) $b_d(A,B)=0\\iff A\\cap B\\ne\\varnothing$ — FALSA',
+        detalle: '<p>($\\Leftarrow$) vale: si $x\\in A\\cap B$, $d(x,x)=0$. ($\\Rightarrow$) falla: $A=(0,1)$, $B=(1,2)$ en $\\mathbb{R}$ tienen $A\\cap B=\\varnothing$ pero $b_d(A,B)=0$ (tomar $1-\\tfrac1n$ y $1+\\tfrac1n$).</p>',
+      },
+      {
+        idea: '(c) $b_d(A,B)=0\\iff\\overline A\\cap\\overline B\\ne\\varnothing$ — FALSA',
+        detalle: '<p>($\\Leftarrow$) vale: si $x\\in\\overline A\\cap\\overline B$, por (a) $b_d(A,B)=b_d(\\overline A,\\overline B)\\le d(x,x)=0$. ($\\Rightarrow$) falla: en $\\mathbb{R}$, $A=\\mathbb{N}$ y $B=\\{n+\\tfrac1n:n\\ge2\\}$ son cerrados y disjuntos, pero $d(n,n+\\tfrac1n)=\\tfrac1n\\to0$, así $b_d(A,B)=0$ con $\\overline A\\cap\\overline B=A\\cap B=\\varnothing$. (Es el mismo ejemplo que aparece en la Práctica 5, Ej. 10: con $A$ compacto sí valdría.)</p>',
+      },
+      {
+        idea: '(d) Desigualdad triangular — FALSA',
+        detalle: '<p>$A=\\{0\\}$, $B=\\{2\\}$, $C=[0,2]$ en $\\mathbb{R}$: $b_d(A,C)=0$ (porque $0\\in C$), $b_d(C,B)=0$ (porque $2\\in C$), pero $b_d(A,B)=2>0+0$.</p>',
+      },
+      {
+        idea: 'Conclusión: $b_d$ no es una distancia',
+        detalle: '<p>Falla la desigualdad triangular (d) y también "$d(A,B)=0\\Rightarrow A=B$" (por ejemplo $A=\\{0\\}$ y $B=[0,1]$ tienen $b_d=0$ y $A\\ne B$). $\\blacksquare$</p>',
+      },
+    ],
+    conclusion: '$b_d$ es una "distancia entre conjuntos" útil pero no es métrica. Se anula cuando los conjuntos se tocan o se acercan arbitrariamente, aunque no se intersequen. Para una verdadera métrica entre conjuntos acotados cerrados se usa la distancia de Hausdorff.',
+  },
+];
+
+// Combinadas y ordenadas por número de ejercicio.
+export const GUIA_P3 = [...BASE_P3, ...EXTRA_P3].sort(
+  (a, b) => Number(a.fuente.match(/Ej\. (\d+)/)[1]) - Number(b.fuente.match(/Ej\. (\d+)/)[1])
+);
