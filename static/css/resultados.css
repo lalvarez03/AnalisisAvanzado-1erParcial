@@ -1,0 +1,110 @@
+/* resultados.css — pestaña separada con los resultados clave de un tema (resultados.html). */
+
+html, body.rv-body { margin: 0; padding: 0; height: auto; min-height: 100%; background: var(--bg); overflow-y: auto; }
+.rv-body { --unit: var(--accent); color: var(--text); }
+
+/* ---- Barra superior ---- */
+.rv-top {
+  position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px 22px; background: linear-gradient(90deg, #141b2c, #1a2236); border-bottom: 1px solid var(--border);
+}
+.rv-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; min-width: 0; }
+.rv-logo {
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; color: #fff;
+  font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--unit), var(--accent-2));
+}
+.rv-brand-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.rv-brand-text strong { font-size: 16px; }
+.rv-brand-text small { color: var(--text-dim); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rv-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rv-actions [hidden] { display: none; }
+
+/* ---- Layout ---- */
+.rv-layout {
+  max-width: 1280px; margin: 0 auto; padding: 22px 22px 60px; box-sizing: border-box;
+  display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 28px; align-items: start;
+}
+.rv-main { min-width: 0; }
+.rv-load { color: var(--text-dim); text-align: center; padding: 60px 0; }
+.rv-error { text-align: center; padding: 60px 0; display: flex; flex-direction: column; gap: 14px; align-items: center; color: var(--text-dim); }
+
+/* ---- Índice lateral ---- */
+.rv-side { position: sticky; top: 84px; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 4px; }
+.rv-side[hidden] { display: none; }
+.rv-side-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin: 0 0 10px 10px; }
+.rv-toc { display: flex; flex-direction: column; gap: 2px; border-left: 2px solid var(--border); }
+.rv-toc-link {
+  display: flex; gap: 10px; align-items: baseline; padding: 7px 10px; margin-left: -2px; border-left: 2px solid transparent;
+  text-decoration: none; color: var(--text-dim); font-size: 13px; line-height: 1.35; border-radius: 0 8px 8px 0;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.rv-toc-link:hover { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.rv-toc-link.active { color: var(--text); border-left-color: var(--unit); background: rgba(255, 255, 255, 0.05); font-weight: 600; }
+.rv-toc-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.rv-toc-n { flex: none; font: 700 11px ui-monospace, Consolas, monospace; color: var(--unit); }
+
+/* ---- Portada del tema ---- */
+.rv-hero {
+  display: flex; gap: 18px; align-items: center; padding: 22px 24px; border-radius: 18px; margin-bottom: 14px;
+  border: 1px solid var(--border); border-left: 5px solid var(--unit);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--unit) 16%, var(--bg-soft)), var(--bg-soft) 70%);
+}
+.rv-hero-ic { flex: none; width: 64px; height: 64px; display: grid; place-items: center; font-size: 32px; border-radius: 18px; background: rgba(255, 255, 255, 0.06); }
+.rv-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--unit); }
+.rv-hero h1 { margin: 2px 0 4px; font-size: 28px; line-height: 1.2; border: none; padding: 0; }
+.rv-desc { margin: 0 0 10px; color: var(--text-dim); font-size: 14px; }
+.rv-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.rv-chip { font-size: 12px; color: var(--text-dim); border: 1px solid var(--border); border-radius: 999px; padding: 2px 11px; background: rgba(0, 0, 0, 0.15); }
+.rv-help { color: var(--text-dim); font-size: 13.5px; margin: 0 0 18px 4px; }
+
+/* ---- Tarjetas (numeradas) ---- */
+.rv-list { counter-reset: rv; display: flex; flex-direction: column; gap: 14px; }
+.rv-list > .res-card {
+  counter-increment: rv; scroll-margin-top: 90px; margin: 0; padding: 12px 20px 16px 16px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.rv-list > .res-card:hover, .rv-list > .res-card:focus-within { border-color: var(--unit); }
+.rv-list > .res-card:target { box-shadow: 0 0 0 2px var(--unit); }
+.rv-list .res-card-head { font-size: 18px; padding: 6px 2px 4px; }
+.rv-list .res-card-head::before {
+  content: counter(rv, decimal-leading-zero); font: 700 12px ui-monospace, Consolas, monospace; color: var(--unit);
+  align-self: center; min-width: 22px;
+}
+.rv-list .res-body { padding-left: 52px; }
+.rv-list .res-name { flex: 1; min-width: 0; }
+
+/* ---- Anterior / siguiente ---- */
+.rv-vecinos { display: flex; justify-content: space-between; gap: 12px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--border); }
+.rv-vecino {
+  display: flex; flex-direction: column; gap: 2px; max-width: 48%; padding: 10px 16px; border-radius: 12px; text-decoration: none;
+  color: var(--text); background: var(--panel); border: 1px solid var(--border); transition: border-color 0.15s, background 0.15s;
+}
+.rv-vecino:hover { border-color: var(--unit); background: var(--panel-2); }
+.rv-vecino small { color: var(--text-dim); font-size: 11px; }
+.rv-vecino.next { text-align: right; margin-left: auto; }
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .rv-layout { grid-template-columns: 1fr; padding: 16px 14px 50px; }
+  .rv-side { position: static; max-height: none; }
+  .rv-toc { flex-direction: row; flex-wrap: wrap; gap: 6px; border-left: none; }
+  .rv-toc-link { border: 1px solid var(--border); border-radius: 999px; margin: 0; padding: 4px 11px; }
+  .rv-toc-link.active { border-color: var(--unit); }
+  .rv-toc-t { display: none; }
+  .rv-list .res-body { padding-left: 0; }
+  .rv-hero { flex-direction: column; align-items: flex-start; }
+  .rv-hero h1 { font-size: 22px; }
+}
+
+/* ---- Impresión: todo desplegado, sin barras ---- */
+@media print {
+  .rv-top, .rv-side, .rv-vecinos, .rv-help, .res-bullet { display: none !important; }
+  body.rv-body { background: #fff; color: #000; }
+  .rv-layout { display: block; padding: 0; }
+  .rv-hero, .rv-list > .res-card { background: #fff; border-color: #ccc; break-inside: avoid; color: #000; }
+  .rv-list .res-body { padding-left: 0; }
+  .res-enun, .res-sub-body, .res-ex-d .solved { background: #fff !important; color: #000 !important; }
+  .solved-steps .solved-step, .solved-steps .solved-concl { display: block !important; }
+  .solved .controls { display: none !important; }
+}

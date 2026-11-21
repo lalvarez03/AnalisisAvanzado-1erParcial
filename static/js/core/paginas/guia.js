@@ -49,7 +49,7 @@ export function renderGuia(root) {
   root.appendChild(holder);
   load(guias[0]);
 
-  const extra = (m.herramientas || []).filter((h) => h.id === 'asistente' || h.id === 'quiz');
+  const extra = (m.herramientas || []).filter((h) => h.id === 'estudio');
   if (extra.length) {
     root.appendChild(callout('', 'Más práctica',
       extra.map((h) => `<a href="#${h.id}">${h.titulo}</a>`).join(' · ')));

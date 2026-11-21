@@ -14,6 +14,7 @@
 //   estudio:      [{ id, titulo, teoria, paginas, resumen, saber, recetas, mapa, errores }]  (uno por guía)
 //   guias:        [{ id, nombre, datos: [ejercicioResuelto] }]
 //   machete:      'machete.html'                      (fragmento HTML dentro de la carpeta de la materia)
+//   redirecciones: { [idViejo]: idNuevo }            (rutas eliminadas que se redirigen, opcional)
 //   almacenamiento: { visited, seen, lastPage, navCollapsed, practica }  (solo para claves heredadas)
 
 /** Deriva orden de páginas, títulos y búsqueda de unidad a partir de unidades + herramientas. */

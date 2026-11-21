@@ -1,4 +1,4 @@
-// materias/analisis-avanzado/plan.js — plan de estudio de Análisis Avanzado.
+﻿// materias/analisis-avanzado/plan.js — plan de estudio de Análisis Avanzado.
 // Las unidades siguen el orden de las guías de ejercicios (Prácticas 1 a 7) y de la teórica 1C2026.
 // El núcleo (js/core/materia.js) deriva de acá el orden de páginas, los títulos y el progreso.
 // No importa nada para evitar ciclos.
@@ -86,11 +86,11 @@ export const UNIDADES = [
 ];
 
 // Herramientas de práctica (no pertenecen a una unidad). Los ids 'estudio', 'guia' y 'feedback'
-// tienen implementación genérica en el núcleo; 'asistente' y 'quiz' son propios de esta materia.
+// tienen implementación genérica en el núcleo; 'asistente' es propio de esta materia.
 export const HERRAMIENTAS = [
-  { id: 'quiz',      ic: '✍️',  titulo: 'Autoevaluación',       desc: 'Preguntas para ponerte a prueba.' },
-  { id: 'asistente', ic: '🧩',  titulo: 'Asistente de ejercicios', desc: 'Armá demostraciones arrastrando los pasos.' },
+  // El orden importa: la primera herramienta es a donde lleva "siguiente" desde el último tema.
   { id: 'estudio',   ic: '🗺️', titulo: 'Estudiar por práctica', desc: 'Recetas, mapa de ejercicios y errores comunes de cada guía.' },
   { id: 'guia',      ic: '📖',  titulo: 'Guía resuelta',         desc: 'Todos los ejercicios de P1–P7 resueltos paso a paso.' },
+  { id: 'asistente', ic: '🧩',  titulo: 'Asistente de demostraciones', desc: 'Armá demostraciones arrastrando los pasos.' },
   { id: 'feedback',  ic: '💬',  titulo: 'Tu opinión',            desc: 'Contanos qué te sirvió y qué no (hasta 2 imágenes).', grupo: 'extra' },
 ];

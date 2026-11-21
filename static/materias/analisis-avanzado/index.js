@@ -28,7 +28,6 @@ import { renderPuntoFijo } from '../../js/pages/em-puntofijo.js';
 import { renderNormados } from '../../js/pages/em-normados.js';
 import { renderFunciones } from '../../js/pages/em-funciones.js';
 import { renderAsistente } from '../../js/pages/asistente.js';
-import { renderQuiz } from '../../js/pages/quiz.js';
 
 // Guías de ejercicios resueltos
 import { GUIA_P1 } from '../../js/utils/guia-p1.js';
@@ -76,8 +75,10 @@ export default {
     'em-normados': renderNormados,
     'em-funciones': renderFunciones,
     'asistente': renderAsistente,
-    'quiz': renderQuiz,
   },
+
+  // Rutas viejas que ya no existen: se redirigen (enlaces guardados, "seguir donde dejaste").
+  redirecciones: { quiz: 'estudio' },
 
   resultados: RESULTADOS,
   glosario: GLOSARIO,

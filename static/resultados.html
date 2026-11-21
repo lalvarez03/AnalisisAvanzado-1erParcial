@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resultados clave</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/resultados.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      startup: {
+        ready: () => {
+          MathJax.startup.defaultReady();
+          window.__mathjaxReady = true;
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body class="rv-body">
+  <!-- Vista separada de los "resultados clave" de un tema: resultados.html?m=<materia>&p=<pagina>.
+       Reutiliza las mismas tarjetas que el pie de cada tema (js/utils/resultados-cards.js). -->
+  <header class="rv-top">
+    <a class="rv-brand" id="rv-back-brand" href="index.html#materias" title="Volver al tema">
+      <span class="rv-logo" id="rv-logo">∑</span>
+      <span class="rv-brand-text">
+        <strong id="rv-materia">Resultados clave</strong>
+        <small id="rv-unidad">Cargando…</small>
+      </span>
+    </a>
+    <div class="rv-actions">
+      <button class="btn ghost" type="button" id="rv-toggle" hidden>Desglosar</button>
+      <button class="btn ghost" type="button" id="rv-print" hidden>🖨 Imprimir</button>
+      <a class="btn" id="rv-back" href="index.html#materias">← Volver al tema</a>
+    </div>
+  </header>
+
+  <div class="rv-layout" id="rv-layout">
+    <aside class="rv-side" id="rv-side" aria-label="Índice de resultados" hidden>
+      <div class="rv-side-title">En esta página</div>
+      <nav class="rv-toc" id="rv-toc"></nav>
+    </aside>
+    <main class="rv-main" id="rv-main">
+      <p class="rv-load">Cargando resultados…</p>
+    </main>
+  </div>
+
+  <script type="module" src="js/core/resultados-vista.js"></script>
+</body>
+</html>

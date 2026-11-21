@@ -1,4 +1,4 @@
-// pages/asistente.js — Asistente de ejercicios de las Prácticas 1-3.
+// pages/asistente.js — Asistente de demostraciones de las Prácticas 1-3.
 // Los ejercicios están segmentados por tema. El estudiante elige un tema,
 // luego un ejercicio, y lo resuelve arrastrando pasos (orderProof) o
 // completando huecos (fillBlanks).
@@ -389,7 +389,7 @@ const TEMAS = [
 
 export function renderAsistente(root) {
   root.appendChild(pageHeader(
-    'Asistente de ejercicios',
+    'Asistente de demostraciones',
     'Practicá las demostraciones de las <strong>Prácticas 1–3</strong> de forma guiada, '
     + 'organizadas por tema: arrastrá los pasos hasta ordenar una prueba correcta, o completá los huecos.'
   ));
@@ -455,6 +455,6 @@ export function renderAsistente(root) {
     'Para la teoría de cada tema: <a href="#sup-inf">Supremos e ínfimos</a>, '
     + '<a href="#sucesiones">Sucesiones</a>, <a href="#card-numerables">Cardinalidad</a>, '
     + '<a href="#em-distancia">Espacios métricos</a>. '
-    + 'Para preguntas rápidas de opción múltiple, la <a href="#quiz">Autoevaluación</a>.'
+    + 'Para las recetas y el mapa de ejercicios de cada guía, <a href="#estudio">Estudiar por práctica</a>.'
   ));
 }

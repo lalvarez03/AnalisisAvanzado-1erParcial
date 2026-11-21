@@ -58,7 +58,7 @@ function flujo() {
       ['2', '📜', 'Definiciones y teoremas', 'Con cuantificadores completos y demostración.'],
       ['3', '🗺️', 'Mapa de la práctica', 'Qué técnica va con cada ejercicio.'],
       ['4', '✏️', 'Resolvé y compará', 'Intentá en papel; revelá la solución de a un paso.'],
-      ['5', '✍️', 'Autoevaluate', 'Repasá con los resultados clave y el machete.'],
+      ['5', '📌', 'Repasá', 'Con los resultados clave y el machete.'],
     ].map(([n, ic, h, p]) => el('div', { class: 'flow-step' }, [
       el('div', { class: 'flow-num', text: n }),
       el('div', { class: 'flow-ic', text: ic }),

@@ -303,8 +303,8 @@ export function renderSupInf(root) {
 
   root.appendChild(seccionResueltos('Ejercicios resueltos', RES_SUP_INF));
 
-  root.appendChild(callout('tip', '¿Querés practicar las demostraciones?',
-    'En el <a href="#asistente">Asistente de ejercicios</a> podés armar paso a paso, arrastrando, la prueba '
-    + 'de la caracterización $\\varepsilon$ del supremo y otras de la Práctica 1.'
+  root.appendChild(callout('tip', '¿Querés practicar?',
+    'En <a href="#estudio">Estudiar por práctica</a> tenés las recetas y el mapa de ejercicios de la Práctica 1, '
+    + 'incluida la caracterización $\\varepsilon$ del supremo.'
   ));
 }

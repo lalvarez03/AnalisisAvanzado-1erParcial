@@ -7,7 +7,7 @@
 // PRIMERA aparición de cada término dentro de `raíz` (fuera de las fórmulas $...$), y al hacer clic
 // en un término se abre un popup con su definición formal.
 
-import { typeset } from './dom.js';
+import { typeset, protegerMath } from './dom.js';
 
 // Una fórmula LaTeX: $$..$$, $..$, \(..\) o \[..\]. Con el grupo de captura, split() la conserva en índices impares.
 const MATH = /(\$\$[\s\S]+?\$\$|\$[^$]+?\$|\\\([\s\S]+?\\\)|\\\[[\s\S]+?\\\])/;
@@ -132,7 +132,7 @@ function abrir(span) {
   cab.append(nombre, x);
   const cuerpo = document.createElement('div');
   cuerpo.className = 'glos-pop-body';
-  cuerpo.innerHTML = t.def;
+  cuerpo.innerHTML = protegerMath(t.def);
   pop.append(cab, cuerpo);
   pop.setAttribute('aria-label', 'Definición: ' + t.nombre);
   pop.hidden = false;

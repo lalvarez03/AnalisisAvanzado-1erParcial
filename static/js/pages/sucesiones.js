@@ -289,7 +289,7 @@ export function renderSucesiones(root) {
   root.appendChild(seccionResueltos('Ejercicios resueltos', RES_SUCESIONES));
 
   root.appendChild(callout('', 'Practicá las pruebas',
-    'En el <a href="#asistente">Asistente de ejercicios</a> podés armar, arrastrando, la demostración de '
-    + '$\\lim (3-2n)/(n+1) = -2$ por definición, y otras de sucesiones.'
+    'En <a href="#estudio">Estudiar por práctica</a> tenés las recetas para probar límites por definición, '
+    + 'como $\\lim (3-2n)/(n+1) = -2$, y el mapa de ejercicios de sucesiones.'
   ));
 }

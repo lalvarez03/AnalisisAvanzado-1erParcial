@@ -1,5 +1,18 @@
 // utils/dom.js — helpers para construir DOM y renderizar matemática.
 
+const MATH_EN_HTML = /\$\$[\s\S]+?\$\$|\$[^$]+?\$|\\\([\s\S]+?\\\)|\\\[[\s\S]+?\\\]/g;
+
+/**
+ * Protege la matemática antes de asignarla como HTML: dentro de $...$, $$...$$, \(...\) y \[...\]
+ * reemplaza `<` por `&lt;`. Sin esto, un `$s-\varepsilon<a$` se interpreta como la etiqueta `<a`
+ * y el navegador se come el resto del texto (la fórmula nunca llega a MathJax).
+ * Complejidad: O(n) en la longitud del texto.
+ */
+export function protegerMath(str) {
+  if (typeof str !== 'string' || str.indexOf('<') === -1) return str;
+  return str.replace(MATH_EN_HTML, (m) => m.replace(/</g, '&lt;'));
+}
+
 /**
  * Crea un elemento con atributos e hijos.
  * @param {string} tag
@@ -10,7 +23,7 @@ export function el(tag, attrs = {}, children = []) {
   const node = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) {
     if (k === 'class') node.className = v;
-    else if (k === 'html') node.innerHTML = v;
+    else if (k === 'html') node.innerHTML = protegerMath(v);
     else if (k === 'text') node.textContent = v;
     else if (k === 'dataset') Object.assign(node.dataset, v);
     else if (k.startsWith('on') && typeof v === 'function') {
@@ -30,7 +43,7 @@ export function el(tag, attrs = {}, children = []) {
 /** Atajo: parsea un fragmento HTML y lo devuelve como un contenedor <div>. */
 export function html(str) {
   const div = document.createElement('div');
-  div.innerHTML = str;
+  div.innerHTML = protegerMath(str);
   return div;
 }
 

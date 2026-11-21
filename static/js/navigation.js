@@ -15,8 +15,8 @@ import {
   toggleVisited, resetProgress,
 } from './state.js';
 import { typeset, el } from './utils/dom.js';
-import { solvedExercise } from './utils/resueltos.js';
-import { configurarGlosario, marcarTerminos, iniciarGlosario } from './utils/glosario.js';
+import { configurarGlosario, iniciarGlosario } from './utils/glosario.js';
+import { crearTarjetaResultado, alternarTodos, etiquetaAlternar } from './utils/resultados-cards.js';
 import { renderHub } from './core/hub.js';
 import { renderInicio } from './core/paginas/inicio.js';
 import { renderEstudio } from './core/paginas/estudio.js';
@@ -292,68 +292,32 @@ function pageNav(page) {
   return wrap;
 }
 
-// Checklist de teoremas, lemas y propiedades del tema (manifiesto: `resultados`).
+// Resultados clave del tema (manifiesto: `resultados`). Las tarjetas viven en utils/resultados-cards.js
+// y se reutilizan en la pestaña separada (resultados.html).
 function resultadosClave(page) {
   const lista = materiaActiva().resultados?.[page];
   if (!lista || !lista.length) return null;
   const u = plan().unidadDePagina(page);
-  const items = lista.map((r) => {
-    // Esquema: d = definición formal · e = enunciado · p = demostración · x = ejemplo de uso paso a paso.
-    // Visible: el enunciado. Dentro del botón "Desglose": definición (siempre visible), demostración y ejemplo.
-    const enun = el('div', { class: 'res-enun', html: '<div class="res-lbl">📌 Enunciado</div>' + r.e });
-    marcarTerminos(enun);   // el enunciado formal está siempre visible, con sus términos clickeables
-    const partes = [enun];
-    let desglose = null;
-    if (r.p || r.x) {
-      desglose = el('details', { class: 'res-sub res-desglose' }, [
-        el('summary', {}, '🔎 Desglose: demostración y ejemplo'),
-      ]);
-      let armado = false;
-      // El contenido se construye recién al abrirlo (evita crear cientos de componentes al cargar la página).
-      desglose.addEventListener('toggle', () => {
-        if (!desglose.open || armado) return;
-        armado = true;
-        const cuerpoD = el('div', { class: 'res-desglose-body' });
-        if (r.p) {
-          const prueba = el('div', { class: 'res-sub-body res-proof-d', html: '<div class="res-lbl">🧩 Demostración</div>' + r.p });
-          marcarTerminos(prueba);
-          cuerpoD.appendChild(prueba);
-        }
-        if (r.x) {
-          const ej = el('div', { class: 'res-ex-d' }, [el('div', { class: 'res-lbl', text: '✏️ Ejemplo de uso, paso a paso' })]);
-          ej.appendChild(solvedExercise({ fuente: 'Ejemplo de uso · ' + r.n, ...r.x }));
-          marcarTerminos(ej);   // antes de que MathJax procese las fórmulas
-          cuerpoD.appendChild(ej);
-        }
-        desglose.appendChild(cuerpoD);
-        typeset(desglose);
-      });
-      partes.push(desglose);
-    }
-    // Tarjeta siempre visible: título + enunciado formal; el único desplegable es el desglose.
-    const cuerpo = el('div', { class: 'res-body' }, partes);
-    const item = el('div', { class: 'res-item res-card' }, [
-      el('div', { class: 'res-card-head' }, [
-        el('span', { class: 'res-name', html: r.n }),
-        r.ref ? el('span', { class: 'res-ref', text: r.ref }) : null,
-      ]),
-      cuerpo,
-    ]);
-    item._desglose = desglose;
-    return item;
-  });
-  const todos = el('button', { class: 'btn ghost', type: 'button' }, 'Abrir / cerrar todos los desgloses');
-  todos.addEventListener('click', () => {
-    const abrir = items.some((d) => d._desglose && !d._desglose.open);
-    items.forEach((d) => { if (d._desglose) d._desglose.open = abrir; });
-    typeset(wrap);
-  });
+
+  // "Desglosar" / "Contraer" según el estado actual de las tarjetas.
+  const todos = el('button', { class: 'btn ghost', type: 'button' }, 'Desglosar');
+  const actualizar = () => { todos.textContent = etiquetaAlternar(items); };
+  const items = lista.map((r) => crearTarjetaResultado(r, { onCambio: actualizar }));
+  todos.addEventListener('click', () => { alternarTodos(items); actualizar(); });
+
+  // "Separar": abre estos mismos resultados en una pestaña propia.
+  const separar = el('a', {
+    class: 'btn ghost res-separar', target: '_blank', rel: 'noopener',
+    href: `resultados.html?m=${encodeURIComponent(materiaActiva().id)}&p=${encodeURIComponent(page)}`,
+    title: 'Abrir los resultados de este tema en otra pestaña',
+  }, '↗ Separar');
+
   const wrap = el('section', { class: 'results', style: u ? `--unit:${u.color}` : '' }, [
     el('div', { class: 'results-head' }, [
       el('h2', { text: '📌 Resultados clave de este tema' }),
-      todos,
+      el('div', { class: 'results-acciones' }, [todos, separar]),
     ]),
-    el('p', { class: 'page-sub', html: 'Cada resultado muestra su título y su enunciado formal. Abrí el <strong>desglose</strong> para ver la <strong>demostración</strong> y un <strong>ejemplo de uso paso a paso</strong>. Los términos <span class="term-demo">subrayados</span> (en el enunciado, la demostración y el ejemplo) son clickeables: te muestran su definición formal.' }),
+    el('p', { class: 'page-sub', html: 'Cada resultado muestra su título y su enunciado formal. Tocá el <strong>+</strong> (o el título) de un resultado para desglosar la <strong>demostración</strong> y un <strong>ejemplo de uso paso a paso</strong>. Los términos <span class="term-demo">subrayados</span> (en el enunciado, la demostración y el ejemplo) son clickeables: te muestran su definición formal.' }),
     ...items,
   ]);
   wrap.addEventListener('toggle', () => typeset(wrap), true);
@@ -363,6 +327,12 @@ function resultadosClave(page) {
 function render(page) {
   runCleanups();
   const { PAGE_TITLES } = plan();
+  // Rutas que ya no existen (p. ej. la vieja autoevaluación) se redirigen a su reemplazo.
+  const destino = materiaActiva().redirecciones?.[page];
+  if (destino) {
+    history.replaceState(null, '', '#' + destino);
+    page = destino;
+  }
   const resolved = (pageRegistry[page] && (page in PAGE_TITLES)) ? page : DEFAULT_PAGE;
   const renderer = pageRegistry[resolved];
 
