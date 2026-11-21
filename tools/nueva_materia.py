@@ -144,11 +144,27 @@ export function renderTemaEjemplo(root) {
 """
 
 T_RESULTADOS = """// materias/__ID__/resultados.js — checklist de teoremas/propiedades por página de teoría.
-// Cada ítem: { n: nombre, e: enunciado, ref?: 'Teo. 1.2', p?: 'idea de la prueba' } (HTML/LaTeX).
+// Cada ítem lleva las 5 partes: n (nombre), ref, d (definiciones formales), e (enunciado),
+// p (demostración completa) y x (ejemplo de uso paso a paso). Todo HTML/LaTeX.
+const R = String.raw; // con String.raw el LaTeX se escribe con una sola barra invertida
 
 export const RESULTADOS = {
   'tema-ejemplo': [
-    { n: 'Nombre del resultado', ref: 'Teo. 1.1', e: 'Enunciado del resultado con $\\\\LaTeX$.', p: 'Idea de la demostración en una línea.' },
+    {
+      n: 'Nombre del resultado', ref: 'Teo. 1.1',
+      d: R`<p>Definiciones formales que usa el resultado, con cuantificadores completos.</p>`,
+      e: R`Enunciado del resultado con $\\LaTeX$.`,
+      p: R`<p>Demostración paso a paso, justificando cada paso. $\\blacksquare$</p>`,
+      x: {
+        enunciado: R`Un ejercicio concreto que se resuelve aplicando el resultado.`,
+        idea: 'Estrategia en una frase.',
+        pasos: [
+          { idea: 'Verificar las hipótesis', detalle: R`<p>Comprobar que se cumplen.</p>` },
+          { idea: 'Aplicar el resultado', detalle: R`<p>Concluir. $\\blacksquare$</p>` },
+        ],
+        conclusion: 'Qué se aprendió de este uso.',
+      },
+    },
   ],
 };
 """

@@ -22,7 +22,7 @@ const FAMILIAS = {
     fn: (n, x) => Math.sin(n * x) / n,
     lim: () => 0,
     uniforme: true,
-    texto: 'Acá $|f_n(x)|\\le\\tfrac1n$ para <em>todo</em> $x$: la gráfica entera entra en la banda $\\pm\\varepsilon$ cuando $n>1/\\varepsilon$. <strong>Convergencia uniforme.</strong>',
+    texto: 'Acá $|f_n(x)|\\le\\tfrac1n$ para <em>todo</em> $x$: la gráfica entera entra en la banda $\\pm\\varepsilon$ cuando $n>1/\\varepsilon$. <strong>Convergencia uniforme ($\\rightrightarrows$).</strong>',
   },
   pico: {
     label: 'f_n(x) = n x² / (1 + n x²) en [0,1]',
@@ -38,7 +38,7 @@ const FAMILIAS = {
     fn: (n, x) => x * Math.exp(-n * x * x),
     lim: () => 0,
     uniforme: true,
-    texto: 'El máximo de $|f_n|$ es $\\tfrac{e^{-1/2}}{\\sqrt{2n}}\\to0$ (se calcula derivando). <strong>Uniforme</strong>, aunque la gráfica tiene "jorobas" que se angostan.',
+    texto: 'El máximo de $|f_n|$ es $\\tfrac{e^{-1/2}}{\\sqrt{2n}}\\to0$ (se calcula derivando). <strong>Uniforme ($\\rightrightarrows$)</strong>, aunque la gráfica tiene "jorobas" que se angostan.',
   },
   pico2: {
     label: 'f_n(x) = n² x (1 − x²)ⁿ en [0,1]',
@@ -69,10 +69,10 @@ export function renderFunciones(root) {
   ));
 
   root.appendChild(callout('def', 'Convergencia uniforme (Def. 7.3)',
-    '$f_n\\Rightarrow f$ <strong>uniformemente</strong> si '
+    '$f_n\\rightrightarrows f$ <strong>uniformemente</strong> si '
     + '$$\\forall\\varepsilon>0\\ \\exists n_0\\in\\mathbb{N}\\ \\forall n\\ge n_0\\ \\forall x\\in X:\\ d(f_n(x),f(x))<\\varepsilon,$$'
     + 'equivalentemente $\\sup_{x\\in X}d(f_n(x),f(x))\\to0$. La diferencia es solo <em>dónde está el "para todo $x$"</em>: '
-    + 'acá el $n_0$ es el mismo para todos los puntos. Uniforme $\\Rightarrow$ puntual, no al revés.'
+    + 'acá el $n_0$ es el mismo para todos los puntos. Uniforme ($\\rightrightarrows$) $\\Rightarrow$ puntual ($\\to$), no al revés.'
   ));
 
   root.appendChild(el('h2', { text: 'Mirarlo: la banda de ancho ε' }));
@@ -162,32 +162,32 @@ export function renderFunciones(root) {
     '<ol>'
     + '<li><strong>Límite puntual.</strong> Fijá $x$ y hacé $n\\to\\infty$. Eso te da el único candidato $f$.</li>'
     + '<li><strong>Error uniforme.</strong> Calculá (o acotá) $M_n=\\sup_x d(f_n(x),f(x))$. Si es difícil, derivá $f_n-f$ y buscá el máximo.</li>'
-    + '<li><strong>Decidí.</strong> Si $M_n\\to0$: uniforme. Si no, exhibí puntos $a_n$ con $d(f_n(a_n),f(a_n))\\ge\\alpha>0$ (Ej. 7.1). '
+    + '<li><strong>Decidí.</strong> Si $M_n\\to0$: uniforme ($f_n\\rightrightarrows f$). Si no, exhibí puntos $a_n$ con $d(f_n(a_n),f(a_n))\\ge\\alpha>0$ (Ej. 7.1). '
     + 'Atajo para no uniforme: las $f_n$ son continuas y el límite no.</li></ol>'
   ));
 
   root.appendChild(el('h2', { text: 'Teoremas que hacen valer la convergencia uniforme' }));
 
   root.appendChild(callout('thm', 'Teorema 7.6 (continuidad)',
-    'Si $f_n:X\\to Y$ son continuas y $f_n\\Rightarrow f$, entonces $f$ es continua.',
+    'Si $f_n:X\\to Y$ son continuas y $f_n\\rightrightarrows f$, entonces $f$ es continua.',
     '<p>Sea $x\\in X$, $\\varepsilon>0$. Por convergencia uniforme existe $n_0$ con $\\sup_zd\'(f_{n_0}(z),f(z))<\\varepsilon/3$. Como $f_{n_0}$ es continua en $x$, existe $\\delta>0$ con $d\'(f_{n_0}(x),f_{n_0}(y))<\\varepsilon/3$ si $d(x,y)<\\delta$. Entonces, para $d(x,y)<\\delta$:</p>'
     + '<p>$d\'(f(x),f(y))\\le d\'(f(x),f_{n_0}(x))+d\'(f_{n_0}(x),f_{n_0}(y))+d\'(f_{n_0}(y),f(y))<\\varepsilon$. $\\blacksquare$</p>'
     + '<p><em>Por qué el $\\varepsilon/3$:</em> hay tres tramos (de $f(x)$ a $f_{n_0}(x)$, de ahí a $f_{n_0}(y)$, y de ahí a $f(y)$); cada uno cuesta $\\varepsilon/3$.</p>'
   ));
 
   root.appendChild(callout('thm', 'Prop. 7.13 (integral)',
-    'Si $f_n,f:[a,b]\\to\\mathbb{R}$ son continuas y $f_n\\Rightarrow f$, entonces $\\int_a^bf_n\\to\\int_a^bf$.',
+    'Si $f_n,f:[a,b]\\to\\mathbb{R}$ son continuas y $f_n\\rightrightarrows f$, entonces $\\int_a^bf_n\\to\\int_a^bf$.',
     '<p>$\\Big|\\int_a^bf_n-\\int_a^bf\\Big|\\le\\int_a^b|f_n-f|\\le(b-a)\\,d_\\infty(f_n,f)\\to0$. $\\blacksquare$</p>'
   ));
 
   root.appendChild(callout('thm', 'Teorema 7.11 (completitud) y Ejemplo 7.12',
-    'Si $(f_n)$ es <em>uniformemente de Cauchy</em> ($\\forall\\varepsilon\\,\\exists n_0\\,\\forall n,m\\ge n_0:\\ \\sup_xd\'(f_n(x),f_m(x))<\\varepsilon$) y $Y$ es completo, existe $f$ con $f_n\\Rightarrow f$. '
+    'Si $(f_n)$ es <em>uniformemente de Cauchy</em> ($\\forall\\varepsilon\\,\\exists n_0\\,\\forall n,m\\ge n_0:\\ \\sup_xd\'(f_n(x),f_m(x))<\\varepsilon$) y $Y$ es completo, existe $f$ con $f_n\\rightrightarrows f$. '
     + 'En consecuencia $(B(X),d_\\infty)$ y $(C(K),d_\\infty)$ ($K$ compacto) son espacios métricos <strong>completos</strong>.',
-    '<p>Para cada $x$, $(f_n(x))$ es de Cauchy en $Y$ completo, así que converge; llamamos $f(x)$ al límite. Dado $\\varepsilon$, tomamos $n_0$ con $\\sup_xd\'(f_n(x),f_m(x))<\\varepsilon/2$ para $n,m\\ge n_0$. Fijado $x$ y $n\\ge n_0$, hacemos $m\\to\\infty$: $d\'(f_n(x),f(x))\\le\\varepsilon/2<\\varepsilon$. Vale para todo $x$: $f_n\\Rightarrow f$. $\\blacksquare$</p>'
+    '<p>Para cada $x$, $(f_n(x))$ es de Cauchy en $Y$ completo, así que converge; llamamos $f(x)$ al límite. Dado $\\varepsilon$, tomamos $n_0$ con $\\sup_xd\'(f_n(x),f_m(x))<\\varepsilon/2$ para $n,m\\ge n_0$. Fijado $x$ y $n\\ge n_0$, hacemos $m\\to\\infty$: $d\'(f_n(x),f(x))\\le\\varepsilon/2<\\varepsilon$. Vale para todo $x$: $f_n\\rightrightarrows f$. $\\blacksquare$</p>'
   ));
 
   root.appendChild(callout('thm', 'Prop. 7.15 (derivada)',
-    'Si $f_n\\in C^1([a,b])$, $f_n\\to f$ puntualmente y $f_n\'\\Rightarrow g$, entonces $f$ es derivable y $f\'=g$.',
+    'Si $f_n\\in C^1([a,b])$, $f_n\\to f$ puntualmente y $f_n\'\\rightrightarrows g$, entonces $f$ es derivable y $f\'=g$.',
     '<p>Por el TFC, $f_n(x)-f_n(a)=\\int_a^xf_n\'(t)\\,dt$. Pasando al límite (Prop. 7.13): $f(x)-f(a)=\\int_a^xg(t)\\,dt$. Como $g$ es continua (límite uniforme de continuas), el TFC da $f\'=g$. $\\blacksquare$</p>'
     + '<p><em>Ojo:</em> hace falta que converjan uniformemente las <strong>derivadas</strong>; que converjan las $f_n$ no alcanza (Ej. 7.5).</p>'
   ));
@@ -204,7 +204,7 @@ export function renderFunciones(root) {
   root.appendChild(callout('warn', 'Errores comunes',
     '<ul>'
     + '<li>Creer que "converge en cada punto" alcanza para conservar continuidad, integral o derivada. No: hace falta uniformidad.</li>'
-    + '<li>Probar uniformidad en $[a,b]$ y concluir que vale en toda la recta. Es falso (Ej. 7.2b, 7.10a). Sí vale la recíproca útil: uniforme en cada acotado $\\Rightarrow$ <em>continua</em> en todo $\\mathbb{R}$.</li>'
+    + '<li>Probar uniformidad en $[a,b]$ y concluir que vale en toda la recta. Es falso (Ej. 7.2b, 7.10a). Sí vale la recíproca útil: $f_n\\rightrightarrows f$ en cada acotado $\\Rightarrow$ <em>continua</em> en todo $\\mathbb{R}$.</li>'
     + '<li>Mirar solo el límite punto a punto de picos que escapan: $f_n\\to0$ puntual no implica $\\int f_n\\to0$.</li></ul>'
   ));
 

@@ -7,6 +7,7 @@
 
 import { UNIDADES, HERRAMIENTAS } from './plan.js';
 import { RESULTADOS } from './resultados.js';
+import { GLOSARIO } from './glosario.js';
 import { ESTUDIO } from './estudio.js';
 
 // Páginas propias de la materia (visualizaciones interactivas)
@@ -79,6 +80,7 @@ export default {
   },
 
   resultados: RESULTADOS,
+  glosario: GLOSARIO,
   estudio: ESTUDIO,
   guias: [
     { id: 'p1', nombre: 'Práctica 1 · Supremos y sucesiones', datos: GUIA_P1 },

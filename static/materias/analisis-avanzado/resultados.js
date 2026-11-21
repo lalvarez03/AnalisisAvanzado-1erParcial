@@ -1,156 +1,37 @@
-// utils/resultados-data.js — checklist de resultados clave por tema, según la teórica 1C2026.
-// Cada ítem: { n: nombre, ref: (opcional) numeración de la teórica, e: enunciado, p: (opcional) demostración / idea }.
-// Se muestra al final de cada página de teoría como "Resultados clave de este tema".
+// materias/analisis-avanzado/resultados.js — resultados clave por página de teoría.
+//
+// Cada resultado tiene: { n: nombre, ref: referencia en la teórica/práctica,
+//   d: definiciones formales, e: enunciado, p: demostración,
+//   x: { enunciado, idea, pasos: [{ idea, detalle }], conclusion }  ← ejemplo de uso paso a paso }.
+// Se muestran al pie de cada tema (js/navigation.js → resultadosClave). Los textos viven en resultados/*.js.
+
+import { SUP_INF } from './resultados/sup-inf.js';
+import { SUCESIONES } from './resultados/sucesiones.js';
+import {
+  CARD_EQUIVALENCIA, CARD_NUMERABLES, CARD_HILBERT, CARD_CANTOR, CARD_ORDEN,
+} from './resultados/cardinalidad.js';
+import { EM_DISTANCIA, EM_TOPOLOGIA, EM_ACUMULACION } from './resultados/metricos-1.js';
+import { EM_CAUCHY } from './resultados/metricos-2.js';
+import { EM_CONTINUIDAD } from './resultados/continuidad.js';
+import { EM_COMPACIDAD, EM_PUNTOFIJO } from './resultados/compacidad.js';
+import { EM_NORMADOS } from './resultados/normados.js';
+import { EM_FUNCIONES } from './resultados/funciones.js';
 
 export const RESULTADOS = {
-  'sup-inf': [
-    { n: 'Axioma de completitud', ref: 'Def. 1.4 / Teo. 1.21', e: 'Todo $A\\subseteq\\mathbb{R}$ no vacío y acotado superiormente tiene supremo; todo $A$ no vacío y acotado inferiormente tiene ínfimo. Es lo que distingue a $\\mathbb{R}$ de $\\mathbb{Q}$.' },
-    { n: 'Caracterización $\\varepsilon$ del supremo', ref: 'Prop. 1.17', e: '$s=\\sup A\\iff$ (a) $s$ es cota superior de $A$ y (b) $\\forall\\varepsilon>0\\ \\exists a\\in A:\\ s-\\varepsilon<a$. Análogo para el ínfimo: $i\\le a\\ \\forall a$ y $\\forall\\varepsilon\\ \\exists a:\\ a<i+\\varepsilon$ (Práctica 1, Ej. 3).', p: '(⇒) Si $s-\\varepsilon$ fuera cota superior, contradiría que $s$ es la menor. (⇐) Si $t<s$, con $\\varepsilon=s-t$ hay $a>t$, así que $t$ no es cota superior.' },
-    { n: 'Una cota que pertenece al conjunto es el máximo', ref: 'Prop. 1.10', e: 'Si $t$ es cota superior de $A$ y $t\\in A$, entonces $t=\\sup A=\\max A$.' },
-    { n: 'Principio de Arquímedes', ref: 'Teo. 1.11 y Prop. 1.12', e: 'Para todo $x\\in\\mathbb{R}$ existe $n\\in\\mathbb{N}$ con $n\\ge x$; y para todo $y>0$ existe $n$ con $0<1/n<y$. Consecuencia: $\\mathbb{N}$ no está acotado y $\\inf\\{1/n\\}=0$.', p: 'Si $\\mathbb{N}$ estuviera acotado, tendría supremo $s$; $s-1$ no es cota, así que existe $n>s-1$ y entonces $n+1>s$: absurdo.' },
-    { n: 'Parte entera', ref: 'Def. 1.13', e: 'Para todo $x$ existe un único entero $\\lfloor x\\rfloor$ con $\\lfloor x\\rfloor\\le x<\\lfloor x\\rfloor+1$ (es el supremo de $\\{k\\in\\mathbb{Z}:k\\le x\\}$).' },
-    { n: 'Densidad de $\\mathbb{Q}$ y de los irracionales', ref: 'Prop. 1.14; Práctica 1, Ej. 2', e: 'Si $x<y$ existen un racional y un irracional en $(x,y)$ (y un entero si $y-x>1$).' },
-    { n: 'Monotonía del supremo y operaciones', ref: 'Práctica 1, Ej. 5–6', e: 'Si $A\\subseteq B$ entonces $\\sup A\\le\\sup B$ e $\\inf B\\le\\inf A$. Además $\\inf(-A)=-\\sup A$ y $\\sup(cA)=c\\sup A$ si $c>0$.' },
-    { n: 'Si $x<y+\\varepsilon$ para todo $\\varepsilon>0$, entonces $x\\le y$', ref: 'Práctica 1, Ej. 1', e: 'Y por lo tanto, si $|x-y|<\\varepsilon$ para todo $\\varepsilon>0$, entonces $x=y$. Es la herramienta para "pasar al límite" en desigualdades.' },
-  ],
-  'sucesiones': [
-    { n: 'Unicidad del límite', ref: 'Prop. 2.8', e: 'Si $a_n\\to\\ell_1$ y $a_n\\to\\ell_2$, entonces $\\ell_1=\\ell_2$.', p: '$|\\ell_1-\\ell_2|\\le|\\ell_1-a_n|+|a_n-\\ell_2|<\\varepsilon$ para $n$ grande y todo $\\varepsilon$.' },
-    { n: 'Convergente ⟹ acotada', ref: 'Prop. 2.12', e: 'Si $a_n\\to\\ell\\in\\mathbb{R}$, existe $M$ con $|a_n|\\le M$ para todo $n$. La recíproca es falsa: $(-1)^n$.' },
-    { n: 'Álgebra de límites', ref: 'Prop. 2.9', e: 'Si $a_n\\to a$, $b_n\\to b$: $ca_n\\to ca$, $a_n+b_n\\to a+b$, $a_nb_n\\to ab$ y, si $b\\ne0$, $a_n/b_n\\to a/b$.' },
-    { n: 'Sándwich y acotada × nula', ref: 'Práctica 1, Ej. 8, 11', e: 'Si $|x_n-\\ell|\\le a_n\\to0$ entonces $x_n\\to\\ell$. Si $x_n\\to0$ e $(y_n)$ está acotada, $x_ny_n\\to0$.' },
-    { n: 'Paso al límite en desigualdades', ref: 'Práctica 1, Ej. 10', e: 'Si $x_n\\le y_n$ y $x_n\\to\\ell_1$, $y_n\\to\\ell_2$, entonces $\\ell_1\\le\\ell_2$ (aunque la desigualdad sea estricta antes del límite).' },
-    { n: 'Teorema de la sucesión monótona', ref: 'Práctica 1, Ej. 12', e: 'Una sucesión decreciente y acotada inferiormente converge a su ínfimo; si no es acotada inferiormente, tiende a $-\\infty$. (Análogo creciente con el supremo.)' },
-    { n: 'Las subsucesiones heredan el límite', ref: 'Prop. 2.23', e: 'Si $a_n\\to\\ell$, toda subsucesión también tiende a $\\ell$. Para refutar convergencia basta exhibir dos subsucesiones con límites distintos.' },
-    { n: 'Bolzano–Weierstrass', e: 'Toda sucesión acotada de reales tiene una subsucesión convergente. Si no es acotada superiormente, tiene una subsucesión que diverge a $+\\infty$ (Práctica 1, Ej. 14).' },
-    { n: 'Criterios por subsucesiones', ref: 'Práctica 1, Ej. 15–16', e: '(a) Si toda subsucesión tiene una sub-subsucesión que converge a $\\ell$, entonces $a_n\\to\\ell$. (b) Si $(a_{2k})$ y $(a_{2k-1})$ convergen al mismo límite, $(a_n)$ converge; si además $(a_{3k})$ converge, los tres límites coinciden y $(a_n)$ converge.' },
-    { n: 'Condición necesaria de las series', ref: 'Prop. 2.27', e: 'Si $\\sum a_n$ converge, entonces $a_n\\to0$ (la recíproca es falsa: serie armónica).' },
-    { n: 'Serie geométrica', ref: 'Prop. 2.30', e: '$\\sum_{n\\ge0}r^n$ converge sii $|r|<1$, y entonces suma $\\frac1{1-r}$.' },
-    { n: 'Series de términos no negativos', ref: 'Ej. 2.33, Prop. 2.34, 2.35', e: 'Si $a_n\\ge0$, $\\sum a_n$ converge sii las sumas parciales están acotadas. Criterio de comparación: $0\\le a_n\\le b_n$ y $\\sum b_n$ converge $\\Rightarrow\\sum a_n$ converge. Comparación por cociente: si $a_n/b_n\\to L\\in(0,\\infty)$, ambas series tienen el mismo carácter.' },
-  ],
-  'card-equivalencia': [
-    { n: '$\\sim$ es una relación de equivalencia', e: 'Reflexiva (identidad), simétrica (inversa) y transitiva (composición de biyecciones). Por eso tiene sentido hablar de "cardinal".' },
-    { n: 'Propiedades de imagen y preimagen', ref: 'Recuadro de la Práctica 2', e: '$f(A\\cup B)=f(A)\\cup f(B)$, $f(A\\cap B)\\subseteq f(A)\\cap f(B)$, $f^{-1}$ respeta $\\cup$, $\\cap$ y complementos, $A\\subseteq f^{-1}(f(A))$ y $f(f^{-1}(C))\\subseteq C$ (igualdad si $f$ es inyectiva / sobreyectiva respectivamente).' },
-    { n: 'Composición e inversa', e: 'La composición de biyecciones es biyección y la inversa de una biyección también lo es. Una función es biyectiva sii tiene inversa.' },
-    { n: 'Intervalos y recta', e: 'Todos los intervalos abiertos acotados son coordinables entre sí y con $\\mathbb{R}$ (por ejemplo $x\\mapsto\\frac x{1+|x|}$ es una biyección $\\mathbb{R}\\to(-1,1)$).' },
-  ],
-  'card-numerables': [
-    { n: 'Subconjuntos de numerables', e: 'Todo subconjunto infinito de $\\mathbb{N}$ es numerable (se lo enumera en orden creciente), luego todo subconjunto de un numerable es contable.' },
-    { n: 'Todo infinito contiene un numerable', e: 'Si $A$ es infinito, existe $(a_n)\\subseteq A$ de términos distintos; es decir, $\\aleph_0$ es el menor cardinal infinito.' },
-    { n: '$\\mathbb{N}\\times\\mathbb{N}$, $\\mathbb{Z}$, $\\mathbb{Q}$ son numerables', e: 'Se enumeran con el recorrido diagonal; $\\mathbb{Q}$ se ve como imagen de $\\mathbb{Z}\\times\\mathbb{N}$.' },
-    { n: 'Sobreyección desde $\\mathbb{N}$', e: 'Si existe una sobreyección $\\mathbb{N}\\to X$, entonces $X$ es contable.' },
-    { n: 'Uniones de contables', ref: 'Práctica 2, Ej. 2, 5, 6', e: 'La unión de dos contables y la unión <em>numerable</em> de contables son contables. Un producto finito de numerables es numerable. Las palabras finitas sobre un alfabeto finito forman un conjunto numerable.' },
-    { n: 'Subconjuntos finitos', ref: 'Práctica 2, Ej. 11', e: 'Si $A$ es numerable, $\\mathcal{P}_f(A)=\\{B\\subseteq A:B\\text{ finito}\\}$ es numerable.' },
-  ],
-  'card-hilbert': [
-    { n: 'Infinito = coordinable con una parte propia', e: '$\\mathbb{N}\\sim\\mathbb{N}\\setminus\\{0\\}\\sim2\\mathbb{N}$: un conjunto infinito puede ser biyectable con un subconjunto propio (Hotel de Hilbert). Un conjunto finito nunca.' },
-    { n: 'Aritmética de $\\aleph_0$', e: '$\\aleph_0+k=\\aleph_0$, $\\aleph_0+\\aleph_0=\\aleph_0$ y $\\aleph_0\\cdot\\aleph_0=\\aleph_0$ (infinitos buses con infinitos pasajeros caben en el hotel).' },
-    { n: 'Quitar un numerable', ref: 'Práctica 2, Ej. 3', e: 'Si $A\\subseteq B$ es contable y $B\\setminus A$ es infinito, entonces $B\\setminus A\\sim B$. En particular el conjunto de irracionales tiene cardinal $c$ (Ej. 4).' },
-  ],
-  'card-cantor': [
-    { n: 'Cantor: $[0,1)$ no es numerable', e: 'No existe sobreyección $\\mathbb{N}\\to[0,1)$; luego $\\mathbb{R}$ no es numerable y $\\aleph_0<c$.', p: 'Argumento diagonal: dada una lista $x_n=0.x_n^1x_n^2\\dots$ (sin colas de 9) se arma $y$ cuyo $k$-ésimo dígito difiere de $x_k^k$ (y evita 0 y 9). Entonces $y\\ne x_k$ para todo $k$.' },
-    { n: 'Los irracionales y los intervalos', e: '$\\mathbb{R}\\setminus\\mathbb{Q}$, $(a,b)$, $[a,b]$ y $\\mathbb{R}$ tienen todos cardinal $c$.' },
-    { n: '$[0,1)\\sim\\{0,1\\}^{\\mathbb{N}}\\sim\\mathcal{P}(\\mathbb{N})$', ref: 'Práctica 2, Ej. 10', e: 'Por el desarrollo binario (que no es único: hay que tratar las colas de unos). En consecuencia $\\#\\mathcal{P}(\\mathbb{N})=c$.' },
-    { n: '$c\\cdot c=c$ y $\\mathbb{R}^k$', ref: 'Práctica 2, Ej. 7, 14', e: '$\\#(\\mathbb{R}^k)=c$ para todo $k$; la unión de una cantidad numerable de conjuntos de cardinal $c$ tiene cardinal $c$; y $\\#\\mathbb{R}[X]=c$.' },
-    { n: 'Objetos "chicos" dentro de $\\mathbb{R}$', ref: 'Práctica 2, Ej. 16, 17', e: 'Las sucesiones enteras convergentes, las sucesiones racionales periódicas y el conjunto de discontinuidades de una monótona son contables.' },
-  ],
-  'card-orden': [
-    { n: 'Orden de cardinales', e: '$\\#A\\le\\#B$ si hay una inyección $A\\hookrightarrow B$. Es reflexivo y transitivo, y (por CSB) antisimétrico.' },
-    { n: 'Cantor–Schröder–Bernstein', e: 'Si hay inyecciones $A\\hookrightarrow B$ y $B\\hookrightarrow A$, entonces $A\\sim B$.' },
-    { n: 'Teorema de Cantor', e: '$\\#A<\\#\\mathcal{P}(A)$ para todo $A$: no hay sobreyección $A\\to\\mathcal{P}(A)$.', p: 'Dada $f:A\\to\\mathcal{P}(A)$, el conjunto $D=\\{a:a\\notin f(a)\\}$ no está en la imagen: si $D=f(a_0)$, entonces $a_0\\in D\\iff a_0\\notin D$.' },
-    { n: '$\\mathcal{P}(A)\\sim\\{0,1\\}^A$ y propiedades de $\\mathcal{P}$', ref: 'Práctica 2, Ej. 8, 9', e: 'Cada subconjunto corresponde a su función indicadora; si $\\#A=n$, $\\#\\mathcal{P}(A)=2^n$. Además $\\mathcal{P}(A)\\cap\\mathcal{P}(B)=\\mathcal{P}(A\\cap B)$, $\\mathcal{P}(A)\\cup\\mathcal{P}(B)\\subseteq\\mathcal{P}(A\\cup B)$ y $A\\sim B\\Rightarrow\\mathcal{P}(A)\\sim\\mathcal{P}(B)$.' },
-    { n: 'Hay infinitos de infinitos', e: '$\\aleph_0<c=2^{\\aleph_0}<2^c<\\cdots$: no existe el "mayor infinito".' },
-  ],
-  'em-distancia': [
-    { n: 'Axiomas de métrica', ref: 'Cap. 4', e: '$d(x,y)=0\\iff x=y$; $d(x,y)=d(y,x)$; $d(x,z)\\le d(x,y)+d(y,z)$ (de ahí sale $d\\ge0$).' },
-    { n: 'Desigualdad triangular inversa', ref: 'Ejemplo 4.28', e: '$|d(x,z)-d(y,z)|\\le d(x,y)$: la distancia a un punto fijo es 1-Lipschitz. Y $|d(x,y)-d(x\',y\')|\\le d(x,x\')+d(y,y\')$.' },
-    { n: 'Ejemplos fundamentales', e: '$d_1,d_2,d_\\infty$ en $\\mathbb{R}^n$ ($d_2$ usa Cauchy–Schwarz), $d_\\infty$ en $C([0,1])$, la métrica discreta, y $\\sqrt{|x-y|}$ en $\\mathbb{R}$; en cambio $(x-y)^2$ y $|x^2-y^2|$ <em>no</em> son métricas.' },
-    { n: 'Comparación de $d_1,d_2,d_\\infty$', ref: 'Práctica 3, Ej. 12', e: '$d_\\infty\\le d_2\\le d_1\\le n\\,d_\\infty$, por lo que $B_1(x,r)\\subseteq B_2(x,r)\\subseteq B_\\infty(x,r)\\subseteq B_1(x,nr)$.' },
-    { n: 'Métricas equivalentes', ref: 'Cap. 4.1.4', e: 'Dos métricas son equivalentes si definen los mismos abiertos (convergen las mismas sucesiones); si $c\\,d\\le d\'\\le C\\,d$ lo son. Conservan abiertos, cerrados, convergencia, continuidad y compacidad. La completitud y la continuidad uniforme, en cambio, solo se conservan si la equivalencia es de tipo $c\\,d\\le d\'\\le C\\,d$.' },
-    { n: 'Diámetro y acotados', ref: 'Práctica 3, Ej. 7', e: '$A\\subseteq B\\Rightarrow\\operatorname{diam}A\\le\\operatorname{diam}B$ y $\\operatorname{diam}A=\\operatorname{diam}\\overline A$. Un conjunto es acotado sii está contenido en alguna bola.' },
-  ],
-  'em-topologia': [
-    { n: 'Bolas abiertas son abiertas; $\\{x\\}$ y bolas cerradas son cerrados', ref: 'Práctica 3, Ej. 4', e: 'Si $y\\in B(x,r)$, $B(y,r-d(x,y))\\subseteq B(x,r)$. $\\overline B(x,r)=\\{d(x,y)\\le r\\}$ es cerrado y $\\overline{B(x,r)}\\subseteq\\overline B(x,r)$ (puede ser estricta).' },
-    { n: 'Unión e intersección de abiertos', ref: 'Teo. 4.18', e: 'Unión arbitraria de abiertos es abierta; intersección <em>finita</em> es abierta (la numerable falla: $\\bigcap(-\\tfrac1n,\\tfrac1n)=\\{0\\}$). $\\varnothing$ y $E$ son abiertos.' },
-    { n: 'Unión e intersección de cerrados', ref: 'Teo. 4.31', e: 'Intersección arbitraria de cerrados es cerrada; unión <em>finita</em> es cerrada. $A$ es cerrado sii $E\\setminus A$ es abierto.' },
-    { n: 'Interior y clausura: extremalidad', e: '$A^\\circ$ es el mayor abierto contenido en $A$ y $\\overline A$ el menor cerrado que contiene a $A$. $A$ es abierto sii $A=A^\\circ$; cerrado sii $A=\\overline A$.' },
-    { n: 'Dualidad por complemento', ref: 'Práctica 3, Ej. 5', e: '$E\\setminus A^\\circ=\\overline{E\\setminus A}$ y $E\\setminus\\overline A=(E\\setminus A)^\\circ$. (Pero $\\overline A\\ne\\overline{A^\\circ}$ y $A^\\circ\\ne(\\overline A)^\\circ$ en general.)' },
-    { n: 'Álgebra de interior y clausura', ref: 'Práctica 3, Ej. 6', e: '$(A\\cap B)^\\circ=A^\\circ\\cap B^\\circ$ y $\\overline{A\\cup B}=\\overline A\\cup\\overline B$; en cambio $A^\\circ\\cup B^\\circ\\subseteq(A\\cup B)^\\circ$ y $\\overline{A\\cap B}\\subseteq\\overline A\\cap\\overline B$ pueden ser estrictas.' },
-    { n: 'Frontera', ref: 'Práctica 3, Ej. 9', e: '$\\partial A=\\overline A\\setminus A^\\circ=\\overline A\\cap\\overline{E\\setminus A}$; es cerrada y $\\partial A=\\partial(E\\setminus A)$. Además $\\overline A=A\\cup\\partial A$ y $E=A^\\circ\\sqcup\\partial A\\sqcup(E\\setminus A)^\\circ$.' },
-    { n: 'Distancia a un conjunto', ref: 'Práctica 3, Ej. 10', e: '$|d(x,A)-d(y,A)|\\le d(x,y)$; $d(x,A)=0\\iff x\\in\\overline A$; $\\{d(x,A)<r\\}$ es abierto y $\\{d(x,A)\\le r\\}$ es cerrado.' },
-    { n: 'La "distancia" entre conjuntos no es métrica', ref: 'Práctica 3, Ej. 11', e: '$b_d(A,B)=\\inf d(a,b)$ cumple $b_d(A,B)=b_d(\\overline A,\\overline B)$, pero puede ser $0$ sin que $A\\cap B\\ne\\varnothing$ y no cumple la triangular.' },
-  ],
-  'em-acumulacion': [
-    { n: 'Clausura = $A\\cup A\'$', e: '$\\overline A=A\\cup A\'$; y $A$ es cerrado sii $A\'\\subseteq A$.' },
-    { n: 'Caracterización por sucesiones', ref: 'Prop. 4.54', e: '$x\\in\\overline A\\iff$ existe $(x_n)\\subseteq A$ con $x_n\\to x$. $x\\in A\'\\iff$ existe $(x_n)\\subseteq A\\setminus\\{x\\}$ de términos distintos con $x_n\\to x$.' },
-    { n: 'Un punto de acumulación tiene infinitos puntos cerca', e: 'Si $x\\in A\'$, toda bola $B(x,r)$ contiene infinitos puntos de $A$. Un conjunto finito no tiene puntos de acumulación.' },
-    { n: 'Puntos aislados', e: '$x\\in A$ es aislado si existe $r>0$ con $B(x,r)\\cap A=\\{x\\}$; $A=\\{\\text{aislados}\\}\\sqcup(A\\cap A\')$. En la métrica discreta todo punto es aislado.' },
-    { n: 'Densidad', ref: 'Def. 5.20', e: '$D$ es denso en $E$ si $\\overline D=E$, es decir toda bola de $E$ corta a $D$. $\\mathbb{Q}$ y $\\mathbb{R}\\setminus\\mathbb{Q}$ son densos en $\\mathbb{R}$.' },
-  ],
-  'em-cauchy': [
-    { n: 'Convergente ⟹ Cauchy ⟹ acotada', e: 'Toda sucesión convergente es de Cauchy y toda de Cauchy es acotada. La recíproca de la primera es lo que falla en espacios no completos.' },
-    { n: 'Cauchy con subsucesión convergente converge', e: 'Si $(x_n)$ es de Cauchy y una subsucesión converge a $x$, toda la sucesión converge a $x$.' },
-    { n: 'Límite continuo de la distancia', ref: 'Práctica 3, Ej. 13', e: 'Si $x_n\\to x$ e $y_n\\to y$, entonces $d(x_n,y_n)\\to d(x,y)$. Si ambas son de Cauchy, $d(x_n,y_n)$ converge.' },
-    { n: '$\\mathbb{R}^n$ es completo; $\\mathbb{Q}$ no', ref: 'Práctica 3, Ej. 14', e: '$(\\mathbb{R}^n,d_1)$, $(\\mathbb{R}^n,d_2)$, $(\\mathbb{R}^n,d_\\infty)$ son completos (Cauchy coordenada a coordenada). $\\mathbb{Q}$ no lo es (aproximaciones de $\\sqrt2$); $\\mathbb{R}\\setminus\\{0\\}$ tampoco.' },
-    { n: 'Cerrado en completo es completo (y recíproco)', ref: 'Práctica 3, Ej. 15', e: 'Si $E$ es completo y $A$ es cerrado, $(A,d)$ es completo. Recíprocamente, un subconjunto completo de cualquier espacio métrico es cerrado.' },
-    { n: 'Teorema de intersección de Cantor', ref: 'Práctica 3, Ej. 16', e: 'En $E$ completo, si $(A_n)$ son cerrados, no vacíos, decrecientes y $\\operatorname{diam}A_n\\to0$, entonces $\\bigcap A_n$ es exactamente un punto.' },
-    { n: 'Compacto ⟹ completo', ref: 'Prop. 6.11', e: 'Todo espacio métrico compacto es completo (Cauchy + subsucesión convergente).' },
-    { n: 'Espacios de funciones completos', ref: 'Ej. 7.12', e: '$(B(X),d_\\infty)$ y $(C(K),d_\\infty)$ ($K$ compacto) son completos. $C([0,1])$ con $d_1$ <em>no</em> es completo.' },
-  ],
-  'em-continuidad': [
-    { n: 'Tres caracterizaciones de continuidad', ref: 'Teo. 5.7, 5.9, Ej. 5.10', e: '$f$ es continua en $x$ sii vale la definición $\\varepsilon$–$\\delta$ sii ($x_n\\to x\\Rightarrow f(x_n)\\to f(x)$). Y $f$ es continua en todo $M$ sii la preimagen de todo abierto es abierta sii la preimagen de todo cerrado es cerrada.' },
-    { n: 'Continuidad y clausura', ref: 'Teo. 5.13', e: '$f$ es continua sii $f(\\overline E)\\subseteq\\overline{f(E)}$ para todo $E$.' },
-    { n: 'La continua no preserva abiertos ni cerrados en la imagen', ref: 'Obs. 5.12', e: '$x^2$ lleva $(-1,1)$ en $[0,1)$; $e^x$ lleva $\\mathbb{R}$ en $(0,\\infty)$. Sí preserva preimágenes.' },
-    { n: 'Álgebra de continuas', e: 'Suma, producto, cociente (denominador $\\ne0$) y composición de continuas son continuas; las proyecciones y $d(\\cdot,x_0)$, $d(\\cdot,A)$ son continuas. $\\{f=g\\}$ es cerrado y $\\{f\\ne g\\}$ abierto.' },
-    { n: 'Densos y continuas', ref: 'Práctica 4, Ej. 7–8', e: 'Dos continuas que coinciden en un denso son iguales; la imagen de un denso por una continua suryectiva es densa.' },
-    { n: 'Continuidad uniforme por sucesiones', ref: 'Prop. 5.18', e: '$f$ es UC sii $d(x_n,y_n)\\to0\\Rightarrow d\'(f(x_n),f(y_n))\\to0$. La negación da el método para refutar UC.' },
-    { n: 'Lipschitz ⟹ UC ⟹ continua', ref: 'Ej. 5.25, Obs. 5.28', e: 'Ninguna recíproca vale: $\\sqrt x$ es UC en $[0,\\infty)$ pero no Lipschitz; $x^2$ es continua pero no UC en $\\mathbb{R}$. Derivada acotada $\\Rightarrow$ Lipschitz (TVM).' },
-    { n: 'UC preserva Cauchy', ref: 'Ej. 5.19', e: 'Si $f$ es UC y $(x_n)$ es de Cauchy, $(f(x_n))$ es de Cauchy. (La continua simple no: $1/x$ en $(0,1)$.)' },
-    { n: 'Extensión de funciones UC', ref: 'Teo. 5.22', e: 'Si $E$ es denso en $M$, $N$ es completo y $f:E\\to N$ es UC, existe una única extensión UC $\\tilde f:M\\to N$.' },
-    { n: 'Homeomorfismos e isometrías', ref: 'Def. 5.29, 5.33; Ej. 5.31', e: 'Homeomorfismo = biyección continua con inversa continua. $d_1,d_2$ son equivalentes sii $\\mathrm{id}:(M,d_1)\\to(M,d_2)$ es homeomorfismo. Toda isometría es Lipschitz-1, inyectiva y es homeomorfismo sobre su imagen.' },
-    { n: 'Funciones de Urysohn', ref: 'Práctica 4, Ej. 11', e: 'Si $A,B$ son cerrados disjuntos, $h=\\frac{d(x,A)}{d(x,A)+d(x,B)}$ es continua, vale $0$ en $A$ y $1$ en $B$; de ahí salen abiertos disjuntos que los separan.' },
-  ],
-  'em-compacidad': [
-    { n: 'Definición y equivalencias', ref: 'Def. 6.1, Teo. 6.14', e: 'En un espacio métrico son equivalentes: (1) toda sucesión de $K$ tiene subsucesión convergente en $K$; (2) todo subconjunto infinito de $K$ tiene un punto de acumulación en $K$; (3) todo cubrimiento por abiertos admite un subcubrimiento finito.' },
-    { n: 'Compacto ⟹ cerrado y acotado', ref: 'Prop. 6.3', e: 'La recíproca falla en general (bola cerrada de $\\ell^\\infty$, $\\ell^2$, $C[0,1]$) pero vale en $\\mathbb{R}^m$.' },
-    { n: 'Heine–Borel', ref: 'Teo. 6.6', e: '$K\\subseteq\\mathbb{R}^m$ es compacto sii es cerrado y acotado. Vale con $d_1$, $d_2$ o $d_\\infty$ (Ej. 6.4).', p: 'Acotado ⟹ cada coordenada es acotada ⟹ Bolzano–Weierstrass coordenada por coordenada ⟹ subsucesión convergente; el límite está en $K$ por ser cerrado.' },
-    { n: 'Cerrado dentro de compacto', ref: 'Prop. 6.8', e: 'Si $K$ es compacto y $F\\subseteq K$ es cerrado, $F$ es compacto.' },
-    { n: 'Uniones e intersecciones', ref: 'Prop. 6.9, Obs. 6.10', e: 'Unión finita de compactos es compacta; intersección arbitraria de compactos es compacta. La unión infinita puede no serlo ($\\bigcup[\\tfrac1i,1]=(0,1]$).' },
-    { n: 'Imagen continua de un compacto', ref: 'Teo. 6.15', e: 'Si $f$ es continua y $K$ es compacto, $f(K)$ es compacto. Consecuencia: producto $K\\times K$ y $\\{x+y\\}$, $\\{xy\\}$.' },
-    { n: 'Weierstrass', ref: 'Cor. 6.17', e: 'Una $f:K\\to\\mathbb{R}$ continua sobre un compacto alcanza máximo y mínimo. De ahí: la distancia a un compacto se realiza, $f>0$ continua en compacto está acotada inferiormente por $\\alpha>0$, y $b_d(A,B)>0$ si $A$ compacto, $B$ cerrado, disjuntos.' },
-    { n: 'Continua en compacto ⟹ UC', ref: 'Teo. 6.18', e: 'Si $M$ es compacto y $f:M\\to N$ es continua, $f$ es uniformemente continua.' },
-    { n: 'Biyección continua desde un compacto', e: 'Si $E$ es compacto y $f:E\\to E\'$ es continua y biyectiva, $f$ es un homeomorfismo (manda cerrados en compactos, que son cerrados).' },
-    { n: 'Encaje de cerrados en compactos', ref: 'Práctica 5, Ej. 6, 15', e: 'En un compacto, toda sucesión decreciente de cerrados no vacíos tiene intersección no vacía; y recíprocamente esa propiedad caracteriza la compacidad.' },
-    { n: 'Compactos en discretos y finitos', e: 'Todo finito es compacto. En un espacio discreto los compactos son exactamente los finitos.' },
-  ],
-  'em-puntofijo': [
-    { n: 'Contracción', ref: 'Def. 6.23, Obs. 6.24', e: '$d(f(x),f(y))\\le\\alpha\\,d(x,y)$ con $\\alpha<1$ <em>fijo</em>. Toda contracción es Lipschitz, luego UC. Con $|f\'|\\le\\alpha<1$ en un intervalo, $f$ es contracción (TVM); $d(f(x),f(y))<d(x,y)$ no alcanza.' },
-    { n: 'Teorema de Banach', ref: 'Teo. 6.26', e: 'Si $(M,d)$ es completo y $f:M\\to M$ es una contracción, existe un único punto fijo $x^*$ y para todo $x_0$ la sucesión $x_{n+1}=f(x_n)$ converge a $x^*$.', p: '$d(x_n,x_{n+k})\\le\\frac{\\alpha^n}{1-\\alpha}d(x_1,x_0)$ ⟹ de Cauchy ⟹ converge a un $x^*$; por continuidad $f(x^*)=x^*$; unicidad: $d(x^*,y^*)\\le\\alpha d(x^*,y^*)$.' },
-    { n: 'Cota del error', ref: 'Obs. 6.27', e: '$d(x_n,x^*)\\le\\frac{\\alpha^n}{1-\\alpha}\\,d(x_1,x_0)$: se puede saber cuántas iteraciones hacen falta.' },
-    { n: 'La completitud es indispensable', ref: 'Práctica 5, Ej. 18', e: '$f(x)=x/3$ en $\\mathbb{R}\\setminus\\{0\\}$ es contracción sin punto fijo.' },
-    { n: 'Punto fijo en un compacto', ref: 'Teo. 6.28', e: 'Si $M$ es compacto y $f$ es continua con $d(f(x),f(y))<d(x,y)$ para $x\\ne y$, entonces $f$ tiene un único punto fijo (el mínimo de $d(x,f(x))$ se alcanza y vale $0$).' },
-    { n: 'Iteradas', ref: 'Práctica 5, Ej. 19', e: 'Si $f^n$ es contracción en un completo, $f$ tiene un único punto fijo (aunque $f$ no sea contracción). Ejemplo: $\\cos x=x$.' },
-    { n: 'Bolzano en dimensión 1', ref: 'Ejemplo 6.22 b; Práctica 5, Ej. 21', e: 'Toda continua $f:[a,b]\\to[a,b]$ tiene un punto fijo (usar $g(x)=f(x)-x$). El conjunto de puntos fijos de una continua es cerrado.' },
-  ],
-  'em-normados': [
-    { n: 'Norma y métrica inducida', e: '$\\|x\\|\\ge0$ y $=0\\iff x=0$; $\\|\\alpha x\\|=|\\alpha|\\|x\\|$; $\\|x+y\\|\\le\\|x\\|+\\|y\\|$. Entonces $d(x,y)=\\|x-y\\|$ es una métrica, invariante por traslaciones y homogénea. $\\|\\cdot\\|_1,\\|\\cdot\\|_2,\\|\\cdot\\|_\\infty$ son normas de $\\mathbb{R}^n$ ($\\|\\cdot\\|_2$ vía Cauchy–Schwarz).' },
-    { n: 'Continuidad de la norma y de las operaciones', e: '$|\\|x\\|-\\|y\\||\\le\\|x-y\\|$; suma y producto por escalares son continuas.' },
-    { n: 'Bolas en un normado', ref: 'Práctica 6, Ej. 2', e: '$\\overline{B(x,r)}=\\overline B(x,r)$, $\\operatorname{diam}B(x,r)=2r$, y toda bola es convexa.' },
-    { n: 'Subespacios', ref: 'Práctica 6, Ej. 4', e: 'La clausura de un subespacio es subespacio; un subespacio propio tiene interior vacío; si $\\dim S<\\infty$, $S$ es cerrado; un hiperplano es cerrado o denso.' },
-    { n: 'Dimensión finita', e: 'Todas las normas son equivalentes, el espacio es completo (Banach), la bola cerrada es compacta. Recíprocamente (Riesz), si la bola cerrada es compacta, la dimensión es finita. En dimensión infinita fallan las tres cosas: $\\mathbb{R}[t]$ con $\\|\\cdot\\|_\\infty$ y $\\|\\cdot\\|_1$; $e_n$ en $\\ell^\\infty$, $\\ell^2$.' },
-    { n: 'Espacios de sucesiones', ref: 'Práctica 6, Ej. 6, 13', e: '$\\ell^\\infty$ y $\\ell^2$ son completos; sus bolas cerradas no son compactas; $\\ell^\\infty$ no es separable (no tiene numerables densos); en $\\ell^2$ vale Cauchy–Schwarz y $\\gamma(a)=\\sum a_n/n$ es continua.' },
-    { n: 'Operador lineal: continuo ⟺ acotado', ref: 'Práctica 6, Ej. 8', e: 'Para $T$ lineal son equivalentes: continuo en $0$, continuo en un punto, continuo, UC, acotado ($\\|Tx\\|\\le M\\|x\\|$) y "manda acotados en acotados".' },
-    { n: 'Norma de un operador', ref: 'Práctica 6, Ej. 9', e: '$\\|T\\|=\\sup_{\\|x\\|\\le1}\\|Tx\\|=\\sup_{\\|x\\|=1}\\|Tx\\|=\\sup_{x\\ne0}\\frac{\\|Tx\\|}{\\|x\\|}$ y $\\|Tx\\|\\le\\|T\\|\\|x\\|$.' },
-    { n: 'Ejemplos de operadores', ref: 'Práctica 6, Ej. 10–12', e: 'Evaluación e integral son continuas en $C[0,1]$ con $\\|\\cdot\\|_\\infty$ (norma 1); con $\\|\\cdot\\|_1$ la evaluación no lo es. El operador integral con núcleo continuo es acotado ($\\|K\\|\\le\\max_x\\int|k(x,y)|dy$). La derivación en $(\\mathbb{R}[t],\\|\\cdot\\|_\\infty)$ no es acotada.' },
-    { n: 'Cesàro', ref: 'Práctica 6, Ej. 3', e: 'Si $x_n\\to x_0$ en un normado, $\\frac{x_1+\\cdots+x_n}{n}\\to x_0$.' },
-  ],
-  'em-funciones': [
-    { n: 'Uniforme ⟹ puntual', ref: 'Obs. 7.4', e: 'Si $f_n\\Rightarrow f$ entonces $f_n\\to f$ puntualmente; la recíproca es falsa ($x^n$ en $[0,1]$).' },
-    { n: 'Criterio por supremo', ref: 'Def. 7.3', e: '$f_n\\Rightarrow f\\iff\\sup_xd(f_n(x),f(x))\\to0\\iff$ no existen $\\alpha>0$, $n_k$, $a_k$ con $d(f_{n_k}(a_k),f(a_k))\\ge\\alpha$ (Práctica 7, Ej. 1).' },
-    { n: 'Límite uniforme de continuas', ref: 'Teo. 7.6', e: 'Si $f_n$ son continuas y $f_n\\Rightarrow f$, entonces $f$ es continua. Igual con UC (Ej. 7.7a) y con acotadas (Ej. 7.7b). Consecuencia: límite puntual discontinuo $\\Rightarrow$ no uniforme.' },
-    { n: 'Uniformemente de Cauchy ⟺ convergencia uniforme', ref: 'Def. 7.8, Teo. 7.11, Ej. 7.10', e: 'Si $f_n\\Rightarrow f$, $(f_n)$ es uniformemente de Cauchy; si $Y$ es completo, vale la recíproca. Si las $f_n$ son acotadas y uniformemente de Cauchy, están uniformemente acotadas.' },
-    { n: '$B(X)$ y $C(K)$ son completos', ref: 'Ej. 7.12', e: 'Con $d_\\infty$, el espacio de funciones acotadas y el de continuas sobre un compacto son espacios métricos completos.' },
-    { n: 'Integral del límite', ref: 'Prop. 7.13', e: 'Si $f_n,f:[a,b]\\to\\mathbb{R}$ son continuas y $f_n\\Rightarrow f$, entonces $\\int f_n\\to\\int f$ (error $\\le(b-a)\\,d_\\infty(f_n,f)$).' },
-    { n: 'Derivada del límite', ref: 'Prop. 7.15', e: 'Si $f_n\\in C^1$, $f_n\\to f$ puntualmente y $f_n\'\\Rightarrow g$, entonces $f$ es derivable y $f\'=g$. $(C^1([a,b]),d_\\infty(f,g)+d_\\infty(f\',g\'))$ es completo (Ej. 7.16).' },
-    { n: 'Series de funciones y criterio M', e: 'Si $\\sum f_n$ converge uniformemente y las $f_n$ son continuas, la suma es continua y se integra término a término. Criterio M de Weierstrass: $|u_n|\\le M_n$ con $\\sum M_n<\\infty$ $\\Rightarrow$ convergencia absoluta y uniforme. Uniforme en cada acotado $\\Rightarrow$ suma continua en todo $\\mathbb{R}$.' },
-  ],
+  'sup-inf': SUP_INF,
+  'sucesiones': SUCESIONES,
+  'card-equivalencia': CARD_EQUIVALENCIA,
+  'card-numerables': CARD_NUMERABLES,
+  'card-hilbert': CARD_HILBERT,
+  'card-cantor': CARD_CANTOR,
+  'card-orden': CARD_ORDEN,
+  'em-distancia': EM_DISTANCIA,
+  'em-topologia': EM_TOPOLOGIA,
+  'em-acumulacion': EM_ACUMULACION,
+  'em-cauchy': EM_CAUCHY,
+  'em-continuidad': EM_CONTINUIDAD,
+  'em-compacidad': EM_COMPACIDAD,
+  'em-puntofijo': EM_PUNTOFIJO,
+  'em-normados': EM_NORMADOS,
+  'em-funciones': EM_FUNCIONES,
 };
