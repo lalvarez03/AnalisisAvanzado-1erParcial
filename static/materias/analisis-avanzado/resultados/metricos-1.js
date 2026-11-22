@@ -51,7 +51,7 @@ export const EM_DISTANCIA = [
       idea: 'Para confirmar, verificar los tres axiomas; para refutar, basta un contraejemplo numérico a algún axioma.',
       pasos: [
         { idea: '$d$: (M1) y (M2)', detalle: R`<p>$\sqrt{|x-y|}=0\iff x=y$ y es simétrica.</p>` },
-        { idea: '$d$: (M3)', detalle: R`<p>Con $a=|x-y|$, $b=|y-z|$: $|x-z|\le a+b$ y $\sqrt{a+b}\le\sqrt a+\sqrt b$ (porque $(\sqrt a+\sqrt b)^2=a+b+2\sqrt{ab}\ge a+b$). Entonces $d(x,z)\le\sqrt{a+b}\le d(x,y)+d(y,z)$. Es métrica.</p>` },
+        { idea: '$d$: (M3)', detalle: R`<p>Primero notamos que $\sqrt{a+b}\le\sqrt a+\sqrt b$ para $a,b\ge 0$. Con $a=|x-y|$, $b=|y-z|$. <br> Esto vale porque $(\sqrt a+\sqrt b)^2=a+b+2\sqrt{ab}\ge a+b$, pues $2\sqrt{ab}\ge 0$.<br>Ahora, por desigualdad triangular en $\mathbb{R}$, $|x-z|\le |x-y|+|y-z|$.<br> Como la raíz es creciente, vale que $\sqrt{|x-z|}\le\sqrt{|x-y|+|y-z|}$.<br> Juntamos las dos desigualdades y queda que: <br> $d(x,z)=\sqrt{|x-z|}\le\sqrt{|x-y|+|y-z|}\le\sqrt{|x-y|}+\sqrt{|y-z|}=d(x,y)+d(y,z)$. <br> Es métrica.</p>` },
         { idea: '$d\'$ no lo es', detalle: R`<p>$d'(1,-1)=|1-1|=0$ pero $1\ne-1$: falla (M1). $\blacksquare$</p>` },
       ],
       conclusion: 'Elevar $|x-y|$ a una potencia $<1$ conserva la triangular; potencias $>1$ (como el cuadrado) la rompen.',
@@ -61,7 +61,7 @@ export const EM_DISTANCIA = [
     n: 'Comparación entre $d_1$, $d_2$ y $d_\\infty$', ref: 'Práctica 3, Ej. 12',
     d: R`<p>$B_1,B_2,B_\infty$ denotan las bolas abiertas para $d_1,d_2,d_\infty$ respectivamente.</p>`,
     e: R`En $\mathbb{R}^n$: $d_\infty(x,y)\le d_2(x,y)\le d_1(x,y)\le n\,d_\infty(x,y)$. Por lo tanto $B_1(x,r)\subseteq B_2(x,r)\subseteq B_\infty(x,r)\subseteq B_1(x,nr)$.`,
-    p: R`<p>Sea $u=x-y$. $d_\infty\le d_2$: $\max|u_i|=\sqrt{\max u_i^2}\le\sqrt{\sum u_i^2}$. $d_2\le d_1$: $(\sum|u_i|)^2=\sum u_i^2+2\sum_{i<j}|u_iu_j|\ge\sum u_i^2$. $d_1\le nd_\infty$: cada sumando es $\le\max|u_i|$ y hay $n$. Las inclusiones de bolas salen de estas desigualdades: si $d_1(x,y)<r$, entonces $d_2(x,y)<r$ y así sucesivamente; si $d_\infty(x,y)<r$, entonces $d_1(x,y)\le nd_\infty<nr$. $\blacksquare$</p>`,
+    p: R`<p>Sea $u=x-y$.<br> $d_\infty\le d_2$: $\max|u_i|=\sqrt{\max u_i^2}\le\sqrt{\sum u_i^2}$.<br> $d_2\le d_1$: $(\sum|u_i|)^2=\sum u_i^2+2\sum_{i<j}|u_iu_j|\ge\sum u_i^2$.<br> $d_1\le nd_\infty$: cada sumando es $\le\max|u_i|$ y hay $n$.<br> Las inclusiones de bolas salen de estas desigualdades: si $d_1(x,y)<r$, entonces $d_2(x,y)<r$ y así sucesivamente; si $d_\infty(x,y)<r$, entonces $d_1(x,y)\le nd_\infty<nr$. $\blacksquare$</p>`,
     x: {
       enunciado: R`En $\mathbb{R}^2$ tomar $x=(0,0)$, $y=(3,4)$. Verificar la cadena de desigualdades y encontrar un punto de $B_\infty(0,1)$ que no esté en $B_1(0,1)$.`,
       idea: 'Evaluar las tres distancias y buscar el punto en una esquina del cuadrado.',
@@ -77,7 +77,7 @@ export const EM_DISTANCIA = [
     n: 'Métricas equivalentes', ref: 'Cap. 4.1.4',
     d: R`<p>Dos métricas $d,d'$ en $E$ son <strong>equivalentes</strong> si definen los mismos abiertos (equivale a que toda bola de una contenga una bola de la otra con el mismo centro). Una condición suficiente: $\exists c,C>0:\ c\,d\le d'\le C\,d$.</p>`,
     e: R`Si $c\,d\le d'\le C\,d$, entonces $d$ y $d'$ son equivalentes: tienen los mismos abiertos, cerrados, sucesiones convergentes y funciones continuas.`,
-    p: R`<p>De $d'\le Cd$: $B_d(x,r/C)\subseteq B_{d'}(x,r)$. De $cd\le d'$: $B_{d'}(x,cr)\subseteq B_d(x,r)$. Si $U$ es $d$-abierto y $x\in U$, hay $r$ con $B_d(x,r)\subseteq U$, y entonces $B_{d'}(x,cr)\subseteq U$: $U$ es $d'$-abierto. La recíproca es simétrica. Mismos abiertos implica mismas sucesiones convergentes ($x_n\to x$ sii todo abierto con $x$ contiene a $x_n$ desde un índice). $\blacksquare$</p>`,
+    p: R`<p>De $d'\le Cd$: $B_d(x,r/C)\subseteq B_{d'}(x,r)$.<br> De $cd\le d'$: $B_{d'}(x,cr)\subseteq B_d(x,r)$.<br> Si $U$ es $d$-abierto y $x\in U$, hay $r$ con $B_d(x,r)\subseteq U$, y entonces $B_{d'}(x,cr)\subseteq U$: $U$ es $d'$-abierto. La recíproca es simétrica. Mismos abiertos implica mismas sucesiones convergentes ($x_n\to x$ sii todo abierto con $x$ contiene a $x_n$ desde un índice). $\blacksquare$</p>`,
     x: {
       enunciado: R`Probar que $x_n=(\tfrac1n,\tfrac1{n^2})$ converge a $0$ en $(\mathbb{R}^2,d_1)$ sii converge en $(\mathbb{R}^2,d_\infty)$.`,
       idea: 'Usar $d_\\infty\\le d_1\\le2d_\\infty$ para pasar de una a otra.',
@@ -114,7 +114,7 @@ export const EM_TOPOLOGIA = [
     d: DEF_TOP,
     e: R`$B(x,r)$ es abierta; $\{x\}$ es cerrado; $\overline B(x,r)=\{y:d(x,y)\le r\}$ es cerrada; y $\overline{B(x,r)}\subseteq\overline B(x,r)$ (puede ser estricta).`,
     p: R`<p><em>$B(x,r)$ abierta:</em> si $y\in B(x,r)$, sea $\rho=r-d(x,y)>0$. Si $z\in B(y,\rho)$, $d(x,z)\le d(x,y)+d(y,z)<d(x,y)+\rho=r$.</p>
-<p><em>$\overline B(x,r)$ cerrada:</em> si $d(x,y)>r$, con $\rho=d(x,y)-r$ y $z\in B(y,\rho)$: $d(x,z)\ge d(x,y)-d(y,z)>r$, así $B(y,\rho)\subseteq E\setminus\overline B(x,r)$. El complemento es abierto.</p>
+<p><em>$\overline B(x,r)$ cerrada:</em> si $d(x,y)>r$, con $\rho=d(x,y)-r$ y $z\in B(y,\rho)$: $d(x,z)\ge d(x,y)-d(y,z)>r$, así $B(y,\rho)\subseteq E\setminus\overline B(x,r)$. El complemento es abierto, entonces $\overline B(x,r)$ es cerrado.</p>
 <p><em>$\{x\}$ cerrado:</em> si $y\ne x$, $B(y,d(x,y))$ no contiene a $x$. Como $\overline B(x,r)$ es cerrada y contiene a $B(x,r)$, contiene su clausura. $\blacksquare$</p>`,
     x: {
       enunciado: R`Probar que $G=\{y\in E:2<d(y,x)<3\}$ es abierto y mostrar un ejemplo donde $\overline{B(x,1)}\ne\overline B(x,1)$.`,
@@ -131,7 +131,7 @@ export const EM_TOPOLOGIA = [
     n: 'Uniones e intersecciones de abiertos', ref: 'Teo. 4.18',
     d: DEF_TOP,
     e: R`La unión arbitraria de abiertos es abierta; la intersección <em>finita</em> de abiertos es abierta; $\varnothing$ y $E$ son abiertos. La intersección infinita puede no serlo.`,
-    p: R`<p>Unión: si $x\in\bigcup U_i$, está en algún $U_i$ y existe $r$ con $B(x,r)\subseteq U_i\subseteq\bigcup U_i$. Intersección finita $U_1\cap\dots\cap U_k$: si $x$ está en todos hay $r_i$ con $B(x,r_i)\subseteq U_i$; con $r=\min r_i>0$ (mínimo de finitos), $B(x,r)\subseteq\bigcap U_i$. Para infinitos, el ínfimo de los radios puede ser $0$. $\blacksquare$</p>`,
+    p: R`<p>Unión: si $x\in\bigcup U_i$, está en algún $U_i$ y existe $r$ con $B(x,r)\subseteq U_i\subseteq\bigcup U_i$.<br> Intersección finita $U_1\cap\dots\cap U_k$: si $x$ está en todos hay $r_i$ con $B(x,r_i)\subseteq U_i$; con $r=\min r_i>0$ (mínimo de finitos), $B(x,r)\subseteq\bigcap U_i$.<br> Para infinitos, el ínfimo de los radios puede ser $0$. $\blacksquare$</p>`,
     x: {
       enunciado: R`Determinar $G=\bigcap_{n\ge1}\big(-\tfrac1n,\,1+\tfrac1n\big)$ y decidir si es abierto.`,
       idea: 'Cada intervalo es abierto; la intersección infinita puede dejar de serlo.',
@@ -162,7 +162,7 @@ export const EM_TOPOLOGIA = [
     n: 'Interior y clausura: son los extremos', ref: 'Cap. 4.1',
     d: DEF_TOP,
     e: R`$A^\circ$ es el mayor abierto contenido en $A$ y $\overline A$ es el menor cerrado que contiene a $A$. Además $A$ es abierto sii $A=A^\circ$ y cerrado sii $A=\overline A$.`,
-    p: R`<p>$A^\circ$ es abierto: si $B(x,r)\subseteq A$ y $y\in B(x,r)$, entonces $B(y,r-d(x,y))\subseteq B(x,r)\subseteq A$, o sea $y\in A^\circ$. Si $U\subseteq A$ es abierto, cada punto de $U$ es interior a $U$, luego a $A$: $U\subseteq A^\circ$. Para la clausura se usa que $\overline A=E\setminus(E\setminus A)^\circ$ (dualidad) y se aplica lo anterior al complemento. $\blacksquare$</p>`,
+    p: R`<p>$A^\circ$ es abierto: si $B(x,r)\subseteq A$ y $y\in B(x,r)$, entonces $B(y,r-d(x,y))\subseteq B(x,r)\subseteq A$, o sea $y\in A^\circ$. Si $U\subseteq A$ es abierto, cada punto de $U$ es interior a $U$, luego a $A$: $U\subseteq A^\circ$.<br> Para la clausura se usa que $\overline A=E\setminus(E\setminus A)^\circ$ (dualidad) y se aplica lo anterior al complemento. $\blacksquare$</p>`,
     x: {
       enunciado: R`Hallar $A^\circ$ y $\overline A$ para $A=(0,1]\cup\{2\}$.`,
       idea: 'Punto por punto: ¿hay una bola dentro? ¿toda bola toca al conjunto?',
@@ -178,7 +178,7 @@ export const EM_TOPOLOGIA = [
     n: 'Dualidad entre interior y clausura', ref: 'Práctica 3, Ej. 5',
     d: DEF_TOP,
     e: R`$E\setminus A^\circ=\overline{E\setminus A}$ y $E\setminus\overline A=(E\setminus A)^\circ$. En cambio, en general $\overline A\ne\overline{A^\circ}$ y $A^\circ\ne(\overline A)^\circ$.`,
-    p: R`<p>$x\in E\setminus A^\circ\iff$ ninguna bola $B(x,r)$ está contenida en $A\iff$ toda bola corta a $E\setminus A\iff x\in\overline{E\setminus A}$. La segunda igualdad se obtiene aplicando la primera a $E\setminus A$. Contraejemplo para las dos desigualdades: $A=\mathbb{Q}$ tiene $A^\circ=\varnothing$ y $\overline A=\mathbb{R}$; entonces $\overline{A^\circ}=\varnothing\ne\mathbb{R}=\overline A$ y $(\overline A)^\circ=\mathbb{R}\ne\varnothing=A^\circ$. $\blacksquare$</p>`,
+    p: R`<p>$x\in E\setminus A^\circ\iff$ ninguna bola $B(x,r)$ está contenida en $A\iff$ toda bola corta a $E\setminus A\iff x\in\overline{E\setminus A}$.<br> La segunda igualdad se obtiene aplicando la primera a $E\setminus A$.<br> Contraejemplo para las dos desigualdades: $A=\mathbb{Q}$ tiene $A^\circ=\varnothing$ y $\overline A=\mathbb{R}$; entonces $\overline{A^\circ}=\varnothing\ne\mathbb{R}=\overline A$ y $(\overline A)^\circ=\mathbb{R}\ne\varnothing=A^\circ$. $\blacksquare$</p>`,
     x: {
       enunciado: R`Usando la dualidad, probar que $\mathbb{R}\setminus\mathbb{Q}$ es denso en $\mathbb{R}$.`,
       idea: '$\\mathbb{Q}$ no contiene intervalos: su interior es vacío; la dualidad lo traduce a una clausura.',
@@ -194,7 +194,7 @@ export const EM_TOPOLOGIA = [
     n: 'Álgebra de interior y clausura', ref: 'Práctica 3, Ej. 6',
     d: DEF_TOP,
     e: R`$(A\cap B)^\circ=A^\circ\cap B^\circ$ y $\overline{A\cup B}=\overline A\cup\overline B$. En cambio $A^\circ\cup B^\circ\subseteq(A\cup B)^\circ$ y $\overline{A\cap B}\subseteq\overline A\cap\overline B$ pueden ser estrictas.`,
-    p: R`<p>$(A\cap B)^\circ$: una bola dentro de $A\cap B$ está dentro de $A$ y de $B$; recíprocamente, si hay $B(x,r_1)\subseteq A$ y $B(x,r_2)\subseteq B$, con $r=\min$ queda dentro de $A\cap B$. $\overline{A\cup B}$: una bola que no corta a $A\cup B$ no corta a $A$ ni a $B$, y recíprocamente con el mínimo de radios. Las inclusiones son directas por monotonía. Contraejemplo: $A=\mathbb{Q}$, $B=\mathbb{R}\setminus\mathbb{Q}$: $A^\circ\cup B^\circ=\varnothing\subsetneq\mathbb{R}=(A\cup B)^\circ$ y $\overline{A\cap B}=\varnothing\subsetneq\mathbb{R}=\overline A\cap\overline B$. $\blacksquare$</p>`,
+    p: R`<p>$(A\cap B)^\circ$: una bola dentro de $A\cap B$ está dentro de $A$ y de $B$; recíprocamente, si hay $B(x,r_1)\subseteq A$ y $B(x,r_2)\subseteq B$, con $r=\min$ queda dentro de $A\cap B$.<br> $\overline{A\cup B}$: una bola que no corta a $A\cup B$ no corta a $A$ ni a $B$, y recíprocamente con el mínimo de radios. Las inclusiones son directas por monotonía.<br> Contraejemplo: $A=\mathbb{Q}$, $B=\mathbb{R}\setminus\mathbb{Q}$: $A^\circ\cup B^\circ=\varnothing\subsetneq\mathbb{R}=(A\cup B)^\circ$ y $\overline{A\cap B}=\varnothing\subsetneq\mathbb{R}=\overline A\cap\overline B$. $\blacksquare$</p>`,
     x: {
       enunciado: R`Calcular ambos lados de las dos inclusiones para $A=[0,1)$ y $B=[1,2]$.`,
       idea: 'Calcular interiores y clausuras de cada conjunto y de las operaciones.',
@@ -209,7 +209,7 @@ export const EM_TOPOLOGIA = [
     n: 'Frontera', ref: 'Práctica 3, Ej. 9',
     d: DEF_TOP + R`<p>Equivalentemente, $x\in\partial A$ si toda bola $B(x,r)$ corta a $A$ y a $E\setminus A$.</p>`,
     e: R`$\partial A=\overline A\setminus A^\circ=\overline A\cap\overline{E\setminus A}$. Es cerrada y $\partial A=\partial(E\setminus A)$. Además $\overline A=A\cup\partial A$ y $E=A^\circ\sqcup\partial A\sqcup(E\setminus A)^\circ$.`,
-    p: R`<p>$\overline A\setminus A^\circ=\overline A\cap(E\setminus A^\circ)=\overline A\cap\overline{E\setminus A}$ por la dualidad. Es intersección de dos cerrados, cerrada. La simetría $\partial A=\partial(E\setminus A)$ es evidente en la última expresión. La partición: un punto es interior a $A$, interior al complemento, o ninguno de los dos (frontera). $\blacksquare$</p>`,
+    p: R`<p>$\overline A\setminus A^\circ=\overline A\cap(E\setminus A^\circ)=\overline A\cap\overline{E\setminus A}$ por la dualidad. Es intersección de dos cerrados, cerrada. La simetría $\partial A=\partial(E\setminus A)$ es evidente en la última expresión.<br> La partición: un punto es interior a $A$, interior al complemento, o ninguno de los dos (frontera). $\blacksquare$</p>`,
     x: {
       enunciado: R`Calcular $\partial A$ para $A=[0,1)\cup\{2\}$ y $\partial\mathbb{Q}$.`,
       idea: 'Usar $\\partial A=\\overline A\\setminus A^\\circ$.',
@@ -224,7 +224,7 @@ export const EM_TOPOLOGIA = [
     n: 'Distancia de un punto a un conjunto', ref: 'Práctica 3, Ej. 10',
     d: R`<p>$d(x,A)=\inf\{d(x,a):a\in A\}$ para $A\ne\varnothing$.</p>`,
     e: R`(a) $|d(x,A)-d(y,A)|\le d(x,y)$; (b) $d(x,A)=0\iff x\in\overline A$; (c) $\{x:d(x,A)<r\}$ es abierto y $\{x:d(x,A)\le r\}$ es cerrado.`,
-    p: R`<p>(a) Para cada $a\in A$, $d(x,A)\le d(x,a)\le d(x,y)+d(y,a)$; tomando ínfimo en $a$, $d(x,A)\le d(x,y)+d(y,A)$. Se intercambian $x,y$. (b) $d(x,A)=0\iff\forall\varepsilon\ \exists a\in A:\ d(x,a)<\varepsilon\iff x\in\overline A$. (c) Si $d(x,A)<r$ y $\rho=r-d(x,A)$, para $y\in B(x,\rho)$ vale $d(y,A)\le d(x,A)+d(x,y)<r$. El otro es el complemento de $\{d(x,A)>r\}$, que es abierto por (a). $\blacksquare$</p>`,
+    p: R`<p>(a) Para cada $a\in A$, $d(x,A)\le d(x,a)\le d(x,y)+d(y,a)$; tomando ínfimo en $a$, $d(x,A)\le d(x,y)+d(y,A)$. Se intercambian $x,y$.<br> (b) $d(x,A)=0\iff\forall\varepsilon\ \exists a\in A:\ d(x,a)<\varepsilon\iff x\in\overline A$.<br> (c) Si $d(x,A)<r$ y $\rho=r-d(x,A)$, para $y\in B(x,\rho)$ vale $d(y,A)\le d(x,A)+d(x,y)<r$. El otro es el complemento de $\{d(x,A)>r\}$, que es abierto por (a). $\blacksquare$</p>`,
     x: {
       enunciado: R`Para $A=(0,1)\subseteq\mathbb{R}$ calcular $d(2,A)$, $d(1,A)$ y $\{x:d(x,A)<\tfrac12\}$.`,
       idea: 'Calcular el ínfimo directamente; observar cuándo se alcanza.',
@@ -240,7 +240,7 @@ export const EM_TOPOLOGIA = [
     n: 'La "distancia" entre conjuntos no es una métrica', ref: 'Práctica 3, Ej. 11',
     d: R`<p>$b_d(A,B)=\inf\{d(a,b):a\in A,\,b\in B\}$ para $A,B\ne\varnothing$.</p>`,
     e: R`$b_d(A,B)=b_d(\overline A,\overline B)$; $b_d(A,B)=0$ vale si $A\cap B\ne\varnothing$ o $\overline A\cap\overline B\ne\varnothing$, pero la recíproca es falsa; y $b_d$ no cumple la triangular. Por lo tanto $b_d$ no es métrica.`,
-    p: R`<p>$\overline A\supseteq A$ da $b_d(\overline A,\overline B)\le b_d(A,B)$. Para $\ge$: dados $x\in\overline A$, $y\in\overline B$, $\varepsilon>0$ hay $a\in A$, $b\in B$ cerca, y $b_d(A,B)\le d(a,b)<d(x,y)+2\varepsilon$. Contraejemplos: $A=(0,1)$, $B=(1,2)$ tienen $b_d=0$ y $A\cap B=\varnothing$. $A=\{0\}$, $B=\{2\}$, $C=[0,2]$: $b_d(A,C)=0=b_d(C,B)$ pero $b_d(A,B)=2$: falla la triangular. $\blacksquare$</p>`,
+    p: R`<p>$\overline A\supseteq A$ da $b_d(\overline A,\overline B)\le b_d(A,B)$.<br> Para $\ge$: dados $x\in\overline A$, $y\in\overline B$, $\varepsilon>0$ hay $a\in A$, $b\in B$ cerca, y $b_d(A,B)\le d(a,b)<d(x,y)+2\varepsilon$.<br> Contraejemplos: $A=(0,1)$, $B=(1,2)$ tienen $b_d=0$ y $A\cap B=\varnothing$.<br> $A=\{0\}$, $B=\{2\}$, $C=[0,2]$: $b_d(A,C)=0=b_d(C,B)$ pero $b_d(A,B)=2$: falla la triangular. $\blacksquare$</p>`,
     x: {
       enunciado: R`Dar dos cerrados disjuntos de $\mathbb{R}$ con $b_d=0$.`,
       idea: 'Dos sucesiones que se acercan entre sí "en el infinito".',
