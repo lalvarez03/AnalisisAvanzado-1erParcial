@@ -147,7 +147,7 @@ export const EM_TOPOLOGIA = [
     n: 'Uniones e intersecciones de cerrados', ref: 'Teo. 4.31',
     d: DEF_TOP,
     e: R`La intersección arbitraria de cerrados es cerrada; la unión <em>finita</em> de cerrados es cerrada; $\varnothing$ y $E$ son cerrados.`,
-    p: R`<p>Por las leyes de De Morgan: $E\setminus\bigcap F_i=\bigcup(E\setminus F_i)$ es unión de abiertos, abierta; y $E\setminus(F_1\cup\dots\cup F_k)=\bigcap(E\setminus F_i)$ es intersección finita de abiertos, abierta. $\blacksquare$</p>`,
+    p: R`<p>Sea $(E,d)$ un espacio métrico y recordemos que un conjunto es cerrado si y solo si su complemento en $E$ es abierto (Teo. 4.29).<br><strong>1. Intersección arbitraria:</strong> Sea $\{F_i\}_{i\in I}$ una familia de cerrados en $E$. Entonces cada complemento $E\setminus F_i$ es abierto. Por las leyes de De Morgan, $E\setminus\bigcap_{i\in I} F_i = \bigcup_{i\in I}(E\setminus F_i)$, que es unión arbitraria de abiertos y por lo tanto abierta. Luego $\bigcap_{i\in I} F_i$ es cerrada.<br><strong>2. Unión finita:</strong> Si $F_1,\dots,F_k\subseteq E$ son cerrados, sus complementos $E\setminus F_i$ son abiertos. Por De Morgan, $E\setminus(F_1\cup\dots\cup F_k) = \bigcap_{i=1}^k(E\setminus F_i)$, que es intersección finita de abiertos y por lo tanto abierta. Luego $F_1\cup\dots\cup F_k$ es cerrada.<br><strong>3. Extremos:</strong> Como $E\setminus\varnothing = E$ y $E\setminus E = \varnothing$ son abiertos, tanto $\varnothing$ como $E$ son cerrados. $\blacksquare$</p>`,
     x: {
       enunciado: R`Mostrar que $\bigcup_{n\ge2}[\tfrac1n,1]$ no es cerrado, y que $[0,1]\cup\{2\}$ sí lo es.`,
       idea: 'La primera es una unión infinita; la segunda, finita.',
