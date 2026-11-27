@@ -11,33 +11,33 @@ import { GLOSARIO } from './glosario.js';
 import { ESTUDIO } from './estudio.js';
 
 // Páginas propias de la materia (visualizaciones interactivas)
-import { renderSupInf } from '../../js/pages/sup-inf.js';
-import { renderSucesiones } from '../../js/pages/sucesiones.js';
-import { renderEquivalencia } from '../../js/pages/card-equivalencia.js';
-import { renderNumerables } from '../../js/pages/card-numerables.js';
-import { renderHilbert } from '../../js/pages/card-hilbert.js';
-import { renderCantor } from '../../js/pages/card-cantor.js';
-import { renderOrden } from '../../js/pages/card-orden.js';
-import { renderDistancia } from '../../js/pages/em-distancia.js';
-import { renderTopologia } from '../../js/pages/em-topologia.js';
-import { renderAcumulacion } from '../../js/pages/em-acumulacion.js';
-import { renderContinuidad } from '../../js/pages/em-continuidad.js';
-import { renderCompacidad } from '../../js/pages/em-compacidad.js';
-import { renderCauchy } from '../../js/pages/em-cauchy.js';
-import { renderPuntoFijo } from '../../js/pages/em-puntofijo.js';
-import { renderNormados } from '../../js/pages/em-normados.js';
-import { renderFunciones } from '../../js/pages/em-funciones.js';
-import { renderAsistente } from '../../js/pages/asistente.js';
+import { renderSupInf } from './pages/sup-inf.js';
+import { renderSucesiones } from './pages/sucesiones.js';
+import { renderEquivalencia } from './pages/card-equivalencia.js';
+import { renderNumerables } from './pages/card-numerables.js';
+import { renderHilbert } from './pages/card-hilbert.js';
+import { renderCantor } from './pages/card-cantor.js';
+import { renderOrden } from './pages/card-orden.js';
+import { renderDistancia } from './pages/em-distancia.js';
+import { renderTopologia } from './pages/em-topologia.js';
+import { renderAcumulacion } from './pages/em-acumulacion.js';
+import { renderContinuidad } from './pages/em-continuidad.js';
+import { renderCompacidad } from './pages/em-compacidad.js';
+import { renderCauchy } from './pages/em-cauchy.js';
+import { renderPuntoFijo } from './pages/em-puntofijo.js';
+import { renderNormados } from './pages/em-normados.js';
+import { renderFunciones } from './pages/em-funciones.js';
+import { renderAsistente } from './pages/asistente.js';
 
 // Guías de ejercicios resueltos
-import { GUIA_P1 } from '../../js/utils/guia-p1.js';
-import { GUIA_P2 } from '../../js/utils/guia-p2.js';
-import { GUIA_P3 } from '../../js/utils/guia-p3.js';
-import { GUIA_P4 } from '../../js/utils/guia-p4.js';
-import { GUIA_P5 } from '../../js/utils/guia-p5.js';
-import { GUIA_P6 } from '../../js/utils/guia-p6.js';
-import { GUIA_P7 } from '../../js/utils/guia-p7.js';
-import { GUIA_SP2024 } from '../../js/utils/guia-sp2024.js';
+import { GUIA_P1 } from './guias/guia-p1.js';
+import { GUIA_P2 } from './guias/guia-p2.js';
+import { GUIA_P3 } from './guias/guia-p3.js';
+import { GUIA_P4 } from './guias/guia-p4.js';
+import { GUIA_P5 } from './guias/guia-p5.js';
+import { GUIA_P6 } from './guias/guia-p6.js';
+import { GUIA_P7 } from './guias/guia-p7.js';
+import { GUIA_SP2024 } from './guias/guia-sp2024.js';
 
 export default {
   id: 'analisis-avanzado',
@@ -53,6 +53,8 @@ export default {
     + '<strong>espacios normados</strong> (P6) son unidades distintas: primero se construye la topología con métricas '
     + 'generales y recién después se agrega la estructura de espacio vectorial.',
   primeraPagina: 'sup-inf',
+  // 1.er parcial: hasta completitud (Cauchy y completitud está en P3). El resto es 2.º parcial.
+  primerParcial: ['p1', 'p2', 'p3'],
 
   unidades: UNIDADES,
   herramientas: HERRAMIENTAS,

@@ -1,0 +1,139 @@
+<!-- materias/algoritmos-3/machete.html — machete de Técnicas de Diseño de Algoritmos (se carga desde machete.html?m=algoritmos-3). -->
+<section class="fase" id="f1" data-practica="P1">
+  <div class="fase-head"><div class="fase-num">1</div><div><h2 class="fase-title">Demostraciones y complejidad</h2><p class="fase-sub">Inducción, absurdo y notación asintótica.</p></div></div>
+  <div class="fase-body">
+    <div class="defs-clave"><h3>🔑 Definiciones clave</h3><dl>
+      <div class="def-item"><dt>Inducción</dt><dd>$P(n_0)$ y $\forall n\ge n_0:\ P(n)\Rightarrow P(n+1)$ $\Rightarrow\forall n\ge n_0:\ P(n)$.</dd></div>
+      <div class="def-item"><dt>$g\in O(f)$</dt><dd>$\exists c,n_0\ \forall n\ge n_0:\ g(n)\le c\,f(n)$.</dd></div>
+      <div class="def-item"><dt>$\Theta$</dt><dd>$O$ y $\Omega$ a la vez.</dd></div></dl></div>
+    <div class="m-cols"><div class="m-card"><h2>Errores típicos</h2>
+      <p><span class="m-tag warn">base</span>El caso base no cubre lo que el paso necesita.</p>
+      <p><span class="m-tag warn">∀</span>Un ejemplo no demuestra un "para todo".</p></div></div>
+  </div>
+</section>
+
+<section class="fase" id="f2" data-practica="P2">
+  <div class="fase-head"><div class="fase-num">2</div><div><h2 class="fase-title">Teoría de grafos</h2><p class="fase-sub">Vocabulario y resultados básicos.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>$\sum\deg v=2|E|$.</p>
+        <p><span class="m-tag thm">thm</span>Todo grafo con $n\ge2$ tiene dos vértices del mismo grado.</p>
+        <p><span class="m-tag thm">thm</span>Árbol $\iff$ conexo y $n-1$ aristas $\iff$ acíclico y $n-1$ aristas.</p>
+        <p><span class="m-tag thm">thm</span>Bipartito $\iff$ sin ciclos impares.</p>
+        <p><span class="m-tag thm">thm</span>$|E|>\tfrac{(n-1)(n-2)}2\Rightarrow$ conexo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f3" data-practica="P3">
+  <div class="fase-head"><div class="fase-num">3</div><div><h2 class="fase-title">Algoritmos sobre grafos</h2><p class="fase-sub">Representaciones, BFS, DFS, puentes.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Costos</h2>
+        <p><span class="m-tag tip">listas</span>$\Theta(n+m)$ espacio; recorrer todo en $O(n+m)$.</p>
+        <p><span class="m-tag tip">matriz</span>$\Theta(n^2)$; adyacencia en $O(1)$.</p>
+        <p><span class="m-tag tip">BFS</span>Cola; niveles = distancias (sin pesos).</p>
+        <p><span class="m-tag tip">DFS</span>Pila; aristas fuera del árbol = retroceso.</p></div>
+      <div class="m-card"><h2>Recetas</h2>
+        <p><span class="m-tag thm">puente</span>$uv$ con $\operatorname{low}(v)>d[u]$.</p>
+        <p><span class="m-tag thm">topológico</span>Cola de $d_{in}=0$; existe $\iff$ DAG; $O(n+m)$.</p>
+        <p><span class="m-tag thm">bipartito</span>Niveles BFS: arista entre mismo nivel par/impar = ciclo impar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f4" data-practica="P4">
+  <div class="fase-head"><div class="fase-num">4</div><div><h2 class="fase-title">Divide y conquista</h2><p class="fase-sub">Recurrencias y Teorema Maestro.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Teorema Maestro</h2>
+        <p>$T(n)=aT(n/b)+\Theta(n^d)$:</p>
+        <p><span class="m-tag thm">$d>\log_ba$</span>$\Theta(n^d)$</p>
+        <p><span class="m-tag thm">$d=\log_ba$</span>$\Theta(n^d\log n)$</p>
+        <p><span class="m-tag thm">$d<\log_ba$</span>$\Theta(n^{\log_ba})$</p></div>
+      <div class="m-card"><h2>Clásicos</h2>
+        <p><span class="m-tag tip">MergeSort</span>$2T(n/2)+n\to n\log n$.</p>
+        <p><span class="m-tag tip">binaria</span>$T(n/2)+1\to\log n$.</p>
+        <p><span class="m-tag tip">inversiones</span>Contar en el merge: $n\log n$.</p>
+        <p><span class="m-tag tip">potencia</span>Reutilizar $a^{b/2}$: $\log b$.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f5" data-practica="P5">
+  <div class="fase-head"><div class="fase-num">5</div><div><h2 class="fase-title">Backtracking</h2><p class="fase-sub">Candidatas, válidas, parciales y podas.</p></div></div>
+  <div class="fase-body">
+    <div class="defs-clave"><h3>🔑 Receta</h3><dl>
+      <div class="def-item"><dt>Formalizar</dt><dd>$Sols$, $\text{válida}$, fórmula ($\exists$, conteo, máx), parciales y sucesión.</dd></div>
+      <div class="def-item"><dt>Subset sum</dt><dd>$ss(C,k)=ss(C',k)\lor ss(C',k-c_n)$; base $[k=0]$.</dd></div></dl></div>
+    <div class="m-cols"><div class="m-card"><h2>Tamaños del árbol</h2>
+      <p><span class="m-tag tip">$2^n$</span>subconjuntos.</p><p><span class="m-tag tip">$n!$</span>permutaciones.</p><p><span class="m-tag tip">$k^n$</span>asignar $k$ opciones a $n$ elementos.</p></div>
+      <div class="m-card"><h2>Podas</h2><p><span class="m-tag warn">demostrar</span>que no se pierden soluciones (factibilidad) ni el óptimo (optimalidad).</p></div></div>
+  </div>
+</section>
+
+<section class="fase" id="f6" data-practica="P6">
+  <div class="fase-head"><div class="fase-num">6</div><div><h2 class="fase-title">Programación dinámica</h2><p class="fase-sub">Memoización, tabla y reconstrucción.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Idea</h2>
+        <p><span class="m-tag tip">costo</span>(cantidad de estados) × (costo por estado).</p>
+        <p><span class="m-tag tip">top-down</span>recursión + memo.</p>
+        <p><span class="m-tag tip">bottom-up</span>tabla en orden de dependencias; se puede ahorrar espacio.</p></div>
+      <div class="m-card"><h2>Ejemplos</h2>
+        <p><span class="m-tag thm">subset sum</span>$M[i][j]=M[i-1][j]\lor M[i-1][j-c_i]$, $O(nk)$ (pseudo-polinomial).</p>
+        <p><span class="m-tag thm">DAG</span>caminos: $c(v)=\sum_{u\to v}c(u)$ en orden topológico.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f7" data-practica="P7">
+  <div class="fase-head"><div class="fase-num">7</div><div><h2 class="fase-title">Greedy</h2><p class="fase-sub">Criterio local + prueba de optimalidad.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Pruebas</h2>
+        <p><span class="m-tag thm">intercambio</span>Transformar un óptimo en la solución greedy sin empeorarlo.</p>
+        <p><span class="m-tag thm">va adelante</span>Inducción: tras cada paso, el greedy es al menos tan bueno.</p></div>
+      <div class="m-card"><h2>Clásicos</h2>
+        <p><span class="m-tag tip">demoras</span>Orden creciente de duración.</p>
+        <p><span class="m-tag tip">deadlines</span>Ordenar por deadline y aceptar si cabe.</p>
+        <p><span class="m-tag tip">ruta</span>Parar en la estación más lejana alcanzable.</p>
+        <p><span class="m-tag warn">falla</span>Suma de subconjuntos, vertex cover por grado máximo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f8" data-practica="P8">
+  <div class="fase-head"><div class="fase-num">8</div><div><h2 class="fase-title">Camino mínimo</h2><p class="fase-sub">Elegir el algoritmo y modelar.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Qué usar</h2>
+        <p><span class="m-tag tip">sin pesos</span>BFS $O(n+m)$.</p>
+        <p><span class="m-tag tip">DAG</span>topológico $O(n+m)$.</p>
+        <p><span class="m-tag tip">pesos ≥ 0</span>Dijkstra $O((n+m)\log n)$.</p>
+        <p><span class="m-tag tip">negativos</span>Bellman–Ford $O(nm)$.</p>
+        <p><span class="m-tag tip">todos los pares</span>Floyd–Warshall $O(n^3)$.</p></div>
+      <div class="m-card"><h2>Recordar</h2>
+        <p><span class="m-tag thm">relajar</span>$d[v]\gets\min(d[v],d[u]+w)$.</p>
+        <p><span class="m-tag thm">$st$-eficiente</span>$d(s,v)+c+d(w,t)=d(s,t)$.</p>
+        <p><span class="m-tag warn">Dijkstra</span>falla con pesos negativos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f9" data-practica="P9">
+  <div class="fase-head"><div class="fase-num">9</div><div><h2 class="fase-title">Flujo en redes</h2><p class="fase-sub">Max-flow min-cut y modelado.</p></div></div>
+  <div class="fase-body">
+    <div class="m-cols">
+      <div class="m-card"><h2>Teoremas</h2>
+        <p><span class="m-tag thm">thm</span>Flujo máximo = capacidad del corte mínimo.</p>
+        <p><span class="m-tag thm">thm</span>Capacidades enteras $\Rightarrow$ existe flujo máximo entero.</p>
+        <p><span class="m-tag tip">E–K</span>Camino de aumento por BFS: $O(nm^2)$.</p></div>
+      <div class="m-card"><h2>Modelados</h2>
+        <p><span class="m-tag tip">caminos disjuntos</span>capacidad 1 en cada arista.</p>
+        <p><span class="m-tag tip">matching</span>$s\to L\to R\to t$ con capacidad 1.</p>
+        <p><span class="m-tag tip">prueba</span>flujo entero de valor $k$ $\Leftrightarrow$ solución de tamaño $k$.</p></div>
+    </div>
+  </div>
+</section>

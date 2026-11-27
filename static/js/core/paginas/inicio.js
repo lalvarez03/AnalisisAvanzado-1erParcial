@@ -2,12 +2,12 @@
 // Genérico: todo sale del manifiesto de la materia activa (unidades, herramientas, textos).
 
 import { el } from '../../utils/dom.js';
-import { materiaActiva, plan, claveMateria } from '../materia.js';
+import { materiaActiva, plan, etiquetaParcial } from '../materia.js';
+import { irAPractica } from '../seleccion.js';
 import { getState, lastPage, progressPercent } from '../../state.js';
 
 function irAEjercicios(unidadId) {
-  try { localStorage.setItem(claveMateria('practica'), unidadId); } catch { /* ignore */ }
-  location.hash = 'estudio';
+  irAPractica('estudio', unidadId);
 }
 
 function progresoUnidad(u) {
@@ -127,18 +127,22 @@ export function renderInicio(root) {
     (m.inicioRuta || '') + ' <em>Tu avance se maneja desde el menú lateral: tildá o destildá cada tema (o el grupo entero) cuando quieras.</em>' }));
 
   const ruta = el('div', { class: 'route' });
-  UNIDADES.forEach((u) => ruta.appendChild(tarjetaUnidad(m, u)));
+  let ultimoParcial = null;
+  UNIDADES.forEach((u) => {
+    const lp = etiquetaParcial(u.id);
+    if (lp && lp !== ultimoParcial) { ruta.appendChild(el('h3', { class: 'parcial-titulo', text: lp })); ultimoParcial = lp; }
+    ruta.appendChild(tarjetaUnidad(m, u));
+  });
   root.appendChild(ruta);
 
-  root.appendChild(el('h2', { class: 'home-h2', text: 'Práctica y repaso' }));
+  // Las herramientas de práctica (estudiar por práctica, ejercicios resueltos, asistente) viven en el otro mundo.
+  root.appendChild(el('h2', { class: 'home-h2', text: 'Repaso y práctica' }));
   const grid = el('div', { class: 'home-grid' });
-  HERRAMIENTAS.filter((h) => !h.grupo).forEach((h) => {
-    grid.appendChild(el('a', { class: 'home-card', href: '#' + h.id }, [
-      el('div', { class: 'ic', text: h.ic }),
-      el('h4', { text: h.titulo }),
-      el('p', { text: h.desc }),
-    ]));
-  });
+  grid.appendChild(el('a', { class: 'home-card', href: '#practicas' }, [
+    el('div', { class: 'ic', text: '✏️' }),
+    el('h4', { text: 'Pasar a Prácticas' }),
+    el('p', { text: 'Estudiar por práctica, ejercicios resueltos y asistente de demostraciones, guía por guía.' }),
+  ]));
   if (m.machete) {
     grid.appendChild(el('a', { class: 'home-card', href: 'machete.html?m=' + encodeURIComponent(m.id), target: '_blank', rel: 'noopener' }, [
       el('div', { class: 'ic', text: '📄' }),
@@ -165,7 +169,8 @@ export function renderInicio(root) {
   root.appendChild(el('div', { class: 'callout tip' }, [
     el('div', { class: 'tag', text: 'Tip de estudio' }),
     el('div', { html:
-      'Usá el <strong>Pomodoro</strong> de la barra superior: 25 minutos de una unidad, 5 de descanso. '
+      'Con el interruptor <strong>Teóricas ⇄ Prácticas</strong> de la barra superior cambiás de mundo: la teoría para entender, las prácticas para ejercitar. '
+      + 'Usá el <strong>Pomodoro</strong>: 25 minutos de una unidad, 5 de descanso. '
       + 'Podés cambiar la duración con el engranaje ⚙️ y subir o bajar el contador de pomodoros con ＋ y −.' }),
   ]));
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estudio — Materias</title>
+  <title>Ñatos de Ciencias · Tus materias</title>
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- MathJax para renderizar LaTeX -->
@@ -22,15 +22,26 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
+  <script>try { document.body.dataset.modo = localStorage.getItem('aa_modo') === 'practica' ? 'practica' : 'teoria'; } catch (e) { document.body.dataset.modo = 'teoria'; }</script>
   <header class="topbar">
     <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
     <a class="brand" href="#materias" title="Ir al menú de materias">
       <span class="brand-logo" id="brand-logo">🎓</span>
       <div class="brand-text">
-        <strong id="brand-title">Estudio</strong>
-        <small id="brand-sub">Menú de materias</small>
+        <strong id="brand-title">Ñatos de Ciencias</strong>
+        <small id="brand-sub">estudiar sin perderse</small>
       </div>
     </a>
+    <!-- Interruptor de mundos: Teóricas ⇄ Prácticas (cambia menú, barra lateral y paleta) -->
+    <div class="modo-switch" id="modo-switch" role="tablist" aria-label="Modo de estudio" data-modo="teoria">
+      <span class="modo-thumb" aria-hidden="true"></span>
+      <button type="button" role="tab" class="modo-opt" data-modo-btn="teoria" aria-selected="true" title="Teóricas: definiciones, demostraciones, gráficas y resultados clave">
+        <span class="modo-ic">📖</span><span class="modo-lbl">Teóricas</span>
+      </button>
+      <button type="button" role="tab" class="modo-opt" data-modo-btn="practica" aria-selected="false" title="Prácticas: estudiar por práctica, ejercicios resueltos y asistente de demostraciones">
+        <span class="modo-ic">✏️</span><span class="modo-lbl">Prácticas</span>
+      </button>
+    </div>
     <div class="pomodoro-widget" id="pomodoro-widget">
       <span class="pomo-mode" id="pomo-mode" title="Modo actual">🍅</span>
       <span class="pomodoro-display" id="pomo-display" title="Clic (en pausa) para editar el tiempo actual">25:00</span>

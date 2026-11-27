@@ -5,11 +5,16 @@
 //   #<materia>/<pagina>         → página de una materia concreta, p. ej. #analisis-avanzado/sup-inf
 //   #<pagina>                   → página de la materia activa (así linkean las páginas entre sí)
 //
+// Dos "mundos" dentro de cada materia (ver core/modo.js):
+//   · Teóricas: inicio + temas de las unidades (definiciones, demostraciones, gráficas y resultados clave).
+//   · Prácticas: menú 'practicas' + estudiar por práctica + ejercicios resueltos + asistente, segmentado por unidad.
+// La página abierta decide el modo (plan().modoDePagina); el menú lateral y la paleta siguen al modo.
+//
 // Cada materia es un componente (static/materias/<id>/): este archivo no conoce ninguna en particular.
 
 import { DEFAULT_PAGE } from './constants.js';
 import { REGISTRO, MATERIA_POR_DEFECTO, buscarMateria } from '../materias/registry.js';
-import { activarMateria, materiaActiva, hayMateriaActiva, plan, claveMateria } from './core/materia.js';
+import { activarMateria, reactivarMateria, etiquetaParcial, materiaActiva, hayMateriaActiva, plan, claveMateria } from './core/materia.js';
 import {
   getState, markVisited, progressPercent, runCleanups, recargarProgreso,
   toggleVisited, resetProgress,
@@ -19,12 +24,20 @@ import { configurarGlosario, iniciarGlosario } from './utils/glosario.js';
 import { crearTarjetaResultado, alternarTodos, etiquetaAlternar } from './utils/resultados-cards.js';
 import { renderHub } from './core/hub.js';
 import { renderInicio } from './core/paginas/inicio.js';
+import { renderPracticas, practicasDeMateria, guiasSueltas } from './core/paginas/practicas.js';
 import { renderEstudio } from './core/paginas/estudio.js';
 import { renderGuia } from './core/paginas/guia.js';
 import { renderFeedback } from './core/paginas/feedback.js';
+import { MODOS, getModo, setModo, alCambiarModo, iniciarSwitchModo } from './core/modo.js';
+import { EVENTO_CONFIG, aplicarConfigGlobal } from './core/config-usuario.js';
+import { EVENTO_SELECCION, leerSeleccion, irAPractica } from './core/seleccion.js';
+import { estructurarHoja } from './core/estructura.js';
 
+const EVENTO_AJUSTES = 'aa:ajustes';
 const MATERIA_ACTIVA_KEY = 'aa_materia_activa';
-const GENERICAS = { inicio: renderInicio, estudio: renderEstudio, guia: renderGuia, feedback: renderFeedback };
+const GENERICAS = {
+  inicio: renderInicio, practicas: renderPracticas, estudio: renderEstudio, guia: renderGuia, feedback: renderFeedback,
+};
 
 let contentEl = null;
 let pageRegistry = {};
@@ -64,8 +77,7 @@ async function asegurarMateria(id) {
   recargarProgreso();
   pageRegistry = { ...GENERICAS, ...(manifiesto.paginas || {}) };
   try { localStorage.setItem(MATERIA_ACTIVA_KEY, id); } catch { /* ignore */ }
-  buildSidebar();
-  initCollapsibleGroups();
+  reconstruirMenu();
   aplicarMarca(manifiesto);
   return true;
 }
@@ -84,29 +96,70 @@ function aplicarMarca(m) {
 function modoHub(on) {
   document.body.classList.toggle('modo-hub', on);
   if (on) {
-    document.title = 'Materias — Estudio';
+    document.title = 'Ñatos de Ciencias · Tus materias';
     closeSidebar();
   }
 }
 
 // ---------------------------------------------------------------------------
-// Menú lateral (generado desde el plan de la materia activa)
+// Menú lateral (generado desde el plan de la materia activa; cambia según el modo)
 // ---------------------------------------------------------------------------
+
+/** Reconstruye el menú del modo actual y sus grupos colapsables. */
+function reconstruirMenu() {
+  buildSidebar();
+  initCollapsibleGroups();
+  syncProgressUI();
+}
+
+/** Botón superior del menú: lleva al menú principal del modo actual. */
+function botonMenuModo(m, modo) {
+  const esPractica = modo === 'practica';
+  return el('a', {
+    class: 'nav-materia', 'data-materia-inicio': '1', href: '#' + MODOS[modo].home,
+    title: (esPractica ? 'Menú de Prácticas de ' : 'Menú de ') + m.nombre, style: `--unit:${m.color}`,
+  }, [
+    el('span', { class: 'nav-materia-ic', text: esPractica ? '✏️' : (m.icono || '∑') }),
+    el('span', { class: 'nav-materia-txt' }, [
+      el('strong', { text: m.nombre }),
+      el('small', { text: esPractica ? 'Menú de prácticas' : 'Menú de la teoría' }),
+    ]),
+  ]);
+}
+
+function grupoHerramientas(lista, titulo, sigil) {
+  const group = el('div', { class: 'nav-group nav-tools', style: '--unit:#9aa6c4' });
+  group.appendChild(el('div', { class: 'nav-group-title' }, [
+    el('span', { class: 'nav-num', text: sigil }),
+    el('span', { class: 'nav-group-name', text: titulo }),
+  ]));
+  lista.forEach((h) => {
+    group.appendChild(el('div', { class: 'nav-row nav-row-tool' }, [
+      el('a', { class: 'nav-link', 'data-page': h.id, href: '#' + h.id }, h.ic + ' ' + h.titulo),
+    ]));
+  });
+  return group;
+}
 
 function buildSidebar() {
   const nav = document.getElementById('nav');
   if (!nav) return;
+  const modo = getModo();
+  nav.innerHTML = '';
+  nav.dataset.modo = modo;
+  if (modo === 'practica') buildSidebarPractica(nav); else buildSidebarTeoria(nav);
+}
+
+// --- Teóricas: unidades con sus temas (checkbox de progreso) y atajo a los ejercicios de cada unidad ---
+function buildSidebarTeoria(nav) {
   const m = materiaActiva();
   const { UNIDADES, HERRAMIENTAS } = plan();
-  nav.innerHTML = '';
+  nav.appendChild(botonMenuModo(m, 'teoria'));
 
-  // Botón de la materia: lleva al menú de la materia (el menú de materias es la marca "Estudio" de arriba).
-  nav.appendChild(el('a', { class: 'nav-materia', 'data-materia-inicio': '1', href: '#inicio', title: 'Menú de ' + m.nombre, style: `--unit:${m.color}` }, [
-    el('span', { class: 'nav-materia-ic', text: m.icono || '∑' }),
-    el('span', { class: 'nav-materia-txt' }, [el('strong', { text: m.nombre }), el('small', { text: 'Menú de la materia' })]),
-  ]));
-
+  let ultimoParcial = null;
   UNIDADES.forEach((u) => {
+    const lp = etiquetaParcial(u.id);
+    if (lp && lp !== ultimoParcial) { nav.appendChild(el('div', { class: 'nav-parcial', text: lp })); ultimoParcial = lp; }
     const group = el('div', { class: 'nav-group', style: `--unit:${u.color}`, 'data-unit': u.id });
 
     // Encabezado: solo título (colapsa el grupo). Los checks de grupo se quitaron.
@@ -126,46 +179,19 @@ function buildSidebar() {
       });
       check.addEventListener('click', () => { toggleVisited(p.id); onProgressChanged(); });
       group.appendChild(el('div', { class: 'nav-row', 'data-row': p.id }, [
-        check,
         el('a', { class: 'nav-link', 'data-page': p.id, href: '#' + p.id }, p.titulo),
+        check,
       ]));
     });
 
-    if ((m.estudio || []).some((e) => e.id === u.id)) {
-      const ej = el('a', { class: 'nav-link nav-ej', href: '#estudio', title: 'Estudiar ' + rotulo }, '🗺️ Estudiar ' + rotulo);
-      ej.addEventListener('click', (e) => {
-        e.preventDefault();
-        try { localStorage.setItem(claveMateria('practica'), u.id); } catch { /* ignore */ }
-        // Siempre re-renderizamos 'estudio' con la práctica correcta, aunque ya estemos en esa página.
-        render('estudio');
-        location.hash = 'estudio';
-      });
-      group.appendChild(ej);
-    }
     nav.appendChild(group);
   });
 
-  const herramientasPrincipales = HERRAMIENTAS.filter((h) => !h.grupo);
-  const herramientasExtra      = HERRAMIENTAS.filter((h) => h.grupo === 'extra');
-
-  function buildToolGroup(lista, titulo, sigil) {
-    const group = el('div', { class: 'nav-group nav-tools', style: '--unit:#9aa6c4' });
-    group.appendChild(el('div', { class: 'nav-group-title' }, [
-      el('span', { class: 'nav-num', text: sigil }),
-      el('span', { class: 'nav-group-name', text: titulo }),
-    ]));
-    lista.forEach((h) => {
-      group.appendChild(el('div', { class: 'nav-row nav-row-tool' }, [
-        el('a', { class: 'nav-link', 'data-page': h.id, href: '#' + h.id }, h.ic + ' ' + h.titulo),
-      ]));
-    });
-    return group;
-  }
-
-  nav.appendChild(buildToolGroup(herramientasPrincipales, 'Práctica y repaso', '★'));
-  if (herramientasExtra.length) {
-    nav.appendChild(buildToolGroup(herramientasExtra, 'Extra', '✦'));
-  }
+  // Solo las herramientas que son de teoría o neutrales ("Extra"); las de práctica viven en el otro mundo.
+  const deTeoria = HERRAMIENTAS.filter((h) => plan().modoDePagina(h.id) === 'teoria');
+  const extra = HERRAMIENTAS.filter((h) => h.grupo === 'extra');
+  if (deTeoria.length) nav.appendChild(grupoHerramientas(deTeoria, 'Herramientas', '★'));
+  if (extra.length) nav.appendChild(grupoHerramientas(extra, 'Extra', '✦'));
 
   // Reiniciar todo el progreso de ESTA materia.
   const reset = el('button', { class: 'nav-reset', type: 'button', title: 'Desmarcar todos los temas de esta materia' }, '↺ Reiniciar progreso');
@@ -175,6 +201,54 @@ function buildSidebar() {
     onProgressChanged();
   });
   nav.appendChild(reset);
+}
+
+// --- Prácticas: un grupo por práctica/unidad, con "Estudiar" y "Ejercicios resueltos" ---
+function buildSidebarPractica(nav) {
+  const m = materiaActiva();
+  const { HERRAMIENTAS } = plan();
+  nav.appendChild(botonMenuModo(m, 'practica'));
+
+  let ultimoParcial = null;
+  practicasDeMateria(m).forEach(({ u, estudio, guia }) => {
+    const lp = etiquetaParcial(u.id);
+    if (lp && lp !== ultimoParcial) { nav.appendChild(el('div', { class: 'nav-parcial', text: lp })); ultimoParcial = lp; }
+    const rotulo = u.etiqueta || String(u.num);
+    const group = el('div', { class: 'nav-group', style: `--unit:${u.color}`, 'data-unit': u.id });
+    group.appendChild(el('div', { class: 'nav-group-head' }, [
+      el('div', { class: 'nav-group-title' }, [
+        el('span', { class: 'nav-num', text: rotulo }),
+        el('span', { class: 'nav-group-name', text: u.titulo }),
+      ]),
+    ]));
+    if (estudio) group.appendChild(enlaceSeleccion('estudio', u.id, '🗺️ Estudiar ' + rotulo));
+    if (guia) group.appendChild(enlaceSeleccion('guia', u.id, `📖 Ejercicios resueltos (${guia.datos.length})`));
+    nav.appendChild(group);
+  });
+
+  const sueltas = guiasSueltas(m);
+  if (sueltas.length) {
+    const group = el('div', { class: 'nav-group', style: '--unit:#ffb454' });
+    group.appendChild(el('div', { class: 'nav-group-title' }, [
+      el('span', { class: 'nav-num', text: '📝' }),
+      el('span', { class: 'nav-group-name', text: 'Parciales' }),
+    ]));
+    sueltas.forEach((g) => group.appendChild(enlaceSeleccion('guia', g.id, g.nombre)));
+    nav.appendChild(group);
+  }
+
+  const herramientas = HERRAMIENTAS.filter((h) => !h.grupo && h.id !== 'estudio' && h.id !== 'guia'
+    && plan().modoDePagina(h.id) === 'practica');
+  const extra = HERRAMIENTAS.filter((h) => h.grupo === 'extra');
+  if (herramientas.length) nav.appendChild(grupoHerramientas(herramientas, 'Herramientas', '★'));
+  if (extra.length) nav.appendChild(grupoHerramientas(extra, 'Extra', '✦'));
+}
+
+/** Enlace del menú de prácticas que abre `estudio` o `guia` con una práctica ya elegida. */
+function enlaceSeleccion(pagina, id, texto) {
+  const a = el('a', { class: 'nav-link nav-sel', 'data-page': pagina, 'data-sel': id, href: '#' + pagina }, texto);
+  a.addEventListener('click', (e) => { e.preventDefault(); irAPractica(pagina, id); });
+  return a;
 }
 
 // Refleja el estado de "recorrido" en checkboxes, grupos, badge y (si está abierto) el inicio.
@@ -206,9 +280,12 @@ function onProgressChanged() {
 
 function updateActiveLink(page) {
   document.querySelectorAll('.nav-link[data-page]').forEach((a) => {
-    a.classList.toggle('active', a.dataset.page === page);
+    // Los enlaces de "estudio"/"guia" por práctica solo se resaltan si son la práctica elegida.
+    const sel = a.dataset.sel;
+    const on = a.dataset.page === page && (!sel || sel === leerSeleccion(page));
+    a.classList.toggle('active', on);
   });
-  document.querySelector('.nav-materia')?.classList.toggle('active', page === 'inicio');
+  document.querySelector('.nav-materia')?.classList.toggle('active', page === MODOS[getModo()].home);
   syncProgressUI();
   // Abrir automáticamente el grupo que contiene la página activa.
   const activeLink = document.querySelector('.nav-link.active');
@@ -218,8 +295,8 @@ function updateActiveLink(page) {
   }
 }
 
-// --- Grupos colapsables del nav ---
-const navKey = () => claveMateria('navCollapsed');
+// --- Grupos colapsables del nav (estado separado por modo) ---
+const navKey = () => claveMateria('navCollapsed') + (getModo() === 'practica' ? ':practica' : '');
 
 function loadCollapsed() {
   try { return new Set(JSON.parse(localStorage.getItem(navKey()) || '[]')); }
@@ -236,9 +313,11 @@ function setGroupCollapsed(group, collapsed) {
 }
 
 function initCollapsibleGroups() {
-  // Primera vez (sin estado guardado): todo colapsado; se abre solo el grupo de la página activa.
+  // Primera vez (sin estado guardado): en Teóricas todo colapsado salvo el grupo de la página activa;
+  // en Prácticas todo abierto (cada grupo tiene solo 2 enlaces).
   const primeraVez = localStorage.getItem(navKey()) === null;
-  const collapsed = primeraVez
+  const colapsarTodo = primeraVez && getModo() === 'teoria';
+  const collapsed = colapsarTodo
     ? new Set([...document.querySelectorAll('.nav-group-title')].map((t) => t.textContent.trim()))
     : loadCollapsed();
   const groups = [...document.querySelectorAll('#nav .nav-group')];
@@ -274,21 +353,25 @@ function updateProgress() {
 // ---------------------------------------------------------------------------
 
 function pageNav(page) {
-  // Botones anterior / siguiente al pie de cada página (orden del plan de la materia).
-  const { PAGE_ORDER, PAGE_TITLES } = plan();
-  const idx = PAGE_ORDER.indexOf(page);
+  // Botones anterior / siguiente al pie de cada tema de teoría (orden de las unidades de la materia).
+  const { PAGINAS_TEORIA, PAGE_TITLES } = plan();
+  const orden = ['inicio', ...PAGINAS_TEORIA];
+  const idx = orden.indexOf(page);
   const wrap = el('div', {
     class: 'controls',
     style: 'justify-content: space-between; margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;',
   });
-  const prev = PAGE_ORDER[idx - 1];
-  const next = PAGE_ORDER[idx + 1];
+  const prev = orden[idx - 1];
+  const next = orden[idx + 1];
   if (prev) {
     wrap.appendChild(el('button', { class: 'btn ghost', onClick: () => { location.hash = prev; } }, '← ' + PAGE_TITLES[prev]));
   } else { wrap.appendChild(el('span')); }
   if (next) {
     wrap.appendChild(el('button', { class: 'btn', onClick: () => { location.hash = next; } }, PAGE_TITLES[next] + ' →'));
-  } else { wrap.appendChild(el('span')); }
+  } else {
+    // Último tema de teoría: el siguiente paso natural es pasar al otro mundo.
+    wrap.appendChild(el('button', { class: 'btn', onClick: () => { location.hash = MODOS.practica.home; } }, '✏️ Pasar a las Prácticas →'));
+  }
   return wrap;
 }
 
@@ -326,7 +409,7 @@ function resultadosClave(page) {
 
 function render(page) {
   runCleanups();
-  const { PAGE_TITLES } = plan();
+  const { PAGE_TITLES, PAGINAS_TEORIA } = plan();
   // Rutas que ya no existen (p. ej. la vieja autoevaluación) se redirigen a su reemplazo.
   const destino = materiaActiva().redirecciones?.[page];
   if (destino) {
@@ -335,6 +418,10 @@ function render(page) {
   }
   const resolved = (pageRegistry[page] && (page in PAGE_TITLES)) ? page : DEFAULT_PAGE;
   const renderer = pageRegistry[resolved];
+
+  // La página decide el mundo: si cambia de modo, se reconstruye el menú lateral (y cambia la paleta).
+  const modoPagina = plan().modoDePagina(resolved);
+  if (modoPagina) setModo(modoPagina);
 
   contentEl.innerHTML = '';
   try {
@@ -345,10 +432,15 @@ function render(page) {
       '<div class="tag">Error</div>No se pudo cargar esta sección. Revisá la consola.' }));
   }
 
-  const bloqueResultados = resultadosClave(resolved);
-  if (bloqueResultados) contentEl.appendChild(bloqueResultados);
-
-  if (resolved !== 'inicio') contentEl.appendChild(pageNav(resolved));
+  const esTema = PAGINAS_TEORIA.includes(resolved);
+  if (esTema && materiaActiva().estructura === 'secciones') {
+    try { estructurarHoja(contentEl); } catch (e) { console.error('No se pudo estructurar la hoja', resolved, e); }
+  }
+  if (esTema) {
+    const bloqueResultados = resultadosClave(resolved);
+    if (bloqueResultados) contentEl.appendChild(bloqueResultados);
+    contentEl.appendChild(pageNav(resolved));
+  }
 
   getState().currentPage = resolved;
   markVisited(resolved);
@@ -428,6 +520,28 @@ export function initNavigation() {
   window.addEventListener('hashchange', route);
   document.getElementById('menu-toggle')?.addEventListener('click', openSidebar);
   document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
+
+  // Interruptor Teóricas ⇄ Prácticas: lleva al menú principal del mundo elegido.
+  iniciarSwitchModo((modo) => { location.hash = MODOS[modo].home; });
+  alCambiarModo(() => { if (hayMateriaActiva()) { reconstruirMenu(); updateActiveLink(getState().currentPage); } });
+  // Ajustes de la materia (orden de unidades / agrupación por parcial): se recalcula el plan y se redibuja.
+  window.addEventListener(EVENTO_AJUSTES, (e) => {
+    if (!hayMateriaActiva()) return;
+    if (e.detail?.id && e.detail.id !== materiaActiva().id) return;   // era otra materia: se aplica al abrirla
+    reactivarMateria();
+    reconstruirMenu();
+    // Si se está viendo el menú de materias no hay nada que redibujar en el contenido.
+    if (!document.body.classList.contains('modo-hub')) {
+      const y = contentEl.scrollTop;
+      render(getState().currentPage || 'inicio');
+      contentEl.scrollTop = y;
+    }
+  });
+  // Preferencias globales (Pomodoro, avance, materias visibles).
+  window.addEventListener(EVENTO_CONFIG, aplicarConfigGlobal);
+  aplicarConfigGlobal();
+  // Cambiar de práctica/guía desde las pestañas de la página actualiza el resaltado del menú.
+  window.addEventListener(EVENTO_SELECCION, () => { if (hayMateriaActiva()) updateActiveLink(getState().currentPage); });
 
   route();
 }

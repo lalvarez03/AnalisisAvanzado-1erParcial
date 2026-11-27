@@ -8,7 +8,7 @@
 
 import { el } from '../../utils/dom.js';
 import { pageHeader, callout } from '../../utils/page.js';
-import { materiaActiva, plan } from '../materia.js';
+import { materiaActiva, hayMateriaActiva, plan } from '../materia.js';
 import { lastPage, registerCleanup } from '../../state.js';
 import { FEEDBACK_ENDPOINT, FEEDBACK_EMAIL, FEEDBACK_COOLDOWN_MIN } from '../../config.js';
 
@@ -164,7 +164,8 @@ export function renderFeedback(root) {
   // --- Tema ---
   const tema = el('select', { id: 'fb-tema' });
   tema.appendChild(el('option', { value: '' }, 'General / toda la app'));
-  const { PAGINAS_TEORIA, PAGE_TITLES, HERRAMIENTAS } = plan();
+  // Desde los ajustes del menú de materias puede no haber una materia activa: el tema queda "General".
+  const { PAGINAS_TEORIA, PAGE_TITLES, HERRAMIENTAS } = hayMateriaActiva() ? plan() : { PAGINAS_TEORIA: [], PAGE_TITLES: {}, HERRAMIENTAS: [] };
   PAGINAS_TEORIA.forEach((id) => tema.appendChild(el('option', { value: PAGE_TITLES[id] }, PAGE_TITLES[id])));
   HERRAMIENTAS.filter((h) => h.id !== 'feedback').forEach((h) =>
     tema.appendChild(el('option', { value: h.titulo }, h.titulo)));
@@ -252,7 +253,7 @@ export function renderFeedback(root) {
   function armarPayload() {
     return {
       tipo: state.tipo,
-      materia: materiaActiva().id,
+      materia: hayMateriaActiva() ? materiaActiva().id : 'general',
       tema: tema.value,
       comentario: texto.value.trim(),
       contacto: contacto.value.trim(),

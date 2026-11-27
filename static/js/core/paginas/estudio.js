@@ -5,7 +5,8 @@
 import { el } from '../../utils/dom.js';
 import { pageHeader, callout } from '../../utils/page.js';
 import { solvedExercise } from '../../utils/resueltos.js';
-import { materiaActiva, claveMateria } from '../materia.js';
+import { materiaActiva } from '../materia.js';
+import { guardarSeleccion, leerSeleccion } from '../seleccion.js';
 
 function typesetNode(node) {
   if (window.MathJax?.typesetPromise) {
@@ -65,7 +66,6 @@ function seccionPractica(m, p) {
 
 export function renderEstudio(root) {
   const m = materiaActiva();
-  const KEY = claveMateria('practica');
   const estudio = m.estudio || [];
 
   root.appendChild(pageHeader(
@@ -94,7 +94,7 @@ export function renderEstudio(root) {
 
   function load(p) {
     [...picker.children].forEach((b) => b.classList.toggle('active', b.dataset.id === p.id));
-    try { localStorage.setItem(KEY, p.id); } catch { /* ignore */ }
+    guardarSeleccion('estudio', p.id);
     holder.innerHTML = '';
     holder.appendChild(seccionPractica(m, p));
     typesetNode(holder);
@@ -109,10 +109,6 @@ export function renderEstudio(root) {
     }, partes.length > 1 ? partes[0] + ' · ' + partes[1].split(' y ')[0] : p.titulo));
   });
 
-  let inicial = estudio[0];
-  try {
-    const guardada = localStorage.getItem(KEY);
-    inicial = estudio.find((p) => p.id === guardada) || inicial;
-  } catch { /* ignore */ }
-  load(inicial);
+  const guardada = leerSeleccion('estudio');
+  load(estudio.find((p) => p.id === guardada) || estudio[0]);
 }

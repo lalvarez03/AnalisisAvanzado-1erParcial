@@ -18,6 +18,26 @@ export const REGISTRO = [
     estado: 'activa',
     cargar: () => import('./analisis-avanzado/index.js'),
   },
+  {
+    id: 'alc',
+    nombre: 'Álgebra Lineal Computacional',
+    icono: '🧮',
+    color: '#38d9d9',
+    institucion: 'DM · FCEN · UBA',
+    descripcion: 'Espacios vectoriales, punto flotante y condición, LU/QR, autovalores y SVD, cuadrados mínimos y métodos iterativos. Prácticas 1 a 7.',
+    estado: 'activa',
+    cargar: () => import('./alc/index.js'),
+  },
+  {
+    id: 'algoritmos-3',
+    nombre: 'Técnicas de Diseño de Algoritmos',
+    icono: '🧠',
+    color: '#ff8a5b',
+    institucion: 'DC · FCEyN · UBA',
+    descripcion: 'Demostraciones, grafos, divide y conquista, backtracking, programación dinámica, greedy, caminos mínimos y flujos. Prácticas 1 a 9.',
+    estado: 'activa',
+    cargar: () => import('./algoritmos-3/index.js'),
+  },
   // Agregá nuevas materias acá. (`py tools/nueva_materia.py` inserta la entrada justo antes de este comentario.)
   // Ejemplo:
   // {

@@ -5,6 +5,7 @@ import { el } from '../../utils/dom.js';
 import { pageHeader, callout } from '../../utils/page.js';
 import { solvedExercise } from '../../utils/resueltos.js';
 import { materiaActiva } from '../materia.js';
+import { guardarSeleccion, leerSeleccion } from '../seleccion.js';
 
 export function renderGuia(root) {
   const m = materiaActiva();
@@ -32,6 +33,7 @@ export function renderGuia(root) {
 
   function load(g) {
     [...picker.children].forEach((p) => p.classList.toggle('active', p.dataset.id === g.id));
+    guardarSeleccion('guia', g.id);
     holder.innerHTML = '';
     holder.appendChild(el('div', { class: 'page-sub', style: 'margin: 6px 0 14px;', text: `${g.datos.length} ejercicios resueltos` }));
     g.datos.forEach((cfg) => holder.appendChild(solvedExercise(cfg)));
@@ -47,7 +49,8 @@ export function renderGuia(root) {
   root.appendChild(el('div', { class: 'ex-picker-label', text: 'Práctica' }));
   root.appendChild(picker);
   root.appendChild(holder);
-  load(guias[0]);
+  const guardada = leerSeleccion('guia');
+  load(guias.find((g) => g.id === guardada) || guias[0]);
 
   const extra = (m.herramientas || []).filter((h) => h.id === 'estudio');
   if (extra.length) {

@@ -85,10 +85,11 @@ export const UNIDADES = [
   },
 ];
 
-// Herramientas de práctica (no pertenecen a una unidad). Los ids 'estudio', 'guia' y 'feedback'
+// Herramientas (no pertenecen a una unidad). Los ids 'estudio', 'guia' y 'feedback'
 // tienen implementación genérica en el núcleo; 'asistente' es propio de esta materia.
+// Mundo al que pertenecen: por defecto 'practica' (estudio, guia, asistente); las de `grupo: 'extra'` son neutrales.
+// La teoría (definiciones, demostraciones, gráficas, resultados clave) vive en `UNIDADES`.
 export const HERRAMIENTAS = [
-  // El orden importa: la primera herramienta es a donde lleva "siguiente" desde el último tema.
   { id: 'estudio',   ic: '🗺️', titulo: 'Estudiar por práctica', desc: 'Recetas, mapa de ejercicios y errores comunes de cada guía.' },
   { id: 'guia',      ic: '📖',  titulo: 'Guía resuelta',         desc: 'Todos los ejercicios de P1–P7 resueltos paso a paso.' },
   { id: 'asistente', ic: '🧩',  titulo: 'Asistente de demostraciones', desc: 'Armá demostraciones arrastrando los pasos.' },

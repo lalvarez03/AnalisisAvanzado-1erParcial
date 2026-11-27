@@ -1,0 +1,239 @@
+<!-- materias/alc/machete.html — machete de Álgebra Lineal Computacional (se carga desde machete.html?m=alc).
+     Una <section class="fase"> por práctica. Teoría de referencia: apunte Acosta–Laplagne. -->
+<section class="fase" id="f1" data-practica="P1">
+  <div class="fase-head">
+    <div class="fase-num">1</div>
+    <div>
+      <h2 class="fase-title">Espacios vectoriales y matrices</h2>
+      <p class="fase-sub">Subespacios, bases, dimensión, bloques y cambio de base.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Subespacio</dt><dd>$0\in S$, cerrado por suma y por producto por escalar.</dd></div>
+        <div class="def-item"><dt>Base / dimensión</dt><dd>Generadores l.i.; todas las bases tienen el mismo cardinal $\dim S$.</dd></div>
+        <div class="def-item"><dt>Coordenadas</dt><dd>$[v]_B=M_B^{-1}v$; $C(B,B')=M_{B'}^{-1}M_B$.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>$\dim(S+T)=\dim S+\dim T-\dim(S\cap T)$.</p>
+        <p><span class="m-tag thm">thm</span>$S\cup T$ subespacio $\iff S\subseteq T$ o $T\subseteq S$.</p>
+        <p><span class="m-tag thm">thm</span>$(AB)^t=B^tA^t$; $\operatorname{tr}(AB)=\operatorname{tr}(BA)$.</p>
+        <p><span class="m-tag thm">thm</span>$\det\begin{pmatrix}A&B\\C&D\end{pmatrix}=\det A\det(D-CA^{-1}B)$.</p>
+      </div>
+      <div class="m-card">
+        <h2>Técnicas</h2>
+        <p><span class="m-tag tip">base</span>Escalonar y tomar columnas <em>originales</em> con pivote.</p>
+        <p><span class="m-tag tip">$S\cap T$</span>Apilar las ecuaciones de ambos.</p>
+        <p><span class="m-tag tip">Rouché</span>Única si $\operatorname{rg}A=\operatorname{rg}(A|b)=n$.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f2" data-practica="P2">
+  <div class="fase-head">
+    <div class="fase-num">2</div>
+    <div>
+      <h2 class="fase-title">TL, punto flotante, normas y condición</h2>
+      <p class="fase-sub">Qué hace una matriz y cuánto error amplifica.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Núcleo / imagen</dt><dd>$\operatorname{Nu}f=\{f(v)=0\}$, $\operatorname{Im}f=\{f(v)\}$; $\dim V=\dim\operatorname{Nu}+\dim\operatorname{Im}$.</dd></div>
+        <div class="def-item"><dt>$\varepsilon$ de máquina</dt><dd>$\beta^{1-t}$; $\operatorname{fl}(x)=x(1+\delta)$, $|\delta|\le\varepsilon/2$.</dd></div>
+        <div class="def-item"><dt>Norma inducida</dt><dd>$\|A\|=\max_{\|x\|=1}\|Ax\|$; $\|A\|_\infty$ = máx. fila, $\|A\|_1$ = máx. columna, $\|A\|_2=\sigma_1$.</dd></div>
+        <div class="def-item"><dt>Condición</dt><dd>$\operatorname{cond}A=\|A\|\|A^{-1}\|\ge1$.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>$\|x\|_\infty\le\|x\|_2\le\sqrt n\|x\|_\infty$; $\tfrac1{\sqrt n}\|x\|_1\le\|x\|_2\le\|x\|_1$.</p>
+        <p><span class="m-tag thm">thm</span>$\tfrac1{\operatorname{cond}A}\tfrac{\|\delta b\|}{\|b\|}\le\tfrac{\|\delta x\|}{\|x\|}\le\operatorname{cond}A\tfrac{\|\delta b\|}{\|b\|}$.</p>
+        <p><span class="m-tag thm">thm</span>$\|A-B\|/\|A\|\ge1/\operatorname{cond}A$ si $B$ singular.</p>
+      </div>
+      <div class="m-card">
+        <h2>Cuidado</h2>
+        <p><span class="m-tag warn">absorción</span>$10^{34}+1-10^{34}=0$.</p>
+        <p><span class="m-tag warn">cancelación</span>Restar casi iguales pierde dígitos.</p>
+        <p><span class="m-tag warn">$\det$</span>No mide la condición: $\operatorname{cond}(\tfrac1{10}I)=1$.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f3" data-practica="P3">
+  <div class="fase-head">
+    <div class="fase-num">3</div>
+    <div>
+      <h2 class="fase-title">LU, Cholesky y QR</h2>
+      <p class="fase-sub">Métodos directos para $Ax=b$.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>LU</dt><dd>$A=LU$, $L$ triangular inferior con unos; con pivoteo $PA=LU$, $|\ell_{ij}|\le1$.</dd></div>
+        <div class="def-item"><dt>Cholesky</dt><dd>$A=LL^t$ si $A$ simétrica definida positiva.</dd></div>
+        <div class="def-item"><dt>Proyector</dt><dd>$P^2=P$; ortogonal si $P=P^t$; $P_S=QQ^*=A(A^*A)^{-1}A^*$.</dd></div>
+        <div class="def-item"><dt>Householder</dt><dd>$H=I-2uu^t$, simétrica y ortogonal.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>Menores principales inversibles $\Rightarrow$ existe $LU$; única si $A$ inversible.</p>
+        <p><span class="m-tag thm">thm</span>$Q^{-1}=Q^t\iff$ columnas ortonormales $\iff\|Qx\|=\|x\|$.</p>
+        <p><span class="m-tag thm">thm</span>$A=QR$ con $r_{ij}=\langle a_j,q_i\rangle$.</p>
+      </div>
+      <div class="m-card">
+        <h2>Costos</h2>
+        <p><span class="m-tag tip">LU</span>$\tfrac23n^3$; cada sistema triangular $n^2$.</p>
+        <p><span class="m-tag tip">Cholesky</span>$\tfrac13n^3$.</p>
+        <p><span class="m-tag tip">QR</span>Householder: estable; GS clásico pierde ortogonalidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f4" data-practica="P4">
+  <div class="fase-head">
+    <div class="fase-num">4</div>
+    <div>
+      <h2 class="fase-title">Autovalores, Markov y potencia</h2>
+      <p class="fase-sub">Direcciones que solo se estiran.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Autovalor</dt><dd>$Av=\lambda v$, $v\ne0$; raíz de $\det(A-\lambda I)$.</dd></div>
+        <div class="def-item"><dt>Diagonalizable</dt><dd>$A=CDC^{-1}$ $\iff$ base de autovectores; $A^k=CD^kC^{-1}$.</dd></div>
+        <div class="def-item"><dt>Estocástica</dt><dd>$p_{ij}\ge0$, columnas suman 1; $\lambda=1$ siempre, $|\lambda|\le1$.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>Autovalores distintos $\Rightarrow$ autovectores l.i.</p>
+        <p><span class="m-tag thm">thm</span>$\operatorname{tr}A=\sum\lambda_i$, $\det A=\prod\lambda_i$; $p(A)$ tiene autovalores $p(\lambda_i)$.</p>
+        <p><span class="m-tag thm">thm</span>$P>0$ estocástica: $P^kv_0\to v^*$ único.</p>
+      </div>
+      <div class="m-card">
+        <h2>Potencia</h2>
+        <p><span class="m-tag tip">potencia</span>$v\mapsto Av/\|Av\|\to v_1$; error $\sim|\lambda_2/\lambda_1|^k$.</p>
+        <p><span class="m-tag tip">inversa</span>Autovalor de menor módulo.</p>
+        <p><span class="m-tag tip">$A-\mu I$</span>Más lejano (potencia) o más cercano (inversa) a $\mu$.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f5" data-practica="P5">
+  <div class="fase-head">
+    <div class="fase-num">5</div>
+    <div>
+      <h2 class="fase-title">Hermitianas, Schur y SVD</h2>
+      <p class="fase-sub">Diagonalización ortonormal y la mejor aproximación de rango bajo.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Schur</dt><dd>$A=UTU^*$, $T$ triangular superior con los autovalores.</dd></div>
+        <div class="def-item"><dt>Espectral</dt><dd>$A=A^*\Rightarrow A=UDU^*$, $D$ real.</dd></div>
+        <div class="def-item"><dt>SVD</dt><dd>$A=U\Sigma V^*$, $\sigma_i=\sqrt{\lambda_i(A^*A)}$, $Av_i=\sigma_iu_i$.</dd></div>
+        <div class="def-item"><dt>Pseudo-inversa</dt><dd>$A^\dagger=\hat V\hat\Sigma^{-1}\hat U^*$.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>$\|A\|_2=\sigma_1$, $\operatorname{cond}_2=\sigma_1/\sigma_n$.</p>
+        <p><span class="m-tag thm">thm</span>Eckart–Young: $\|A-A_s\|_2=\sigma_{s+1}$ es mínimo entre rango $\le s$.</p>
+        <p><span class="m-tag thm">thm</span>$A$ definida positiva $\iff\lambda_i>0$.</p>
+      </div>
+      <div class="m-card">
+        <h2>Compresión</h2>
+        <p><span class="m-tag tip">datos</span>$(m+n)r+r+2$ en vez de $mn$.</p>
+        <p><span class="m-tag tip">error</span>$\sigma_{r+1}/\sigma_1$ (relativo, norma 2).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f6" data-practica="P6">
+  <div class="fase-head">
+    <div class="fase-num">6</div>
+    <div>
+      <h2 class="fase-title">Cuadrados mínimos e interpolación</h2>
+      <p class="fase-sub">Ajustar vs. interpolar.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Ecuaciones normales</dt><dd>$A^tA\hat x=A^tb$; $\hat x=A^\dagger b$; residuo $\perp\operatorname{Im}A$.</dd></div>
+        <div class="def-item"><dt>Vandermonde</dt><dd>$V_{ij}=x_i^j$; inversible si los $x_i$ son distintos.</dd></div>
+        <div class="def-item"><dt>Trapecios</dt><dd>$\int_a^bf\approx h\big(\tfrac{f(a)+f(b)}2+\sum_{i=1}^{n-1}f(x_i)\big)$.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>Existe un único interpolante de grado $\le n$ por $n+1$ puntos.</p>
+        <p><span class="m-tag thm">thm</span>$\operatorname{cond}_2(A^tA)=\operatorname{cond}_2(A)^2$.</p>
+      </div>
+      <div class="m-card">
+        <h2>Cuidado</h2>
+        <p><span class="m-tag warn">Runge</span>Nodos equiespaciados + grado alto oscilan.</p>
+        <p><span class="m-tag tip">linealizar</span>$Y=aX^b\to\ln Y=\ln a+b\ln X$.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fase" id="f7" data-practica="P7">
+  <div class="fase-head">
+    <div class="fase-num">7</div>
+    <div>
+      <h2 class="fase-title">Métodos iterativos</h2>
+      <p class="fase-sub">Jacobi, Gauss–Seidel, SOR, gradiente y gradiente conjugado.</p>
+    </div>
+  </div>
+  <div class="fase-body">
+    <div class="defs-clave">
+      <h3>🔑 Definiciones clave</h3>
+      <dl>
+        <div class="def-item"><dt>Partición</dt><dd>$A=L+D+U$; $B_J=-D^{-1}(L+U)$, $B_{GS}=-(D+L)^{-1}U$.</dd></div>
+        <div class="def-item"><dt>SOR</dt><dd>$B(\omega)=(D+\omega L)^{-1}\big((1-\omega)D-\omega U\big)$, $\det=(1-\omega)^n$.</dd></div>
+        <div class="def-item"><dt>Gradiente</dt><dd>$t=\tfrac{r^tr}{r^tAr}$, $r=b-Ax$; residuos consecutivos ortogonales.</dd></div>
+      </dl>
+    </div>
+    <div class="m-cols">
+      <div class="m-card">
+        <h2>Resultados</h2>
+        <p><span class="m-tag thm">thm</span>Converge $\iff\rho(B)<1$; $\rho(B)\le\|B\|$.</p>
+        <p><span class="m-tag thm">thm</span>Diagonal dominante estricta $\Rightarrow$ Jacobi y GS convergen; SOR exige $\omega\in(0,2)$.</p>
+        <p><span class="m-tag thm">thm</span>$f=\tfrac12x^tAx-b^tx$: $\nabla f=Ax-b$; mínimo $\iff A$ def. positiva.</p>
+      </div>
+      <div class="m-card">
+        <h2>Tasas</h2>
+        <p><span class="m-tag tip">gradiente</span>$\tfrac{\kappa-1}{\kappa+1}$ por paso.</p>
+        <p><span class="m-tag tip">CG</span>$\tfrac{\sqrt\kappa-1}{\sqrt\kappa+1}$; exacto en $\le n$ pasos.</p>
+      </div>
+    </div>
+  </div>
+</section>
